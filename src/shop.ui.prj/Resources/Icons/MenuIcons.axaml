@@ -1,0 +1,32 @@
+<ResourceDictionary
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:converters="using:Shop.UI.Converters">
+
+    <ControlTemplate
+      x:Key="ProfileIcon">
+        <Viewbox
+          Width="{TemplateBinding Width}"
+          Height="{TemplateBinding Height}"
+          Margin="-2,0,0,0"
+          Stretch="Uniform">
+            <Path
+              Data="M12,11A5,5,0,1,0,7,6,5.006,5.006,0,0,0,12,11Zm0-8A3,3,0,1,1,9,6,3,3,0,0,1,12,3ZM3,22V18a5.006,5.006,0,0,1,5-5h8a5.006,5.006,0,0,1,5,5v4a1,1,0,0,1-2,0V18a3,3,0,0,0-3-3H8a3,3,0,0,0-3,3v4a1,1,0,0,1-2,0Z"
+              Fill="{TemplateBinding ContentControl.Foreground}" />
+        </Viewbox>
+    </ControlTemplate>
+
+    <converters:SwitchConverter
+      x:Key="IconConverter">
+
+        <converters:Case
+          Key="MenuButtonHome"
+          Value="{StaticResource HomeIcon}" />
+        <converters:Case
+          Key="MenuButtonBasket"
+          Value="{StaticResource BracketIcon}" />
+        <converters:Case
+          Key="MenuButtonProfile"
+          Value="{StaticResource ProfileIcon}" />
+    </converters:SwitchConverter>
+</ResourceDictionary>

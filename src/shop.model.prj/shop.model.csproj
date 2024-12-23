@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Shop.Model</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Home\" />
+    <Folder Include="Bracket\" />
+    <Folder Include="Profile\" />
+  </ItemGroup>
+
+</Project>

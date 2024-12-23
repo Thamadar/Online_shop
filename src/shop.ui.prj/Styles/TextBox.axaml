@@ -1,0 +1,159 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Design.PreviewWith>
+    <Border Padding="20">
+        <TextBox Text="555" Watermark="Water"/>
+    </Border>
+  </Design.PreviewWith>
+
+    <!-- TextBox style, template -->
+    <Style Selector="TextBox">
+        <Setter Property="Height"                   Value="27"/>
+        <Setter Property="FontSize"                 Value="{DynamicResource FontSizeNormal}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding"                  Value="4,6,4,5"/>
+        <Setter Property="MaxLines"                 Value="1" />
+        <Setter Property="AcceptsReturn"            Value="False" />
+        <Setter Property="AcceptsTab"               Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <DataValidationErrors>
+                        <Panel>
+                            <Border Name="PART_BorderElement"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{TemplateBinding CornerRadius}"
+                                    MinWidth="{TemplateBinding MinWidth}"
+                                    MinHeight="{TemplateBinding MinHeight}"/>
+                            <Border Margin="{TemplateBinding BorderThickness}">
+                                <Grid ColumnDefinitions="Auto,*,Auto" >
+                                    <ContentPresenter Grid.Column="0"
+                                                      Grid.ColumnSpan="1"
+                                                      Content="{TemplateBinding InnerLeftContent}"/>
+                                    <DockPanel Grid.Column="1"
+                                               Grid.ColumnSpan="1"
+                                               x:Name="PART_InnerDockPanel"
+                                               Margin="{TemplateBinding Padding}">
+                                        <TextBlock Name="PART_FloatingWatermark"
+                                                   FontSize="{TemplateBinding FontSize}"
+                                                   IsVisible="False"
+                                                   Text="{TemplateBinding Watermark}"
+                                                   DockPanel.Dock="Top" />
+                                        <ScrollViewer Name="PART_ScrollViewer"
+                                                      HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
+                                                      VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}"
+                                                      IsScrollChainingEnabled="{TemplateBinding (ScrollViewer.IsScrollChainingEnabled)}"
+                                                      AllowAutoHide="{TemplateBinding (ScrollViewer.AllowAutoHide)}"
+                                                      BringIntoViewOnFocusChange="{TemplateBinding (ScrollViewer.BringIntoViewOnFocusChange)}">
+                                            <Panel>
+                                                <TextBlock Name="PART_Watermark"
+                                                           Opacity="0.5"
+                                                           Padding="0"
+                                                           Text="{TemplateBinding Watermark}"
+                                                           TextAlignment="{TemplateBinding TextAlignment}"
+                                                           TextWrapping="{TemplateBinding TextWrapping}"
+                                                           IsVisible="{TemplateBinding Text,
+                                                                                       Converter={x:Static StringConverters.IsNullOrEmpty}}"
+                                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                                <TextPresenter Name="PART_TextPresenter"
+                                                               Text="{TemplateBinding Text, Mode=TwoWay}"
+                                                               CaretIndex="{TemplateBinding CaretIndex}"
+                                                               SelectionStart="{TemplateBinding SelectionStart}"
+                                                               SelectionEnd="{TemplateBinding SelectionEnd}"
+                                                               TextAlignment="{TemplateBinding TextAlignment}"
+                                                               TextWrapping="{TemplateBinding TextWrapping}"
+                                                               LineHeight="{TemplateBinding LineHeight}"
+                                                               LetterSpacing="{TemplateBinding LetterSpacing}"
+                                                               PasswordChar="{TemplateBinding PasswordChar}"
+                                                               RevealPassword="{TemplateBinding RevealPassword}"
+                                                               SelectionBrush="{TemplateBinding SelectionBrush}"
+                                                               SelectionForegroundBrush="{TemplateBinding SelectionForegroundBrush}"
+                                                               CaretBrush="{TemplateBinding CaretBrush}"
+                                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                            </Panel>
+                                            <ScrollViewer.Styles>
+                                                <Style Selector="ScrollContentPresenter#PART_ContentPresenter">
+                                                    <Setter Property="Cursor" Value="IBeam" />
+                                                </Style>
+                                            </ScrollViewer.Styles>
+                                        </ScrollViewer>
+                                    </DockPanel>
+                                    <ContentPresenter Grid.Column="2"
+                                                      Grid.ColumnSpan="1"
+                                                      Content="{TemplateBinding InnerRightContent}"/>
+                                </Grid>
+                            </Border>
+                        </Panel>
+                    </DataValidationErrors>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- TextBox events -->
+    <Style Selector="TextBox">
+        <!-- default -->
+        <Style Selector="^">
+            <!-- border & background -->
+            <Setter Property="Background"  Value="{DynamicResource GrayMainColor}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource Main}"/>
+            <!-- foreground -->
+            <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
+
+            <!-- border & background -->
+            <Style Selector="^ /template/ Border#PART_BorderElement">
+                <Setter Property="Background"  Value="{DynamicResource Main}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource Main}"/>
+            </Style>
+
+            <!-- watermark -->
+            <Style Selector="^ /template/ TextBlock#PART_Watermark,
+                   ^ /template/ TextBlock#PART_FloatingWatermark">
+                <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
+                <Setter Property="Padding"    Value="3,3,3,3"/>
+                <Setter Property="FontSize"   Value="{DynamicResource FontSizeSmall}"/>
+                <Setter Property="Opacity"    Value="1.0" />
+            </Style>
+
+            <!-- selected text & caret -->
+            <Style Selector="^ /template/ TextPresenter#PART_TextPresenter">
+                <Setter Property="SelectionBrush"           Value="{DynamicResource Smoke}" />
+                <Setter Property="SelectionForegroundBrush" Value="{DynamicResource FullWhite}" />
+                <Setter Property="CaretBrush"               Value="{DynamicResource Smoke}" />
+            </Style>
+        </Style>
+
+        <!-- pointerover -->
+        <Style Selector="^:pointerover">
+            <!-- foreground -->
+            <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
+            <!-- border & background -->
+            <Style Selector="^ /template/ Border#PART_BorderElement">
+                <Setter Property="Background"  Value="{DynamicResource SmokeMainColor}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource SmokeMainColor}"/>
+            </Style>
+            <!-- border -->
+            <Style Selector="^ /template/ Border#PART_BorderElement">
+                <Setter Property="BorderBrush" Value="{DynamicResource Metal}"/>
+            </Style>
+        </Style>
+
+        <!-- focus -->
+        <Style Selector="^:focus">
+            <!-- foreground -->
+            <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
+            <Style Selector="^ /template/ Border#PART_BorderElement">
+                <Setter Property="Background"  Value="{DynamicResource SmokeMainColor}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource SmokeMainColor}"/>
+            </Style>
+            <!-- border -->
+            <Style Selector="^ /template/ Border#PART_BorderElement">
+                <Setter Property="BorderBrush" Value="{DynamicResource Metal}"/>
+            </Style>
+        </Style>  
+    </Style>
+</Styles>

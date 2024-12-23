@@ -1,0 +1,21 @@
+<Styles
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:c="using:Shop.UI.Controls">
+    <Design.PreviewWith>
+        <Border
+          Padding="20">
+            <!-- Add Controls for Previewer Here -->
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="ToggleButton.menu">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="#FFF" />
+        <Setter Property="BorderBrush" Value="#FFF" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Width" Value="44" />
+        <Setter Property="Height" Value="44" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+</Styles>

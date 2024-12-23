@@ -1,0 +1,18 @@
+<Styles
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border
+          Classes="container"
+          Width="50" Height="50"
+          Margin="20" />
+    </Design.PreviewWith>
+
+    <Style Selector="Border.container">
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="Background" Value="#3b3b3b" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="#cbcbcb" />
+    </Style>
+</Styles>

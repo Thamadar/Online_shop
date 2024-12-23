@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net7.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <Configurations>Debug;Release</Configurations>
+    <RootNamespace>Shop.UI</RootNamespace>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  
+  <ItemGroup> 
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+  
+  <ItemGroup>
+    <AvaloniaXaml Remove="Behaviors\**" />
+    <Compile Remove="Behaviors\**" />
+    <EmbeddedResource Remove="Behaviors\**" />
+    <None Remove="Behaviors\**" />
+  </ItemGroup>
+
+  <ItemGroup> 
+    <AvaloniaResource Include="..\resources\avalonia-logo.ico" Link="Assets\avalonia-logo.ico" />
+ 
+    <AvaloniaResource Include="..\resources\Images\close.png" Link="Assets\Images\close.png" /> 
+    <AvaloniaResource Include="..\resources\Images\titlebar_maximize.png" Link="Assets\Images\titlebar_maximize.png" />
+    <AvaloniaResource Include="..\resources\Images\titlebar_minimize.png" Link="Assets\Images\titlebar_minimize.png" />
+    <AvaloniaResource Include="..\resources\Images\minimize.png" Link="Assets\Images\minimize.png" />
+  </ItemGroup>
+
+  
+  <ItemGroup>
+    <None Remove=".gitignore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.0.0" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.0" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0" />
+  </ItemGroup>
+</Project>
