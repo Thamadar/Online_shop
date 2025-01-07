@@ -34,6 +34,9 @@
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove=".gitignore" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\shop.ui.prj\shop.ui.csproj" />
@@ -44,5 +47,10 @@
     <Compile Update="Views\MainWindowView.axaml.cs">
       <DependentUpon>MainWindowView.axaml</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Http\" />
   </ItemGroup>
 </Project>

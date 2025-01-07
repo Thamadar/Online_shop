@@ -19,7 +19,7 @@ namespace Shop.Client
 
 		public override void OnFrameworkInitializationCompleted()
 		{
-			_container = RegistrationService.CreateContainer();
+			_container = RegistrationService.CreateContainer(); 
 
 			var mainInfo = _container.Resolve<MainInfo>();
 			mainInfo.SetIContainer(_container);
