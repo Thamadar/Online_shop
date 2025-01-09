@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-using Shop.Model.Bracket; 
+using Shop.Model.Database;
 
 namespace Shop.Server.Repositories;
 
@@ -23,5 +23,10 @@ public class ProductRepository : DatabaseBase
 		resultProducts = this.Products.ToList(); 
 
 		return resultProducts;
+	}
+
+	public async Task<bool> IsProductsEmpty()
+	{
+		return !this.Products.Any();
 	}
 }

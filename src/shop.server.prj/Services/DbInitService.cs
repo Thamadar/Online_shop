@@ -1,11 +1,15 @@
 ﻿using Microsoft.Data.SqlClient;
-using Shop.Model.Bracket;
+
+using Shop.Model.Database; 
 
 namespace Shop.Server.Services;
 
-public class DbInitService : DatabaseBase
+public class DbInitService : DatabaseBase, IServerService
 {
 	#region Queries
+
+	private const string _getCountProductsFromTableQuery = @"
+		SELECT COUNT(*) FROM Products";
 
 	private const string _checkIsDatabaseExistAndCreateQuery = @"IF NOT EXISTS
 	(SELECT * FROM sys.databases WHERE name = 'OnlineShop')
@@ -23,23 +27,18 @@ public class DbInitService : DatabaseBase
     [Weight] [float] NOT NULL,
     [Image] [varbinary](max) NOT NULL)";
 
-	private const string _insertDefaultDataInProductTableIfEmptyQuery = @"
-	IF NOT EXISTS (SELECT * FROM Products)
-	BEGIN 
+	private const string _insertDefaultDataInProductTableQuery = @"
 		INSERT INTO Products (ProductName, CurrentCount, Price, PriceBeforeSale, Weight, Image)
 		VALUES 
-		(@ProductName, @CurrentCount, @Price, @PriceBeforeSale, @Weight, @Image)
-	END";
+		(@ProductName, @CurrentCount, @Price, @PriceBeforeSale, @Weight, @Image)";
 
 	#endregion
 
 	public DbInitService(IDatabase database)
 		: base(database)
-	{
-		Start();
-	}
+	{ }
 
-	private void Start()
+	public void Start()
 	{
 		ConsoleLog.Write("Инициализация подключения к БД...");
 
@@ -61,26 +60,36 @@ public class DbInitService : DatabaseBase
 			createTableCommand.ExecuteNonQuery();
 		}
 
+
 		// Check if table "Products" is empty, if not, insert
 		using(SqlConnection connection = new SqlConnection(_connectionString))
-		{
-			var productsDataForInsert = GeProductDataForInsert();
+		{  
 			connection.Open();
 
-			foreach(var productEntity in productsDataForInsert)
+			using(SqlCommand getCountCommand = new SqlCommand(_getCountProductsFromTableQuery, connection))
 			{
-				string insertDefaultDataInProductTableQuery = _insertDefaultDataInProductTableIfEmptyQuery;
-				using(SqlCommand command = new SqlCommand(insertDefaultDataInProductTableQuery, connection))
+				int countProducts = (int)getCountCommand.ExecuteScalar();
+
+				if(countProducts == 0)
 				{
-					command.Parameters.AddWithValue("@ProductName", productEntity.ProductName);
-					command.Parameters.AddWithValue("@CurrentCount", productEntity.CurrentCount);
-					command.Parameters.AddWithValue("@Price", productEntity.Price);
-					command.Parameters.AddWithValue("@PriceBeforeSale", productEntity.PriceBeforeSale ?? -1);
-					command.Parameters.AddWithValue("@Weight", productEntity.Weight);
-					command.Parameters.AddWithValue("@Image", productEntity.Image);
-					command.ExecuteNonQuery();
-				}
-			}
+					var productsDataForInsert = GeProductDataForInsert();
+
+					foreach(var productEntity in productsDataForInsert)
+					{
+						string insertDefaultDataInProductTableQuery = _insertDefaultDataInProductTableQuery;
+						using(SqlCommand insertCommand = new SqlCommand(insertDefaultDataInProductTableQuery, connection))
+						{
+							insertCommand.Parameters.AddWithValue("@ProductName",     productEntity.ProductName);
+							insertCommand.Parameters.AddWithValue("@CurrentCount",    productEntity.CurrentCount);
+							insertCommand.Parameters.AddWithValue("@Price",           productEntity.Price);
+							insertCommand.Parameters.AddWithValue("@PriceBeforeSale", productEntity.PriceBeforeSale ?? -1);
+							insertCommand.Parameters.AddWithValue("@Weight",          productEntity.Weight);
+							insertCommand.Parameters.AddWithValue("@Image",           productEntity.Image);
+							insertCommand.ExecuteNonQuery();
+						}
+					}
+				} 
+			} 
 		}
 
 		ConsoleLog.WriteGreen("База данных подключена!");

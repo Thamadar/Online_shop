@@ -1,13 +1,8 @@
-﻿using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Shop.Model.Database.Contexts;
-using Shop.Server;
+﻿using Microsoft.EntityFrameworkCore;
+
 using Shop.Server.Controllers;
 using Shop.Server.Repositories;
 using Shop.Server.Services;
-using System.Reflection;
 
 namespace Shop.Server;
 
@@ -25,10 +20,19 @@ public class Startup
 		//TO DO:Вынести регистрацию модулей в отдельный класс
 		services.AddSingleton<ProductRepository>();
 		services.AddSingleton<ProductsController>();
-		services.AddSingleton<IDatabase>(new Database(configRoot));
-		services.AddSingleton<DbInitService>();
+		services.AddSingleton<IDatabase, Database>();
+		services.AddSingleton<IServerService, DbInitService>();
 
-		services.AddControllers(); 
+		using(var serviceProvider = services.BuildServiceProvider())
+		{
+			var serverServices  = serviceProvider.GetServices<IServerService>();
+			foreach(var serverService in serverServices)
+			{
+				serverService.Start();
+			}
+		}
+
+			services.AddControllers(); 
 		services.AddEndpointsApiExplorer();
 		services.AddSwaggerGen(); 
 
@@ -48,5 +52,5 @@ public class Startup
 		app.MapControllers(); 
 
 		app.Run();
-	}
+	} 
 }

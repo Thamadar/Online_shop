@@ -1,8 +1,8 @@
-﻿using Shop.Model;
-using Shop.Model.Bracket;
+﻿using Shop.Model; 
 using Shop.Server.Repositories; 
 
 using Microsoft.AspNetCore.Mvc;
+using Shop.Model.Database;
 
 namespace Shop.Server.Controllers;
 

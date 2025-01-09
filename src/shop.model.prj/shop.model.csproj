@@ -15,6 +15,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Folder Include="Bracket\Products\" />
     <Folder Include="Home\" />
     <Folder Include="Profile\" />
   </ItemGroup>

@@ -23,5 +23,9 @@
  
   <ItemGroup>
     <None Remove=".gitignore" />
+  </ItemGroup>
+ 
+  <ItemGroup>
+    <Folder Include="Modules\" />
   </ItemGroup> 
 </Project>

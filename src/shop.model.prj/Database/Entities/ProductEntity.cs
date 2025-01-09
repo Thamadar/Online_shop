@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Shop.Model.Bracket
+namespace Shop.Model.Database
 {
 	/// <summary>
 	/// Объект, инкапсулирующий товар.
