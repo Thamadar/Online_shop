@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls;
 using ReactiveUI;
 using Shop.Client.Extensions;
+using Shop.Client.Http;
 using Shop.Client.Services;
 using Shop.Client.Views.Menu;
 using Shop.Client.Views.Pages;
@@ -52,9 +53,9 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 		_pageService.CurrentPageObservable
 			.ObserveOn(RxApp.MainThreadScheduler)
 			.BindTo(this, x => x.CurrentPage)
-			.AddTo(_disposables);
+			.AddTo(_disposables); 
 
-		var arrParameters = new object[] { _mainInfo }.ToArray();
+		var arrParameters = new object[] { _mainInfo, _mainInfo.GetItem<ProductsHttpClient>() }.ToArray();
 		await _pageService.GoToPageAsync<HomeViewModel>(arrParameters); 
 	}
 }

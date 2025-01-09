@@ -1,6 +1,8 @@
 ﻿using Autofac;
+using Shop.Client.Configurations;
 using Shop.Client.Services;
 using System.Diagnostics;
+using System.Net.Http;
 
 namespace Shop.Client;
 public class MainInfo
@@ -9,11 +11,18 @@ public class MainInfo
 	private readonly object _lockerServices = new object();
 	private IContainer _container;
 
-	private List<IShopService> _services; 
+	private List<IShopService> _services;
+
+	public HttpClient HttpClient { get; private set; }
 
 	public MainInfo()
 	{
+		HttpClient = new HttpClient();
 
+		var connectionConfiguration = ConnectionConfiguration.Defaults; //TO DO: Сериализация из конфига
+
+		HttpClient.BaseAddress = new Uri(connectionConfiguration.BaseAddress);
+		HttpClient.Timeout     = TimeSpan.FromMilliseconds(connectionConfiguration.TimeOutInMilliseconds); 
 	}
 
 	public static MainInfo DesignMainInfo => new();

@@ -14,7 +14,7 @@ public class ProfileViewModel : PageBase
 	{
 		_mainInfo = mainInfo;
 
-		PageHeader = "Профиль";
+		PageHeader = "ProfilePageHeader";
 	}
 
 	public async override Task DisposeAsync()

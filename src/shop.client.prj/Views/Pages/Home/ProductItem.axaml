@@ -1,0 +1,36 @@
+<UserControl
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="using:Shop.UI.Controls" xmlns:converters="using:Shop.UI.Converters"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="using:Shop.Client.Views.Pages"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  x:DataType="local:ProductItemVM"
+  d:DesignHeight="450" d:DesignWidth="800"
+  mc:Ignorable="d"
+  x:Class="Shop.Client.Views.Pages.ProductItem">
+
+    <Grid
+      Width="172" Height="325"
+      RowDefinitions="*,auto,auto,auto,auto">
+        <Image
+          Grid.Row="0"
+          Source="{Binding Image}" />
+        <Grid
+          Grid.Row="1"
+          ColumnDefinitions="auto,*">
+            <TextBlock
+              Grid.Column="0"
+              Text="{Binding Price}" />
+            <TextBlock
+              Grid.Column="1"
+              Text="{Binding PriceBeforeSale}"
+              IsVisible="{Binding PriceBeforeSale, Converter={x:Static ObjectConverters.IsNotNull}}" />
+        </Grid>
+        <TextBlock
+          Grid.Row="2"
+          Text="{Binding ProductName}" />
+        <TextBlock
+          Grid.Row="3"
+          Text="{Binding Weight}" />
+    </Grid>
+</UserControl>

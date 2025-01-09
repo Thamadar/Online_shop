@@ -20,10 +20,7 @@ public class ProductRepository : DatabaseBase
 	{
 		var resultProducts = new List<ProductEntity>(); 
 
-		await using(var context = this)
-		{
-			resultProducts = this.Products.ToList(); 
-		} 
+		resultProducts = this.Products.ToList(); 
 
 		return resultProducts;
 	}

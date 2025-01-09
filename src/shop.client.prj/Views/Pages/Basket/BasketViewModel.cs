@@ -1,20 +1,25 @@
-﻿using Shop.Client.Services.Page; 
+﻿using DynamicData;
+
+using Shop.Client.Extensions; 
+using Shop.Client.Services.Page;  
 
 namespace Shop.Client.Views.Pages;
-public class BasketViewModel : PageBase
+public sealed partial class BasketViewModel : PageBase
 {
-	private readonly MainInfo _mainInfo;
+	private readonly MainInfo _mainInfo; 
+
 
 	public BasketViewModel()
 		:this(MainInfo.DesignMainInfo)
 	{ 
 	}
 
-	public BasketViewModel(MainInfo mainInfo)
+	public BasketViewModel(
+		MainInfo mainInfo)
 	{
-		_mainInfo = mainInfo;
+		_mainInfo           = mainInfo;
 
-		PageHeader = "Корзина";
+		PageHeader = "BasketPageHeader";
 	}
 
 	public async override Task DisposeAsync()
@@ -24,15 +29,14 @@ public class BasketViewModel : PageBase
 	}
 
 	public override async Task LoadPageAsync()
-	{
-		 
+	{  
 
 		await base.LoadPageAsync();
 	}
 
 	public override async Task UnloadPageAsync()
-	{
-		 
+	{ 
+
 		await base.UnloadPageAsync();
 	}
 }

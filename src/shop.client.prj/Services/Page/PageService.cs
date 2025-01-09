@@ -107,6 +107,11 @@ public class PageService : ViewModelBase, IPageService
 					return default;
 				}
 				Pages.Add(newPage);
+
+				if(CurrentPage != null)
+				{
+					await CurrentPage.UnloadPageAsync();
+				} 
 				CurrentPage = newPage;
 			}
 			catch(Exception ex)
@@ -119,8 +124,10 @@ public class PageService : ViewModelBase, IPageService
 			CurrentPage = Pages.Where(x => x is T).First();
 		}
 
-		await CurrentPage.LoadPageAsync();
-
+		if(CurrentPage != null)
+		{
+			await CurrentPage.LoadPageAsync();
+		} 
 
 		return default;
 	}

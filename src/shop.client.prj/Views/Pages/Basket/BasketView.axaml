@@ -1,6 +1,7 @@
 <UserControl
   xmlns="https://github.com/avaloniaui"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="using:Shop.UI.Controls" xmlns:converters="using:Shop.UI.Converters"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="using:Shop.Client.Views.Pages"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   x:DataType="local:BasketViewModel"
@@ -13,5 +14,5 @@
     </Design.DataContext>
 
     <TextBlock
-      Text="BasketPustoyControl" />
+      Text="Basket" />
 </UserControl>

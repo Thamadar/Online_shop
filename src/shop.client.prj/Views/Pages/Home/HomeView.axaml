@@ -1,6 +1,7 @@
 <UserControl
   xmlns="https://github.com/avaloniaui"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="using:Shop.UI.Controls" xmlns:converters="using:Shop.UI.Converters"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="using:Shop.Client.Views.Pages"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   x:DataType="local:HomeViewModel"
@@ -8,9 +9,40 @@
   mc:Ignorable="d"
   x:Class="Shop.Client.Views.Pages.HomeView">
 
-    <Design.DataContext>
-        <local:HomeViewModel />
-    </Design.DataContext>
+  <Design.DataContext>
+    <local:HomeViewModel />
+  </Design.DataContext>
 
-    <TextBlock Text="HomePustoyControl" />
+  <Border
+    Classes="container">
+    <Grid
+      ColumnDefinitions="*, auto">
+      <ScrollViewer
+        Grid.Column="0"
+        HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <ItemsControl
+          ItemsSource="{Binding ProductItems}"
+          ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <UniformGrid
+                Columns="4" />
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <Viewbox>
+                <local:ProductItem />
+              </Viewbox>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+
+      <!-- Корзина -->
+      <Grid
+        Grid.Column="1"
+        Width="300" />
+    </Grid>
+  </Border>
 </UserControl>
