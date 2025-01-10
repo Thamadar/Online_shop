@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Shop.Model.Database
+namespace Shop.Model.Database.Entities
 {
 	/// <summary>
 	/// Объект, инкапсулирующий товар.

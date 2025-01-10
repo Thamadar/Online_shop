@@ -7,9 +7,9 @@
           Padding="50">
             <StackPanel>
                 <c:ButtonIcon
+                  MinWidth="15"
                   Margin="78,0,0,0"
                   IconContent="{StaticResource OffIcon}"
-                  MinWidth="15"
                   TextButton="SuperTest" />
                 <c:ButtonIcon
                   Classes="short"
@@ -39,10 +39,13 @@
                   IconContent="{StaticResource OffIcon}"
                   TextButton="SuperTest" />
                 <c:ButtonIcon
-                  Classes.red="true"
-                  Classes="short" Classes.selected="true"
+                  Classes="short" Classes.red="true"
+                  Classes.selected="true"
                   IconContent="{StaticResource OffIcon}"
                   TextButton="SuperTest" />
+                <c:ButtonIcon
+                  Classes="short-wild"
+                  IconContent="{StaticResource OffIcon}" />
             </StackPanel>
         </Border>
     </Design.PreviewWith>
@@ -69,25 +72,25 @@
                       VerticalAlignment="Center"
                       ColumnDefinitions="auto,*">
                         <Panel
-                            Grid.Column="0"
-                            MinWidth="{TemplateBinding IconWidth}"
-                            MinHeight="{TemplateBinding IconHeight}"
-                            Margin="-1,0,0,0">
+                          Grid.Column="0"
+                          MinWidth="{TemplateBinding IconWidth}"
+                          MinHeight="{TemplateBinding IconHeight}"
+                          Margin="-1,0,0,0">
                             <ContentControl
-                                x:Name="PART_IconContentControl"
-                                Width="{TemplateBinding IconWidth}"
-                                Height="{TemplateBinding IconHeight}"
-                                MinWidth="{TemplateBinding IconWidth}"
-                                MinHeight="{TemplateBinding IconHeight}"
-                                Margin="0,-1,0,0"
-                                HorizontalAlignment="Center"
-                                HorizontalContentAlignment="Center"
-                                Template="{TemplateBinding IconContent}" />
+                              x:Name="PART_IconContentControl"
+                              Width="{TemplateBinding IconWidth}"
+                              Height="{TemplateBinding IconHeight}"
+                              MinWidth="{TemplateBinding IconWidth}"
+                              MinHeight="{TemplateBinding IconHeight}"
+                              Margin="0,-1,0,0"
+                              HorizontalAlignment="Center"
+                              HorizontalContentAlignment="Center"
+                              Template="{TemplateBinding IconContent}" />
                         </Panel>
                         <TextBlock
                           x:Name="PART_TextTextBlock"
                           Grid.Column="1"
-                          Margin="7,0,0,0"
+                          Margin="7,-2,0,0"
                           Text="{TemplateBinding TextButton}" />
                     </Grid>
                 </Border>
@@ -123,9 +126,38 @@
                           Height="{TemplateBinding IconHeight}"
                           MinWidth="{TemplateBinding IconWidth}"
                           MinHeight="{TemplateBinding IconHeight}"
-                            Margin="-1,-1,0,0"
+                          Margin="-1,-1,0,0"
                           HorizontalAlignment="Center"
                           HorizontalContentAlignment="Center"
+                          Template="{TemplateBinding IconContent}" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <!-- Без ограничений на ширину -->
+    <Style Selector="c|ButtonIcon.short-wild">
+        <Setter Property="MaxHeight" Value="44" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border
+                  x:Name="PART_MainBorder"
+                  HorizontalAlignment="Stretch"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid
+                      Margin="{TemplateBinding Padding}">
+                        <ContentControl
+                          x:Name="PART_IconContentControl"
+                          Width="{TemplateBinding IconWidth}"
+                          Height="{TemplateBinding IconHeight}"
+                          MinWidth="{TemplateBinding IconWidth}"
+                          MinHeight="{TemplateBinding IconHeight}"
+                          Margin="0,-1,0,0"
+                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                           Template="{TemplateBinding IconContent}" />
                     </Grid>
                 </Border>
@@ -201,7 +233,7 @@
         <!-- ЦВЕТА: red -->
         <Style Selector="^.red">
             <Setter Property="BorderBrush" Value="#fff" />
-            <Setter Property="Background" Value="#6f1c1c" />
+            <Setter Property="Background" Value="#922424" />
             <Style Selector="^ /template/ ContentControl">
                 <Setter Property="Foreground" Value="#fff" />
             </Style>
@@ -212,14 +244,14 @@
             <Style Selector="^:pointerover">
                 <!-- background -->
                 <Style Selector="^ /template/ Border#PART_MainBorder">
-                    <Setter Property="Background" Value="#7d1f1f" />
+                    <Setter Property="Background" Value="#ad1f1f" />
                 </Style>
             </Style>
             <!-- pressed -->
             <Style Selector="^:pressed">
                 <!-- background -->
                 <Style Selector="^ /template/ Border#PART_MainBorder">
-                    <Setter Property="Background" Value="#5e1919" />
+                    <Setter Property="Background" Value="#812222" />
                 </Style>
             </Style>
             <!-- disabled, checked disabled -->

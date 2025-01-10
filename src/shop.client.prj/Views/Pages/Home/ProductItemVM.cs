@@ -75,7 +75,9 @@ public class ProductItemVM : ViewModelBase
 		ProductName = productName;
 		CurrentCount = currentCoutn;
 		Price = price;
-		PriceBeforeSale = priceBeforeSale;
+		PriceBeforeSale = priceBeforeSale == -1 ?
+			              null :
+			              priceBeforeSale;
 		Weight = weigth;
 
 		Image = GetImageFromByteArray(image);

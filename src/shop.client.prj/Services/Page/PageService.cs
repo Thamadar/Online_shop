@@ -121,6 +121,7 @@ public class PageService : ViewModelBase, IPageService
 		}
 		else
 		{
+			await CurrentPage.UnloadPageAsync();
 			CurrentPage = Pages.Where(x => x is T).First();
 		}
 

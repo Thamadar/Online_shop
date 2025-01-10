@@ -1,23 +1,51 @@
-<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Styles
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
-        <Border Padding="0"
-                Background="Orchid"
-                Height="50">
-            <TextBlock Text="5555555555555555555" />
+        <Border
+          Height="50"
+          Padding="0"
+          Background="Orchid">
+            <TextBlock
+              Classes="sale"
+              Text="5555555555555555555" />
         </Border>
     </Design.PreviewWith>
 
     <Style Selector="TextBlock">
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="FontSize"          Value="{DynamicResource FontSize}" />
-        <Setter Property="Padding"           Value="4,7,4,4" />
+        <Setter Property="FontSize" Value="{DynamicResource FontSize}" />
+        <Setter Property="Padding" Value="4,7,4,4" />
     </Style>
 
-    <Style Selector="TextBlock.ApplicationName">
-        <Setter Property="FontWeight"        Value="SemiBold" />
+    <Style Selector="TextBlock.default">
+        <Setter Property="FontWeight" Value="Regular" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Foreground"        Value="{DynamicResource FullWhite}" />
-        <Setter Property="FontSize"          Value="{DynamicResource ApplicationNameFontSize}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
+    </Style>
+
+    <Style Selector="TextBlock.price-without-sale">
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="FontSize" Value="{DynamicResource MediumFontSize}" />
+        <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
+    </Style>
+
+    <Style Selector="TextBlock.price-with-sale">
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="FontSize" Value="{DynamicResource MediumFontSize}" />
+        <Setter Property="Foreground" Value="{DynamicResource PriceWithSale}" />
+    </Style>
+
+    <Style Selector="TextBlock.sale">
+        <Setter Property="FontWeight" Value="Regular" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="TextDecorations" Value="Strikethrough" />
+        <Setter Property="Foreground" Value="{DynamicResource SmokeGray}" />
     </Style>
 </Styles>

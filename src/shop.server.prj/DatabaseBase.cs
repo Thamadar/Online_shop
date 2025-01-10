@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace Shop.Server;
+﻿namespace Shop.Server;
 
 public interface IDatabase
 {
@@ -18,7 +16,7 @@ public interface IDatabase
 /// <summary>
 /// Базовый класс для объектов, использующий connect к БД.
 /// </summary>
-public abstract class DatabaseBase : DbContext
+public abstract class DatabaseBase
 {
 	protected string _serverConnectionString;
 	protected string _connectionString; 
@@ -27,10 +25,5 @@ public abstract class DatabaseBase : DbContext
 	{
 		_serverConnectionString = database.ServerConnectionString;
 		_connectionString       = database.ConnectionString;
-	} 
-
-	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-	{
-		optionsBuilder.UseSqlServer(_connectionString);
-	}
+	}  
 }

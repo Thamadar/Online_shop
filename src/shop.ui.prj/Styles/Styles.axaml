@@ -25,6 +25,8 @@
 
     <Styles>
         <StyleInclude
+          Source="avares://shop.ui/Styles/AddRemoveButton.axaml" />
+        <StyleInclude
           Source="avares://shop.ui/Styles/Border.axaml" />
         <StyleInclude
           Source="avares://shop.ui/Styles/ToggleButton.axaml" />

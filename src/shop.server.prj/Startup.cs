@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 using Shop.Server.Controllers;
+using Shop.Server.Entities;
 using Shop.Server.Repositories;
 using Shop.Server.Services;
 
@@ -16,10 +17,12 @@ public class Startup
 	}
 
 	public void ConfigureServices(IServiceCollection services)
-	{
-		//TO DO:Вынести регистрацию модулей в отдельный класс
-		services.AddSingleton<ProductRepository>();
-		services.AddSingleton<ProductsController>();
+	{   
+		 
+		services.AddDbContext<ProductContext>(options => options.UseSqlServer(configRoot.GetConnectionString("DefaultConnection")));
+		services.AddScoped<IProductRepository, ProductRepository>();
+
+		//TO DO:Вынести регистрацию модулей в отдельный класс  
 		services.AddSingleton<IDatabase, Database>();
 		services.AddSingleton<IServerService, DbInitService>();
 
@@ -30,13 +33,11 @@ public class Startup
 			{
 				serverService.Start();
 			}
-		}
+		}  
 
-			services.AddControllers(); 
+		services.AddControllers(); 
 		services.AddEndpointsApiExplorer();
 		services.AddSwaggerGen(); 
-
-		services.AddDbContext<ProductRepository>(options => options.UseSqlServer(configRoot.GetConnectionString("DefaultConnection"))); 
 	}
 
 	public void Configure(WebApplication app, IWebHostEnvironment env)

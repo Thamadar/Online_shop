@@ -1,8 +1,8 @@
-﻿using Shop.Model; 
-using Shop.Server.Repositories; 
+﻿using Shop.Model;
+using Shop.Server.Repositories;
 
 using Microsoft.AspNetCore.Mvc;
-using Shop.Model.Database;
+using Shop.Model.Database.Entities;
 
 namespace Shop.Server.Controllers;
 
@@ -13,9 +13,9 @@ namespace Shop.Server.Controllers;
 [Route(HttpConstants.products)] 
 public sealed class ProductsController : ControllerBase
 {  
-	private readonly ProductRepository _productRepository;
+	private readonly IProductRepository _productRepository;
 
-	public ProductsController(ProductRepository productRepository)
+	public ProductsController(IProductRepository productRepository)
 	{
 		_productRepository = productRepository;
 	}

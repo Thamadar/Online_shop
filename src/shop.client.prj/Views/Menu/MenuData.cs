@@ -48,7 +48,7 @@ public class MenuData : ViewModelBase
 	{
 		MenuItems.Clear(); 
 		MenuItems.Add(new MenuItem(_mainInfo, typeof(HomeViewModel),    "MenuButtonHome",    async _ => await OpenPage<HomeViewModel>(_mainInfo.GetItem<ProductsHttpClient>())));
-		MenuItems.Add(new MenuItem(_mainInfo, typeof(BasketViewModel),  "MenuButtonBasket",  async _ => await OpenPage<BasketViewModel>()));
+		//MenuItems.Add(new MenuItem(_mainInfo, typeof(BasketViewModel),  "MenuButtonBasket",  async _ => await OpenPage<BasketViewModel>()));
 		MenuItems.Add(new MenuItem(_mainInfo, typeof(ProfileViewModel), "MenuButtonProfile", async _ => await OpenPage<ProfileViewModel>())); 
 	} 
 

@@ -1,38 +1,26 @@
-<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<ResourceDictionary
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- Colors -->
 
-    <!-- Чуть ли не случайные цвета. Подбирать, настраивать времени не было-->
-    
-    <Color x:Key="MainColor">#5dc0c4</Color>
-    <Color x:Key="DarkMainColor">#438285</Color>
-    <Color x:Key="SmokeMainColor">#40a1a4</Color>
-    
-    <Color x:Key="MainLightColor">#66cdd1</Color>
-    <Color x:Key="MainSmokeColor">#55adb1</Color>  
-
-      
-    <Color x:Key="LightMainColor">#66d1d5</Color> 
-    <Color x:Key="GrayMainColor">#93babb</Color>
     <Color x:Key="FullWhiteColor">#ffffff</Color>
     <Color x:Key="FullBlackColor">#000000</Color>
-    <Color x:Key="SmokeColor">#cdcdcd</Color>
-    <Color x:Key="ShadowGrayColor">#d2d2d2</Color>
-    <Color x:Key="MetalColor">#cbcbcb</Color>
+    <Color x:Key="SmokeGrayColor">#9e9b98</Color>
+
+    <Color x:Key="PriceWithSaleColor">#fa6a3c</Color>
 
     <!-- Brushes -->
-    <SolidColorBrush x:Key="Main"       Color="{StaticResource MainColor}" />
-    <SolidColorBrush x:Key="DarkMain"   Color="{StaticResource DarkMainColor}" />
-    <SolidColorBrush x:Key="MainLight"  Color="{StaticResource MainLightColor}" />
-    <SolidColorBrush x:Key="MainSmoke"  Color="{StaticResource MainSmokeColor}" />
-    <SolidColorBrush x:Key="LightMain"  Color="{StaticResource LightMainColor}" />
-    <SolidColorBrush x:Key="SmokeMain"  Color="{StaticResource SmokeMainColor}" />
-    <SolidColorBrush x:Key="GrayMain"   Color="{StaticResource GrayMainColor}" />
-    <SolidColorBrush x:Key="FullWhite"  Color="{StaticResource FullWhiteColor}" />
-    <SolidColorBrush x:Key="FullBlack"  Color="{StaticResource FullBlackColor}" />
-    <SolidColorBrush x:Key="Smoke"      Color="{StaticResource SmokeColor}" />
-    <SolidColorBrush x:Key="ShadowGray" Color="{StaticResource ShadowGrayColor}" />
-    <SolidColorBrush x:Key="Metal"      Color="{StaticResource MetalColor}" />
-
+    <SolidColorBrush
+      x:Key="FullWhite"
+      Color="{StaticResource FullWhiteColor}" />
+    <SolidColorBrush
+      x:Key="FullBlack"
+      Color="{StaticResource FullBlackColor}" />
+    <SolidColorBrush
+      x:Key="SmokeGray"
+      Color="{StaticResource SmokeGrayColor}" />
+    <SolidColorBrush
+      x:Key="PriceWithSale"
+      Color="{StaticResource PriceWithSaleColor}" />
 </ResourceDictionary>

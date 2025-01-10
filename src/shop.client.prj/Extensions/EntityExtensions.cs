@@ -1,5 +1,5 @@
 ﻿using Shop.Client.Views.Pages;
-using Shop.Model.Database;
+using Shop.Model.Database.Entities;
 
 namespace Shop.Client.Extensions;
 public static class EntityExtensions

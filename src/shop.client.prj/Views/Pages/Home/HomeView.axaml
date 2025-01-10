@@ -9,40 +9,50 @@
   mc:Ignorable="d"
   x:Class="Shop.Client.Views.Pages.HomeView">
 
-  <Design.DataContext>
-    <local:HomeViewModel />
-  </Design.DataContext>
+    <Design.DataContext>
+        <local:HomeViewModel />
+    </Design.DataContext>
 
-  <Border
-    Classes="container">
     <Grid
+      Margin="20"
       ColumnDefinitions="*, auto">
-      <ScrollViewer
-        Grid.Column="0"
-        HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-        <ItemsControl
-          ItemsSource="{Binding ProductItems}"
-          ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-          <ItemsControl.ItemsPanel>
-            <ItemsPanelTemplate>
-              <UniformGrid
-                Columns="4" />
-            </ItemsPanelTemplate>
-          </ItemsControl.ItemsPanel>
-          <ItemsControl.ItemTemplate>
-            <DataTemplate>
-              <Viewbox>
-                <local:ProductItem />
-              </Viewbox>
-            </DataTemplate>
-          </ItemsControl.ItemTemplate>
-        </ItemsControl>
-      </ScrollViewer>
+        <ScrollViewer
+          Grid.Column="0"
+          HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <ItemsControl
+              ItemsSource="{Binding ProductItems}"
+              ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel
+                          VerticalAlignment="Top" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:ProductItem
+                          Margin="0,0,16,16" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
 
-      <!-- Корзина -->
-      <Grid
-        Grid.Column="1"
-        Width="300" />
+        <!-- Корзина -->
+        <Grid
+          Grid.Column="1"
+          Width="300"
+          RowDefinitions="*,auto">
+            <TextBlock
+              Classes="default"
+              Grid.Row="0"
+              HorizontalAlignment="Center"
+              Text="TO DO: КОРЗИНА" />
+            <Button
+              Classes="default"
+              Grid.Row="1"
+              HorizontalAlignment="Stretch"
+              HorizontalContentAlignment="Center"
+              Content="ДАЛЕЕ" />
+        </Grid>
     </Grid>
-  </Border>
 </UserControl>

@@ -1,8 +1,8 @@
-﻿using Shop.Model.Database;
+﻿using Shop.Model.Database.Entities;
 using Shop.Server;
 
-using System.Net.Http.Json; 
-using System.Text.Json; 
+using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace Shop.Client.Http;
 public class ProductsHttpClient

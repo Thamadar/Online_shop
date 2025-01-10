@@ -2,6 +2,28 @@
   xmlns="https://github.com/avaloniaui"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!-- Иконка плюса. Add -->
+    <ControlTemplate
+      x:Key="AddIcon">
+        <Viewbox
+          Stretch="Uniform">
+            <Path
+              Data="M6 8H0V6H6V0H8V6H14V8H8V14H6V8Z"
+              Fill="{TemplateBinding (ContentControl.Foreground)}" />
+        </Viewbox>
+    </ControlTemplate>
+
+    <!-- Иконка минуса. -->
+    <ControlTemplate
+      x:Key="MinusIcon">
+        <Viewbox
+          Stretch="Uniform">
+            <Path
+              Data="M14 2H0V0H14V2Z"
+              Fill="{TemplateBinding (ContentControl.Foreground)}" />
+        </Viewbox>
+    </ControlTemplate>
+
     <ControlTemplate
       x:Key="OffIcon">
         <Viewbox

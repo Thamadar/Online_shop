@@ -1,94 +1,82 @@
-<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <Design.PreviewWith>
-    <Border Padding="20">
-        <Button Content="TestButton"
-                Height="40"/>
-    </Border>
-  </Design.PreviewWith>
-    
+<Styles
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border
+          Padding="20">
+            <Button
+              Height="40"
+              Classes="default"
+              Content="TestButton" />
+        </Border>
+    </Design.PreviewWith>
+
     <!-- Button -->
     <Style Selector="Button, RepeatButton, ToggleButton">
-        <Setter Property="Background"                 Value="{DynamicResource Main}" />
-        <Setter Property="Foreground"                 Value="{DynamicResource FullWhite}" />
-        <Setter Property="FontFamily"                 Value="{StaticResource DefaultFont}" />
-        <Setter Property="FontSize"                   Value="{StaticResource FontSize}" />
-        <Setter Property="FontWeight"                 Value="SemiBold" />
-        <Setter Property="Padding"                    Value="8,6,8,6" />
-        <Setter Property="BorderThickness"            Value="1" />
-        <Setter Property="CornerRadius"               Value="{StaticResource ButtonCornerRadius}" />
-        <Setter Property="VerticalContentAlignment"   Value="Center" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" /> 
+        <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
+        <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSize}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Padding" Value="8,6,8,6" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{StaticResource ButtonCornerRadius}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
 
         <Style Selector="^:pointerover">
-            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Cursor" Value="Hand" />
         </Style>
 
         <Style Selector="^:pressed">
-            <Setter Property="RenderTransform" Value="none"/>
+            <Setter Property="RenderTransform" Value="none" />
         </Style>
     </Style>
 
+    <!-- .default-->
+    <Style Selector="Button.default, RepeatButton.default, ToggleButton.default">
+        <Setter Property="MinWidth" Value="45" />
+        <Setter Property="MinHeight" Value="44" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="8" />
+    </Style>
+
     <!-- Default -->
-    <Style Selector="Button, RepeatButton, ToggleButton">
+    <Style Selector="Button.default, RepeatButton.default, ToggleButton.default">
         <!-- default -->
         <Style Selector="^">
             <!-- background & text -->
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource Main}" />
+                <Setter Property="Background" Value="#363636" />
+                <Setter Property="BorderBrush" Value="#FFF" />
                 <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
-            </Style>  
+            </Style>
         </Style>
         <!-- pointerover -->
         <Style Selector="^:pointerover">
             <!-- background & text -->
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource LightMain}" />
+                <Setter Property="Background" Value="#505050" />
+                <Setter Property="BorderBrush" Value="#FFF" />
                 <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
-            </Style> 
+            </Style>
         </Style>
         <!-- pressed -->
         <Style Selector="^:pressed">
             <!-- background & text -->
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource SmokeMain}" />
+                <Setter Property="Background" Value="#2d2d2d" />
+                <Setter Property="BorderBrush" Value="#FFF" />
                 <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
-            </Style> 
-        </Style> 
+            </Style>
+        </Style>
         <!-- disabled, checked disabled -->
         <Style Selector="^:disabled, ^:checked:disabled">
             <!-- background & text -->
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource GrayMain}" />
-                <Setter Property="Foreground" Value="{DynamicResource Smoke}" />
-            </Style> 
+                <Setter Property="Background" Value="#575757" />
+                <Setter Property="BorderBrush" Value="#FFF" />
+                <Setter Property="Foreground" Value="#b3b3b3" />
+            </Style>
         </Style>
     </Style>
-
-    <!-- NoBackgroundButton -->
-    <Style Selector="Button.NoBackgroundButton,
-           RepeatButton.NoBackgroundButton,
-           ToggleButton.NoBackgroundButton">
-        <!-- default -->
-        <Style Selector="^">
-            <!-- background -->
-            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="Transparent" />
-            </Style>
-        </Style>
-        <!-- pointerover -->
-        <Style Selector="^:pointerover">
-            <!-- background -->
-            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Foreground" Value="{DynamicResource ShadowGray}" />
-            </Style>
-        </Style>
-        <!-- pressed -->
-        <Style Selector="^:pressed">
-            <!-- background -->
-            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Foreground" Value="{DynamicResource Metal}" />
-            </Style>
-        </Style> 
-    </Style>  
 </Styles>

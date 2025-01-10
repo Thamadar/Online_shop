@@ -7,16 +7,14 @@
     <RootNamespace>Shop.Model</RootNamespace>
   </PropertyGroup>
  
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.20" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.20" />
+  <ItemGroup> 
 
   </ItemGroup>
   
   <ItemGroup>
     <Folder Include="Bracket\Products\" />
     <Folder Include="Home\" />
+    <Folder Include="Models\" />
     <Folder Include="Profile\" />
   </ItemGroup>
 

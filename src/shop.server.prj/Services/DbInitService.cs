@@ -1,6 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
-
-using Shop.Model.Database; 
+using Shop.Model.Database.Entities;
 
 namespace Shop.Server.Services;
 

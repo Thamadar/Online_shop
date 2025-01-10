@@ -9,28 +9,76 @@
   mc:Ignorable="d"
   x:Class="Shop.Client.Views.Pages.ProductItem">
 
-    <Grid
-      Width="172" Height="325"
-      RowDefinitions="*,auto,auto,auto,auto">
-        <Image
-          Grid.Row="0"
-          Source="{Binding Image}" />
+    <Border
+      Classes="container-product"
+      Width="208" Height="329"
+      Background="Transparent">
         <Grid
-          Grid.Row="1"
-          ColumnDefinitions="auto,*">
-            <TextBlock
-              Grid.Column="0"
-              Text="{Binding Price}" />
-            <TextBlock
-              Grid.Column="1"
-              Text="{Binding PriceBeforeSale}"
-              IsVisible="{Binding PriceBeforeSale, Converter={x:Static ObjectConverters.IsNotNull}}" />
+          Margin="0,16,0,0"
+          RowDefinitions="auto,auto">
+            <Image
+              Grid.Row="0"
+              Width="190" Height="147"
+              HorizontalAlignment="Center"
+              Source="{Binding Image}"
+              Stretch="Fill" />
+
+            <Grid
+              Grid.Row="1"
+              Margin="10,0"
+              RowDefinitions="auto,auto,auto,auto">
+                <Grid
+                  Grid.Row="0"
+                  VerticalAlignment="Bottom"
+                  ColumnDefinitions="auto,*">
+                    <TextBlock
+                      Classes.price-with-sale="{Binding PriceBeforeSale, Converter={x:Static ObjectConverters.IsNotNull}}"
+                      Classes.price-without-sale="{Binding PriceBeforeSale, Converter={x:Static ObjectConverters.IsNull}}"
+                      Grid.Column="0">
+                        <Run
+                          Text="{Binding Price, TargetNullValue=0, Mode=OneWay}" />
+                        <Run
+                          Text="₽" />
+                    </TextBlock>
+                    <TextBlock
+                      Classes="sale"
+                      Grid.Column="1"
+                      Margin="-4,1,0,0"
+                      IsVisible="{Binding PriceBeforeSale, Converter={x:Static ObjectConverters.IsNotNull}}">
+                        <Run
+                          Text="{Binding PriceBeforeSale, TargetNullValue=0, Mode=OneWay}"
+                          TextDecorations="Strikethrough" />
+                        <Run
+                          Text="₽"
+                          TextDecorations="Strikethrough" />
+                    </TextBlock>
+                </Grid>
+                <TextBlock
+                  Classes="default"
+                  Grid.Row="1"
+                  Height="42"
+                  VerticalAlignment="Top"
+                  Text="{Binding ProductName}"
+                  TextTrimming="CharacterEllipsis" TextWrapping="Wrap"
+                  Margin="0,-2,0,0" />
+                <TextBlock
+                  Classes="default"
+                  Margin="0,-4,0,0"
+                  Grid.Row="2"
+                  Foreground="{DynamicResource SmokeGray}">
+                    <Run
+                      Text="{Binding Weight, TargetNullValue=0, Mode=OneWay}" />
+                    <Run
+                      Text="г" />
+                </TextBlock>
+
+                <controls:AddRemoveButton
+                  Grid.Row="3"
+                  Margin="0,10,0,0"
+                  HorizontalAlignment="Stretch"
+                  Count="{Binding CurrentSelectedCount}"
+                  MaxCount="{Binding CurrentCount}" />
+            </Grid>
         </Grid>
-        <TextBlock
-          Grid.Row="2"
-          Text="{Binding ProductName}" />
-        <TextBlock
-          Grid.Row="3"
-          Text="{Binding Weight}" />
-    </Grid>
+    </Border>
 </UserControl>
