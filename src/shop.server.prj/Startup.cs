@@ -17,9 +17,8 @@ public class Startup
 	}
 
 	public void ConfigureServices(IServiceCollection services)
-	{   
-		 
-		services.AddDbContext<ProductContext>(options => options.UseSqlServer(configRoot.GetConnectionString("DefaultConnection")));
+	{
+		//TO DO:Вынести регистрацию модулей в отдельный класс  
 		services.AddScoped<IProductRepository, ProductRepository>();
 
 		//TO DO:Вынести регистрацию модулей в отдельный класс  
@@ -37,7 +36,9 @@ public class Startup
 
 		services.AddControllers(); 
 		services.AddEndpointsApiExplorer();
-		services.AddSwaggerGen(); 
+		services.AddSwaggerGen();
+
+		services.AddDbContext<ProductContext>(options => options.UseSqlServer(configRoot.GetConnectionString("DefaultConnection")));
 	}
 
 	public void Configure(WebApplication app, IWebHostEnvironment env)

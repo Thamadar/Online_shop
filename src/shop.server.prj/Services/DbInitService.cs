@@ -102,11 +102,11 @@ public class DbInitService : DatabaseBase, IServerService
 	{
 		return new List<ProductEntity>()
 		{
-			new ProductEntity() { ProductName = "TomatoesCommon",               Price = 150,  Weight = 250, CurrentCount = 150, Image = File.ReadAllBytes(@"Assets\Images\tomatoes-common-product.png") },
-			new ProductEntity() { ProductName = "BananasCommon",                Price = 70,   Weight = 500, CurrentCount = 50,  Image = File.ReadAllBytes(@"Assets\Images\banana-product.png") },
-			new ProductEntity() { ProductName = "ApplesGreen",                  Price = 60,   Weight = 400, CurrentCount = 250, Image = File.ReadAllBytes(@"Assets\Images\apples-green-product.png"), PriceBeforeSale = 150 },
-			new ProductEntity() { ProductName = "MushroomChampignons",          Price = 90,   Weight = 500, CurrentCount = 450, Image = File.ReadAllBytes(@"Assets\Images\mushroom-champignons-product.png") },
-			new ProductEntity() { ProductName = "CucumbersSmoothMediumFruited", Price = 150,  Weight = 300, CurrentCount = 220, Image = File.ReadAllBytes(@"Assets\Images\cucumbers-smooth-medium-fruited-product.png"), PriceBeforeSale = 200 }
+			new ProductEntity() { ProductName = "TomatoesCommon",               Price = 150,  Weight = 250, CurrentCount = 3, Image = File.ReadAllBytes(@"Assets\Images\tomatoes-common-product.png") },
+			new ProductEntity() { ProductName = "BananasCommon",                Price = 70,   Weight = 500, CurrentCount = 5, Image = File.ReadAllBytes(@"Assets\Images\banana-product.png") },
+			new ProductEntity() { ProductName = "ApplesGreen",                  Price = 60,   Weight = 400, CurrentCount = 7, Image = File.ReadAllBytes(@"Assets\Images\apples-green-product.png"), PriceBeforeSale = 150 },
+			new ProductEntity() { ProductName = "MushroomChampignons",          Price = 90,   Weight = 500, CurrentCount = 3, Image = File.ReadAllBytes(@"Assets\Images\mushroom-champignons-product.png") },
+			new ProductEntity() { ProductName = "CucumbersSmoothMediumFruited", Price = 150,  Weight = 300, CurrentCount = 8, Image = File.ReadAllBytes(@"Assets\Images\cucumbers-smooth-medium-fruited-product.png"), PriceBeforeSale = 200 }
 		};
 	}
 }
