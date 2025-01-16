@@ -5,6 +5,7 @@ using Avalonia.Controls.Primitives;
 using ReactiveUI;
 using System.Reactive.Linq;
 using System;
+using Avalonia.Data;
 
 namespace Shop.UI.Controls;
 
@@ -28,10 +29,25 @@ public class AddRemoveButton : TemplatedControl
 		AvaloniaProperty.Register<AddRemoveButton, int>(nameof(Count), defaultValue: 0);
 
 	public static readonly StyledProperty<int> MaxCountProperty =
-		AvaloniaProperty.Register<AddRemoveButton, int>(nameof(MaxCount), defaultValue: 0); 
+		AvaloniaProperty.Register<AddRemoveButton, int>(nameof(MaxCount), defaultValue: 0);
 
-	public IReactiveCommand AddCommand { get; private set; }
-	public IReactiveCommand RemoveCommand { get; private set; }
+	public static readonly StyledProperty<IReactiveCommand> AddCommandProperty =
+		AvaloniaProperty.Register<AddRemoveButton, IReactiveCommand>(nameof(AddCommand));
+
+	public static readonly StyledProperty<IReactiveCommand> RemoveCommandProperty =
+		AvaloniaProperty.Register<AddRemoveButton, IReactiveCommand>(nameof(RemoveCommand));
+
+	public IReactiveCommand AddCommand
+	{
+		get => GetValue(AddCommandProperty);
+		set => SetValue(AddCommandProperty, value);
+	}
+
+	public IReactiveCommand RemoveCommand
+	{
+		get => GetValue(RemoveCommandProperty);
+		set => SetValue(RemoveCommandProperty, value);
+	}
 
 	/// <summary>
 	/// Счетчик.
@@ -103,10 +119,28 @@ public class AddRemoveButton : TemplatedControl
 	{
 		if(_areControlsAvailable)
 		{
-			_fullAddButtonIcon.IsEnabled  = !_isMaxCount;
-			_shortAddButtonIcon.IsEnabled = !_isMaxCount;
+			IsMaxCount();
 
-			_сountTextBlock.Text = $"{Count}";
+			_fullAddButtonIcon.IsEnabled  = !_isMaxCount;
+			_shortAddButtonIcon.IsEnabled = !_isMaxCount; 
+		}
+	}
+
+	private void IsMaxCount()
+	{
+		_isMaxCount = false;
+
+		if(Count < 0)
+		{
+			return;
+		}
+		if(MaxCount == 0)
+		{
+			_isMaxCount = false; 
+		}
+		else
+		{
+			_isMaxCount = Count >= MaxCount ? true : false; 
 		}
 	}
 
@@ -138,8 +172,13 @@ public class AddRemoveButton : TemplatedControl
 
 	private TextBlock InitCountTextBlock(TextBlock? control)
 	{
-		 
-		return control;
+		var bind = new Binding(nameof(Count))
+		{
+			Source = this
+		};
+		control.Bind(TextBlock.TextProperty, bind);
+
+		return control; 
 	}
 
 	#endregion

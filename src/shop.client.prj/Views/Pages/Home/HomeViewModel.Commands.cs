@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ReactiveUI; 
 
 namespace Shop.Client.Views.Pages;
 public sealed partial class HomeViewModel
 {
 	public sealed class HomeViewModelCommands
 	{
-		//public IReactiveCommand OpenHide { get; } 
+		public IReactiveCommand ClearBasket { get; }
 
 		public HomeViewModelCommands(HomeViewModel vm)
 		{
-		 
+			ClearBasket = ReactiveCommand.Create(async () => { await vm.ClearBasket(); });
 		}
 	}
 

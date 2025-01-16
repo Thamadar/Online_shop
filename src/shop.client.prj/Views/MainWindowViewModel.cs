@@ -55,7 +55,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 			.BindTo(this, x => x.CurrentPage)
 			.AddTo(_disposables); 
 
-		var arrParameters = new object[] { _mainInfo, _mainInfo.GetItem<ProductsHttpClient>() }.ToArray();
+		var arrParameters = new object[] { _mainInfo, _mainInfo.GetItem<IProductsService>() }.ToArray();
 		await _pageService.GoToPageAsync<HomeViewModel>(arrParameters); 
 	}
 }

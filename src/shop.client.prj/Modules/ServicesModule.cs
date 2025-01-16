@@ -17,5 +17,10 @@ public class ServicesModule : Autofac.Module
 			.As<IPageService>()
 			.AsSelf()
 			.SingleInstance();
+
+		builder.RegisterType<ProductsService>()
+			.As<IProductsService>()
+			.AsSelf()
+			.SingleInstance();
 	}
 }

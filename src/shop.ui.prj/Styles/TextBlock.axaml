@@ -7,7 +7,7 @@
           Padding="0"
           Background="Orchid">
             <TextBlock
-              Classes="sale"
+              Classes="header"
               Text="5555555555555555555" />
         </Border>
     </Design.PreviewWith>
@@ -16,6 +16,14 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="FontSize" Value="{DynamicResource FontSize}" />
         <Setter Property="Padding" Value="4,7,4,4" />
+    </Style>
+
+    <Style Selector="TextBlock.header">
+        <Setter Property="FontWeight" Value="Regular" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="FontSize" Value="{DynamicResource LargeFontSize}" />
+        <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
     </Style>
 
     <Style Selector="TextBlock.default">

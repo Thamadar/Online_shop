@@ -1,39 +1,69 @@
 ﻿using DynamicData;
-
+using DynamicData.Binding;
 using ReactiveUI;
 using Shop.Client.Extensions;
 using Shop.Client.Http;
+using Shop.Client.Services;
 using Shop.Client.Services.Page;
 using System.Collections.ObjectModel;
+using System.Reactive.Linq;
 
 
 namespace Shop.Client.Views.Pages;
+
 public sealed partial class HomeViewModel : PageBase
 {
 	private readonly MainInfo _mainInfo;
 
-	private readonly ProductsHttpClient _productsHttpClient;
+	private readonly IProductsService _productsService;
 
-	private ObservableCollection<ProductItemVM> _productItems = new ObservableCollection<ProductItemVM>();
+	private ReadOnlyObservableCollection<IProductItemVM> _productInBasketItems = new(new());
+	private ReadOnlyObservableCollection<IProductItemVM> _productItems = new(new());
+
+	/// <summary>
+	/// Отображаемые товары в корзине.
+	/// </summary>
+	public ReadOnlyObservableCollection<IProductItemVM> ProductInBasketItems => _productInBasketItems;
 
 	/// <summary>
 	/// Отображаемые товары.
 	/// </summary>
-	public ObservableCollection<ProductItemVM> ProductItems => _productItems;
+	public ReadOnlyObservableCollection<IProductItemVM> ProductItems => _productItems;
 
 	public HomeViewModel()
-		: this(MainInfo.DesignMainInfo, new ProductsHttpClient(MainInfo.DesignMainInfo))
+		: this(MainInfo.DesignMainInfo, new ProductsService(MainInfo.DesignMainInfo, new ProductsHttpClient(MainInfo.DesignMainInfo)))
 	{
 	}
 
 	public HomeViewModel(
 		MainInfo mainInfo,
-		ProductsHttpClient productsHttpClient)
+		IProductsService productsService)
 	{
-		_mainInfo           = mainInfo;
-		_productsHttpClient = productsHttpClient;
+		_mainInfo        = mainInfo;
+		_productsService = productsService; 
 
 		PageHeader = "HomePageHeader";
+
+		_productsService
+			.ConnectToProductsItems()
+			.ObserveOn(RxApp.MainThreadScheduler)
+			.Bind(out _productItems)
+			.Subscribe()
+			.AddTo(_disposables);
+
+		_productsService
+			.ConnectToProductsInBasketItems()
+			.ObserveOn(RxApp.MainThreadScheduler)
+			.Bind(out _productInBasketItems)
+			.Subscribe()
+			.AddTo(_disposables); 
+	} 
+
+	public override async Task LoadPageAsync()
+	{
+		var products = await _productsService.UpdateProductsItems(); 
+
+		await base.LoadPageAsync();
 	}
 
 	public async override Task DisposeAsync()
@@ -42,22 +72,13 @@ public sealed partial class HomeViewModel : PageBase
 		await base.DisposeAsync();
 	}
 
-	public override async Task LoadPageAsync()
-	{
-		var products = await _productsHttpClient.FetchAllProducts();
-
-		if(products != null)
-		{
-			ProductItems.AddRange(products.ConvertToVM());
-		}
-
-		await base.LoadPageAsync();
+	public override async Task UnloadPageAsync()
+	{  
+		await base.UnloadPageAsync();
 	}
 
-	public override async Task UnloadPageAsync()
+	public async Task ClearBasket()
 	{
-		ProductItems.Clear();
-
-		await base.UnloadPageAsync();
+		await _productsService.RemoveAllProductsFromBasket();
 	}
 }

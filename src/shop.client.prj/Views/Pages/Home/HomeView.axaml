@@ -40,16 +40,50 @@
         <!-- Корзина -->
         <Grid
           Grid.Column="1"
-          Width="300"
-          RowDefinitions="*,auto">
-            <TextBlock
-              Classes="default"
+          Width="350"
+          RowDefinitions="auto,*,auto">
+
+            <Grid
               Grid.Row="0"
-              HorizontalAlignment="Center"
-              Text="TO DO: КОРЗИНА" />
+              ColumnDefinitions="*, auto"
+              Margin="10,0">
+                <TextBlock
+                  Classes="header"
+                  Grid.Column="0"
+                  Text="BASKET" />
+                <Button
+                  Classes="default"
+                  Grid.Column="1"
+                  HorizontalAlignment="Right"
+                  Content="Clear"
+                  Background="Transparent"
+                  Width="80"
+                  Command="{Binding Commands.ClearBasket}" />
+            </Grid>
+
+            <ScrollViewer
+              Grid.Row="1"
+              HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <ItemsControl
+                  ItemsSource="{Binding ProductInBasketItems}"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel
+                              Orientation="Vertical" Spacing="8" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:ProductBasketItem />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
             <Button
               Classes="default"
-              Grid.Row="1"
+              Grid.Row="2"
               HorizontalAlignment="Stretch"
               HorizontalContentAlignment="Center"
               Content="ДАЛЕЕ" />

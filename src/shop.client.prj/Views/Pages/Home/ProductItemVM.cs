@@ -6,84 +6,131 @@ using Shop.UI;
 
 namespace Shop.Client.Views.Pages;
 
-/// <summary>
-/// Объект, инкапсулирующий товар.
-/// </summary> 
-public class ProductItemVM : ViewModelBase
+
+/// <inheritdoc/>
+public class ProductItemVM : ViewModelBase, IProductItemVM
 {
 	private Bitmap _image;
 	private int _currentSelectedCount;
-
-	/// <summary>
-	/// Идентификатор товара.
-	/// </summary> 
+ 
+	/// <inheritdoc/>
 	public int Id { get; }
 
-	/// <summary>
-	/// Наименование товара.
-	/// </summary>
+
+	/// <inheritdoc/>
 	public string ProductName { get; }
 
-	/// <summary>
-	/// Текущее доступное количество товаров.
-	/// </summary>
+
+	/// <inheritdoc/>
 	public int CurrentCount { get; set; }
 
-	/// <summary>
-	/// Текущая стоимость товара в рублях.
-	/// </summary>
+
+	/// <inheritdoc/>
 	public double Price { get; }
 
-	/// <summary>
-	/// Стоимость товара до скидки. Может быть null, если нет скидки.
-	/// </summary>
+
+	/// <inheritdoc/>
 	public double? PriceBeforeSale { get; }
 
-	/// <summary>
-	/// Вес товара за 1 шт. в граммах.
-	/// </summary>
+
+	/// <inheritdoc/>
 	public double Weight { get; }
 
-	/// <summary>
-	/// Изображение товара.
-	/// </summary>
+
+	/// <inheritdoc/>
 	public Bitmap Image
 	{
 		get => _image;
 		set => this.RaiseAndSetIfChanged(ref _image, value);
 	}
 
-	/// <summary>
-	/// Количество выбранных товаров пользователем
-	/// </summary>
+	/// <inheritdoc/>
 	public int CurrentSelectedCount
 	{
 		get => _currentSelectedCount;
 		set => this.RaiseAndSetIfChanged(ref _currentSelectedCount, value);
 	}
 
+	/// <inheritdoc/>
+	public IReactiveCommand? AddCommand { get; }
+
+	/// <inheritdoc/>
+	public IReactiveCommand? RemoveCommand { get; }
+
+
+	/// <summary>
+	/// VM-Объект, инкапсулирующий товар.
+	/// </summary> 
+	private ProductItemVM(
+		int id,
+		string productName,
+		int currentCount,
+		double price,
+		double? priceBeforeSale,
+		double weight,
+		int? currentSelectedCount       = null,
+		IReactiveCommand? addCommand    = null,
+		IReactiveCommand? removeCommand = null)
+	{
+		Id                   = id;
+		ProductName          = productName;
+		CurrentCount         = currentCount;
+		Price                = price; 
+		Weight               = weight;
+		CurrentSelectedCount = currentSelectedCount ?? 0;
+		PriceBeforeSale      = priceBeforeSale == -1 ?
+							   null :
+							   priceBeforeSale;
+
+		if(addCommand != null)
+		{
+			AddCommand = addCommand;
+		}
+		if(removeCommand != null)
+		{
+			RemoveCommand = removeCommand;
+		}
+	}
+
+	/// <summary>
+	/// VM-Объект, инкапсулирующий товар. Для Image в виде byte[].
+	/// </summary> 
 	public ProductItemVM(
 		int id,
 		string productName,
-		int currentCoutn,
+		int currentCount,
 		double price,
 		double? priceBeforeSale,
-		double weigth,
-		byte[] image)
-	{
-		Id = id;
-		ProductName = productName;
-		CurrentCount = currentCoutn;
-		Price = price;
-		PriceBeforeSale = priceBeforeSale == -1 ?
-			              null :
-			              priceBeforeSale;
-		Weight = weigth;
-
-		Image = GetImageFromByteArray(image);
+		double weight,
+		byte[] image,
+		int? currentSelectedCount       = null,
+		IReactiveCommand? addCommand    = null,
+		IReactiveCommand? removeCommand = null)
+		: this(id, productName, currentCount, price, priceBeforeSale, weight, currentSelectedCount, addCommand, removeCommand)
+	{ 
+		Image = GetImageFromByteArray(image); 
 	}
 
-	public static Bitmap GetImageFromByteArray(byte[] byteArray)
+	/// <summary>
+	/// VM-Объект, инкапсулирующий товар. Для Image в виде Bitmap.
+	/// </summary> 
+	public ProductItemVM(
+		int id,
+		string productName,
+		int currentCount,
+		double price,
+		double? priceBeforeSale,
+		double weight, 
+		Bitmap image,
+		int? currentSelectedCount = null,
+		IReactiveCommand? addCommand = null,
+		IReactiveCommand? removeCommand = null)
+		: this(id, productName, currentCount, price, priceBeforeSale, weight, currentSelectedCount, addCommand, removeCommand)
+	{ 
+		Image                = image; 
+	}
+	 
+	private static Bitmap GetImageFromByteArray(byte[] byteArray)
 	{
 		if(byteArray == null || byteArray.Length == 0)
 		{
@@ -105,5 +152,21 @@ public class ProductItemVM : ViewModelBase
 		}
 
 		return bitmap;
+	}
+	 
+	/// <inheritdoc/>
+	public ProductItemVM Clone()
+	{
+		return new ProductItemVM(
+			Id,
+			ProductName,
+			CurrentCount,
+			Price,
+			PriceBeforeSale,
+			Weight,
+			Image,
+			CurrentSelectedCount,
+			AddCommand,
+			RemoveCommand); 
 	}
 }
