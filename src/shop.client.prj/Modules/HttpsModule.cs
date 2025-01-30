@@ -11,7 +11,17 @@ public class HttpsModule : Autofac.Module
 		builder
 			.RegisterType<ProductsHttpClient>()
 			.AsSelf()
-			.SingleInstance(); 
+			.SingleInstance();
+
+		builder
+			.RegisterType<OrdersHttpClient>()
+			.AsSelf()
+			.SingleInstance();
+
+		builder
+			.RegisterType<UsersHttpClient>()
+			.AsSelf()
+			.SingleInstance();
 
 	}
 }

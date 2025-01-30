@@ -45,8 +45,8 @@
 
             <Grid
               Grid.Row="0"
-              ColumnDefinitions="*, auto"
-              Margin="10,0">
+              Margin="10,0"
+              ColumnDefinitions="*, auto">
                 <TextBlock
                   Classes="header"
                   Grid.Column="0"
@@ -54,10 +54,10 @@
                 <Button
                   Classes="default"
                   Grid.Column="1"
+                  Width="80"
                   HorizontalAlignment="Right"
                   Content="Clear"
                   Background="Transparent"
-                  Width="80"
                   Command="{Binding Commands.ClearBasket}" />
             </Grid>
 
@@ -86,7 +86,8 @@
               Grid.Row="2"
               HorizontalAlignment="Stretch"
               HorizontalContentAlignment="Center"
-              Content="ДАЛЕЕ" />
+              Content="MakeOrder"
+              Command="{Binding Commands.CreateOrder}" />
         </Grid>
     </Grid>
 </UserControl>

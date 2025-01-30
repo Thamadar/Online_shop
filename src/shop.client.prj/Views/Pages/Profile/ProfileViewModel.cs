@@ -15,24 +15,5 @@ public class ProfileViewModel : PageBase
 		_mainInfo = mainInfo;
 
 		PageHeader = "ProfilePageHeader";
-	}
-
-	public async override Task DisposeAsync()
-	{
-
-		await base.DisposeAsync();
-	}
-
-	public override async Task LoadPageAsync()
-	{
-
-
-		await base.LoadPageAsync();
-	}
-
-	public override async Task UnloadPageAsync()
-	{
-
-		await base.UnloadPageAsync();
-	}
+	} 
 }

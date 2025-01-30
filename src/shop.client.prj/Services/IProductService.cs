@@ -54,4 +54,9 @@ public interface IProductsService : IShopService
 	/// Удаление всех товаров из корзины.
 	/// </summary> 
 	Task<bool> RemoveAllProductsFromBasket();
+	 
+	/// <summary>
+	/// Создание заказа, отправка его через HTTP на сервер.
+	/// </summary> 
+	Task<bool> CreateOrder(Guid userId, string address);
 }

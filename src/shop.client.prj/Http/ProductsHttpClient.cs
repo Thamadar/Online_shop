@@ -1,5 +1,4 @@
-﻿using Shop.Model.Database.Entities;
-using Shop.Server;
+﻿using Shop.Model.Database.Entities; 
 
 using System.Net.Http.Json;
 using System.Text.Json;

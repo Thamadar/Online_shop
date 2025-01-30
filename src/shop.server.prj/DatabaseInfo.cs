@@ -1,6 +1,6 @@
 ﻿namespace Shop.Server;
 
-public class Database : IDatabase
+public class DatabaseInfo : IDatabaseInfo
 {
 	/// <inheritdoc/>
 	public string ServerConnectionString { get; }
@@ -8,7 +8,7 @@ public class Database : IDatabase
 	/// <inheritdoc/>
 	public string ConnectionString { get; }
 
-	public Database(IConfiguration configRoot)
+	public DatabaseInfo(IConfiguration configRoot)
 	{
 		ServerConnectionString = configRoot.GetConnectionString("ServerConnection");
 		ConnectionString       = configRoot.GetConnectionString("DefaultConnection");

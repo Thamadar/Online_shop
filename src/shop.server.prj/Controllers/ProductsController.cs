@@ -22,8 +22,7 @@ public sealed class ProductsController : ControllerBase
 
 	/// <summary>
 	/// Получение всех товаров.
-	/// </summary>
-	/// <returns>A Task.</returns>
+	/// </summary> 
 	[HttpGet(HttpConstants.getTotalProductsTask, Name = nameof(GetAllProducts))]
 	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductEntity[]))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]

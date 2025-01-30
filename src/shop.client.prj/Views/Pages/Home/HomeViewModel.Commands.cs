@@ -6,10 +6,12 @@ public sealed partial class HomeViewModel
 	public sealed class HomeViewModelCommands
 	{
 		public IReactiveCommand ClearBasket { get; }
+		public IReactiveCommand CreateOrder { get; }
 
 		public HomeViewModelCommands(HomeViewModel vm)
 		{
 			ClearBasket = ReactiveCommand.Create(async () => { await vm.ClearBasket(); });
+			CreateOrder = ReactiveCommand.Create(async () => { await vm.CreateOrder(); });
 		}
 	}
 

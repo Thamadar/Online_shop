@@ -1,7 +1,9 @@
 ﻿using DynamicData;
 using Shop.Client.Extensions;
 using Shop.Client.Http;
-using Shop.Client.Views.Pages; 
+using Shop.Client.Views.Pages;
+using Shop.Model.Database.Entities;
+using System.Text;
 
 namespace Shop.Client.Services;
  
@@ -13,6 +15,7 @@ public class ProductsService : IProductsService
 	private readonly ISourceList<IProductItemVM> _totalProducts     = new SourceList<IProductItemVM>();
 
 	private readonly ProductsHttpClient _productsHttpClient;
+	private readonly OrdersHttpClient _ordersHttpClient;
 	private readonly MainInfo _mainInfo;
 
 	#endregion
@@ -25,10 +28,12 @@ public class ProductsService : IProductsService
 
 	public ProductsService(
 		MainInfo mainInfo,
-		ProductsHttpClient productsHttpClient)
+		ProductsHttpClient productsHttpClient,
+		OrdersHttpClient ordersHttpClient)
 	{
 		_mainInfo           = mainInfo;
 		_productsHttpClient = productsHttpClient;
+		_ordersHttpClient   = ordersHttpClient;
 	}
 
 	#endregion
@@ -65,7 +70,7 @@ public class ProductsService : IProductsService
 					addCommand:    async () => await AddProductToBasket(x.Id),
 					removeCommand: async () => await RemoveProductFromBasket(x.Id))));
 
-			//TO DO: ЗАГРУЗКА корзины пользователя из бд
+			//TO DO: ЗАГРУЗКА личной сохраненной ранее корзины пользователя из бд/локального json файла
 
 			result = true;
 			return result;
@@ -203,6 +208,40 @@ public class ProductsService : IProductsService
 		}
 
 		return true;
+	}
+
+
+	/// <inheritdoc/>
+	public async Task<bool> CreateOrder(Guid userId, string address)
+	{
+		var result = default(bool);
+
+		StringBuilder stringBuilder = new StringBuilder();
+
+		stringBuilder.AppendJoin(';', _productsInBasket.Items.Where(x => x.CurrentSelectedCount > 0).Select(x => $"{x.Id},{x.CurrentSelectedCount}"));
+
+		var products = stringBuilder.ToString();
+
+		if(products.Length > 0)
+		{ 
+			var orderEntity = new OrderEntity()
+			{
+				 OrderAddress = address,
+				 UserId       = userId,
+				 Products     = products
+			};
+
+			var orderResponse = await _ordersHttpClient.CreateOrder(orderEntity);
+			if(orderResponse != null &&
+			   orderResponse.Value)
+			{
+				await RemoveAllProductsFromBasket();
+
+				return true;
+			}
+		} 
+
+		return false;
 	}
 
 	#endregion

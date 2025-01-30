@@ -13,5 +13,8 @@
     </Design.DataContext>
 
     <TextBlock
-      Text="ProfilePustoyControl" />
+      Text="Пока пустая страница. В разработке..."
+      Classes="header"
+      HorizontalAlignment="Center"
+      VerticalAlignment="Center" />
 </UserControl>

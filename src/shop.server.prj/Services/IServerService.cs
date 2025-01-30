@@ -2,5 +2,8 @@
 
 public interface IServerService
 {
-	public void Start();
+	/// <summary>
+	/// Реализация инициализации.
+	/// </summary>
+	public void Initialization();
 }
