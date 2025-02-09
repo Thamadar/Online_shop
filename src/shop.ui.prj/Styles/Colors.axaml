@@ -7,6 +7,7 @@
     <Color x:Key="FullWhiteColor">#ffffff</Color>
     <Color x:Key="FullBlackColor">#000000</Color>
     <Color x:Key="SmokeGrayColor">#9e9b98</Color>
+    <Color x:Key="GrayDarkColor">#575557</Color>
 
     <Color x:Key="PriceWithSaleColor">#fa6a3c</Color>
 
@@ -20,6 +21,9 @@
     <SolidColorBrush
       x:Key="SmokeGray"
       Color="{StaticResource SmokeGrayColor}" />
+    <SolidColorBrush
+      x:Key="GrayDark"
+      Color="{StaticResource GrayDarkColor}" />
     <SolidColorBrush
       x:Key="PriceWithSale"
       Color="{StaticResource PriceWithSaleColor}" />

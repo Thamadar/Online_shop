@@ -31,6 +31,7 @@
                   VerticalAlignment="Bottom"
                   ColumnDefinitions="auto,*">
                     <TextBlock
+                      Classes.dark="true"
                       Classes.price-with-sale="{Binding PriceBeforeSale, Converter={x:Static ObjectConverters.IsNotNull}}"
                       Classes.price-without-sale="{Binding PriceBeforeSale, Converter={x:Static ObjectConverters.IsNull}}"
                       Grid.Column="0">
@@ -53,7 +54,7 @@
                     </TextBlock>
                 </Grid>
                 <TextBlock
-                  Classes="default"
+                  Classes="default" Classes.dark="true"
                   Grid.Row="1"
                   Height="42"
                   Margin="0,-2,0,0"
@@ -61,10 +62,9 @@
                   Text="{Binding ProductName}"
                   TextTrimming="CharacterEllipsis" TextWrapping="Wrap" />
                 <TextBlock
-                  Classes="default"
+                  Classes="default" Classes.dark="true"
                   Grid.Row="2"
-                  Margin="0,-4,0,0"
-                  Foreground="{DynamicResource SmokeGray}">
+                  Margin="0,-4,0,0">
                     <Run
                       Text="{Binding Weight, TargetNullValue=0, Mode=OneWay}" />
                     <Run

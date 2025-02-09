@@ -31,6 +31,9 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
+        <Style Selector="^.dark">
+            <Setter Property="Foreground" Value="{DynamicResource GrayDark}" />
+        </Style>
     </Style>
 
     <Style Selector="TextBlock.price-without-sale">
@@ -39,6 +42,10 @@
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="FontSize" Value="{DynamicResource MediumFontSize}" />
         <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
+
+        <Style Selector="^.dark">
+            <Setter Property="Foreground" Value="{DynamicResource GrayDark}" />
+        </Style>
     </Style>
 
     <Style Selector="TextBlock.price-with-sale">
@@ -54,6 +61,6 @@
         <Setter Property="VerticalAlignment" Value="Bottom" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="TextDecorations" Value="Strikethrough" />
-        <Setter Property="Foreground" Value="{DynamicResource SmokeGray}" />
+        <Setter Property="Foreground" Value="{DynamicResource GrayDark}" />
     </Style>
 </Styles>

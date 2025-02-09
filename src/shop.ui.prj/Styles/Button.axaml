@@ -37,7 +37,7 @@
         <Setter Property="MinWidth" Value="45" />
         <Setter Property="MinHeight" Value="44" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="CornerRadius" Value="16" />
     </Style>
 
     <!-- Default -->
@@ -46,7 +46,7 @@
         <Style Selector="^">
             <!-- background & text -->
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="#363636" />
+                <Setter Property="Background" Value="#575557" />
                 <Setter Property="BorderBrush" Value="#FFF" />
                 <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
             </Style>

@@ -9,18 +9,18 @@
     </Design.PreviewWith>
 
     <Style Selector="Border.container">
-        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="CornerRadius" Value="16" />
         <Setter Property="Margin" Value="8" />
-        <Setter Property="Background" Value="#3b3b3b" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="#cbcbcb" />
+        <Setter Property="Background" Value="#6d6a6a" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderBrush" Value="#858385" />
     </Style>
 
     <Style Selector="Border.container-product">
-        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="CornerRadius" Value="16" />
         <Setter Property="Margin" Value="8" />
-        <Setter Property="Background" Value="#757575" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="#cbcbcb" />
+        <Setter Property="Background" Value="#ccc9c9" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderBrush" Value="#ffffff" />
     </Style>
 </Styles>

@@ -30,11 +30,11 @@
     </Styles.Resources>
 
     <Style Selector="c|AddRemoveButton">
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Foreground" Value="#FFF" />
-        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="CornerRadius" Value="16" />
         <Setter Property="BorderBrush" Value="#FFF" />
-        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Background" Value="{DynamicResource GrayDark}" />
         <Setter Property="MinWidth" Value="45" />
         <Setter Property="MinHeight" Value="44" />
         <Setter Property="Padding" Value="0" />
