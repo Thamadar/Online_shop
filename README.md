@@ -9,7 +9,7 @@
 
 ----------------
 
-![alt text](https://github.com/Thamadar/Online_shop/blob/[main]/Readme-preview.jpg?raw=true
+![Project preview](https://github.com/Thamadar/Online_shop/blob/main/Readme-preview.jpg?raw=true)
 
 ----------------
 
