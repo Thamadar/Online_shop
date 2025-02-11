@@ -1,0 +1,269 @@
+<Styles
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:c="using:Shop.UI.Avalonia.Controls">
+    <Design.PreviewWith>
+        <Border
+          Padding="50">
+            <StackPanel>
+                <c:ButtonIcon
+                  MinWidth="15"
+                  Margin="78,0,0,0"
+                  IconContent="{StaticResource OffIcon}"
+                  TextButton="SuperTest" />
+                <c:ButtonIcon
+                  Classes="short"
+                  IconContent="{StaticResource OffIcon}"
+                  TextButton="SuperTest" />
+                <c:ButtonIcon
+                  Classes="short"
+                  IconContent="{StaticResource OffIcon}"
+                  IsEnabled="False" TextButton="SuperTest" />
+                <c:ButtonIcon
+                  Classes="selected"
+                  Margin="78,0,0,0"
+                  IconContent="{StaticResource OffIcon}"
+                  TextButton="SuperTest" />
+                <c:ButtonIcon
+                  Classes="short" Classes.selected="true"
+                  IconContent="{StaticResource OffIcon}"
+                  TextButton="SuperTest" />
+                <c:ButtonIcon
+                  Classes="short" Classes.selected="true"
+                  IconContent="{StaticResource OffIcon}"
+                  IsEnabled="False" TextButton="SuperTest" />
+
+                <c:ButtonIcon
+                  Classes="red"
+                  Margin="78,0,0,0"
+                  IconContent="{StaticResource OffIcon}"
+                  TextButton="SuperTest" />
+                <c:ButtonIcon
+                  Classes="short" Classes.red="true"
+                  Classes.selected="true"
+                  IconContent="{StaticResource OffIcon}"
+                  TextButton="SuperTest" />
+                <c:ButtonIcon
+                  Classes="short-wild"
+                  IconContent="{StaticResource OffIcon}" />
+            </StackPanel>
+        </Border>
+    </Design.PreviewWith>
+
+    <!-- Default -->
+    <Style Selector="c|ButtonIcon">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="#FFF" />
+        <Setter Property="CornerRadius" Value="16" />
+        <Setter Property="MinWidth" Value="45" />
+        <Setter Property="MinHeight" Value="44" />
+        <Setter Property="Padding" Value="10,1,10,0" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border
+                  x:Name="PART_MainBorder"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid
+                      Margin="{TemplateBinding Padding}"
+                      VerticalAlignment="Center"
+                      ColumnDefinitions="auto,*">
+                        <Panel
+                          Grid.Column="0"
+                          MinWidth="{TemplateBinding IconWidth}"
+                          MinHeight="{TemplateBinding IconHeight}"
+                          Margin="-1,0,0,0">
+                            <ContentControl
+                              x:Name="PART_IconContentControl"
+                              Width="{TemplateBinding IconWidth}"
+                              Height="{TemplateBinding IconHeight}"
+                              MinWidth="{TemplateBinding IconWidth}"
+                              MinHeight="{TemplateBinding IconHeight}"
+                              Margin="0,-1,0,0"
+                              HorizontalAlignment="Center"
+                              HorizontalContentAlignment="Center"
+                              Template="{TemplateBinding IconContent}" />
+                        </Panel>
+                        <TextBlock
+                          x:Name="PART_TextTextBlock"
+                          Grid.Column="1"
+                          Margin="7,-2,0,0"
+                          Text="{TemplateBinding TextButton}" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover">
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+
+        <Style Selector="^:pressed">
+            <Setter Property="RenderTransform" Value="none" />
+        </Style>
+    </Style>
+
+    <!-- Short -->
+    <Style Selector="c|ButtonIcon.short">
+        <Setter Property="MaxWidth" Value="45" />
+        <Setter Property="MaxHeight" Value="44" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border
+                  x:Name="PART_MainBorder"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid
+                      Margin="{TemplateBinding Padding}">
+                        <ContentControl
+                          x:Name="PART_IconContentControl"
+                          Width="{TemplateBinding IconWidth}"
+                          Height="{TemplateBinding IconHeight}"
+                          MinWidth="{TemplateBinding IconWidth}"
+                          MinHeight="{TemplateBinding IconHeight}"
+                          Margin="-1,-1,0,0"
+                          HorizontalAlignment="Center"
+                          HorizontalContentAlignment="Center"
+                          Template="{TemplateBinding IconContent}" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <!-- Без ограничений на ширину -->
+    <Style Selector="c|ButtonIcon.short-wild">
+        <Setter Property="MaxHeight" Value="44" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border
+                  x:Name="PART_MainBorder"
+                  HorizontalAlignment="Stretch"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid
+                      Margin="{TemplateBinding Padding}">
+                        <ContentControl
+                          x:Name="PART_IconContentControl"
+                          Width="{TemplateBinding IconWidth}"
+                          Height="{TemplateBinding IconHeight}"
+                          MinWidth="{TemplateBinding IconWidth}"
+                          MinHeight="{TemplateBinding IconHeight}"
+                          Margin="0,-1,0,0"
+                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                          Template="{TemplateBinding IconContent}" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <!-- ЦВЕТА: Default -->
+    <Style Selector="c|ButtonIcon">
+        <Setter Property="BorderBrush" Value="#FFF" />
+        <Setter Property="Background" Value="#575557" />
+        <!-- pointerover -->
+        <Style Selector="^:pointerover">
+            <!-- background -->
+            <Style Selector="^ /template/ Border#PART_MainBorder">
+                <Setter Property="Background" Value="#505050" />
+            </Style>
+        </Style>
+        <!-- pressed -->
+        <Style Selector="^:pressed">
+            <!-- background -->
+            <Style Selector="^ /template/ Border#PART_MainBorder">
+                <Setter Property="Background" Value="#2d2d2d" />
+            </Style>
+        </Style>
+        <!-- disabled, checked disabled -->
+        <Style Selector="^:disabled, ^:checked:disabled">
+            <!-- background -->
+            <Style Selector="^ /template/ Border#PART_MainBorder">
+                <Setter Property="Background" Value="#575757" />
+            </Style>
+            <Style Selector="^ /template/ ContentControl">
+                <Setter Property="Foreground" Value="#b3b3b3" />
+            </Style>
+        </Style>
+
+        <!-- ЦВЕТА: selected -->
+        <Style Selector="^.selected">
+            <Setter Property="BorderBrush" Value="#000" />
+            <Setter Property="Background" Value="#ececec" />
+            <Style Selector="^ /template/ ContentControl">
+                <Setter Property="Foreground" Value="#000" />
+            </Style>
+            <Style Selector="^ /template/ TextBlock">
+                <Setter Property="Foreground" Value="#000" />
+            </Style>
+            <!-- pointerover -->
+            <Style Selector="^:pointerover">
+                <!-- background -->
+                <Style Selector="^ /template/ Border#PART_MainBorder">
+                    <Setter Property="Background" Value="#fff" />
+                </Style>
+            </Style>
+            <!-- pressed -->
+            <Style Selector="^:pressed">
+                <!-- background -->
+                <Style Selector="^ /template/ Border#PART_MainBorder">
+                    <Setter Property="Background" Value="#d8d8d8" />
+                </Style>
+            </Style>
+            <!-- disabled, checked disabled -->
+            <Style Selector="^:disabled, ^:checked:disabled">
+                <!-- background -->
+                <Style Selector="^ /template/ Border#PART_MainBorder">
+                    <Setter Property="Background" Value="#787878" />
+                </Style>
+                <Style Selector="^ /template/ ContentControl">
+                    <Setter Property="Foreground" Value="#b3b3b3" />
+                </Style>
+            </Style>
+        </Style>
+
+        <!-- ЦВЕТА: red -->
+        <Style Selector="^.red">
+            <Setter Property="BorderBrush" Value="#fff" />
+            <Setter Property="Background" Value="#922424" />
+            <Style Selector="^ /template/ ContentControl">
+                <Setter Property="Foreground" Value="#fff" />
+            </Style>
+            <Style Selector="^ /template/ TextBlock">
+                <Setter Property="Foreground" Value="#fff" />
+            </Style>
+            <!-- pointerover -->
+            <Style Selector="^:pointerover">
+                <!-- background -->
+                <Style Selector="^ /template/ Border#PART_MainBorder">
+                    <Setter Property="Background" Value="#ad1f1f" />
+                </Style>
+            </Style>
+            <!-- pressed -->
+            <Style Selector="^:pressed">
+                <!-- background -->
+                <Style Selector="^ /template/ Border#PART_MainBorder">
+                    <Setter Property="Background" Value="#812222" />
+                </Style>
+            </Style>
+            <!-- disabled, checked disabled -->
+            <Style Selector="^:disabled, ^:checked:disabled">
+                <!-- background -->
+                <Style Selector="^ /template/ Border#PART_MainBorder">
+                    <Setter Property="Background" Value="#787878" />
+                </Style>
+                <Style Selector="^ /template/ ContentControl">
+                    <Setter Property="Foreground" Value="#b3b3b3" />
+                </Style>
+            </Style>
+        </Style>
+    </Style>
+</Styles>

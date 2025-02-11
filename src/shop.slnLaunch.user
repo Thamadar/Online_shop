@@ -3,11 +3,11 @@
     "Name": "New Profile",
     "Projects": [
       {
-        "Path": "shop.client.prj\\shop.client.csproj",
+        "Path": "shop.server.prj\\shop.server.csproj",
         "Action": "Start"
       },
       {
-        "Path": "shop.server.prj\\shop.server.csproj",
+        "Path": "shop.client.avalonia.prj\\shop.client.avalonia.csproj",
         "Action": "Start"
       }
     ]

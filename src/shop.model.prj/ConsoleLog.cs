@@ -1,4 +1,4 @@
-﻿namespace Shop.Client;
+﻿namespace Shop.Model;
 
 public static class ConsoleLog
 {  

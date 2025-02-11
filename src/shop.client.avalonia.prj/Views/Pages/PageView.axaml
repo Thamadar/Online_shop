@@ -1,0 +1,44 @@
+<UserControl
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:converters="using:Shop.UI.Avalonia.Converters" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="using:Shop.Client.Avalonia.Views.Pages" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:pages="using:Shop.Client.Avalonia.Services.Page"
+  d:DesignHeight="450" d:DesignWidth="800"
+  x:DataType="pages:PageBase"
+  mc:Ignorable="d"
+  x:Class="Shop.Client.Avalonia.Views.Pages.PageView">
+
+    <Design.DataContext>
+        <local:PageDesignViewModel />
+    </Design.DataContext>
+
+    <UserControl.Resources>
+
+        <converters:StringAllSymbolsToUpperConverter
+          x:Key="StringAllSymbolsToUpperConverter" />
+    </UserControl.Resources>
+
+    <Grid
+      RowDefinitions="auto,*">
+        <Border
+          Classes="container"
+          Grid.Row="0"
+          Height="50">
+            <TextBlock
+              Margin="12,0"
+              Text="{Binding PageHeader, Converter={StaticResource StringAllSymbolsToUpperConverter}}"
+              FontSize="{DynamicResource LargeFontSize}"
+              FontWeight="SemiBold" Foreground="#fff" />
+        </Border>
+        <Border
+          Classes="container"
+          Grid.Row="1"
+          Margin="8,0,8,8"
+          x:DataType="pages:PageBase">
+            <ContentPresenter
+              Content="{Binding}"
+              DataContext="{Binding}" />
+        </Border>
+    </Grid>
+</UserControl>

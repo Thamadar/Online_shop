@@ -1,0 +1,97 @@
+<Styles
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:c="using:Shop.UI.Avalonia.Controls" xmlns:converters="using:Shop.UI.Avalonia.Converters">
+    <Design.PreviewWith>
+        <Border
+          Padding="20">
+            <c:AddRemoveButton
+              Count="555" />
+        </Border>
+    </Design.PreviewWith>
+
+    <Styles.Resources>
+
+        <converters:SwitchConverter
+          x:Key="IsFullSizeConverter"
+          Default="{x:False}">
+            <converters:Case
+              Key="0"
+              Value="{x:True}" />
+        </converters:SwitchConverter>
+
+        <converters:SwitchConverter
+          x:Key="IsShortSizeConverter"
+          Default="{x:True}">
+            <converters:Case
+              Key="0"
+              Value="{x:False}" />
+        </converters:SwitchConverter>
+    </Styles.Resources>
+
+    <Style Selector="c|AddRemoveButton">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Foreground" Value="#FFF" />
+        <Setter Property="CornerRadius" Value="16" />
+        <Setter Property="BorderBrush" Value="#FFF" />
+        <Setter Property="Background" Value="{DynamicResource GrayDark}" />
+        <Setter Property="MinWidth" Value="45" />
+        <Setter Property="MinHeight" Value="44" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border
+                  x:Name="PART_MainBorder"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid>
+                        <Grid
+                          IsVisible="{TemplateBinding Count,
+                                          Converter={StaticResource IsFullSizeConverter}}">
+                            <c:ButtonIcon
+                              x:Name="PART_FullAddButtonIcon"
+                              Classes="short-wild"
+                              HorizontalAlignment="Stretch"
+                              Background="Transparent"
+                              BorderThickness="0"
+                              IconContent="{StaticResource AddIcon}" />
+                        </Grid>
+
+                        <Grid
+                          Margin="{TemplateBinding Padding}"
+                          VerticalAlignment="Center"
+                          ColumnDefinitions="*,auto,*"
+                          IsVisible="{TemplateBinding Count,
+                                          Converter={StaticResource IsShortSizeConverter}}">
+
+                            <c:ButtonIcon
+                              x:Name="PART_ShortRemoveButtonIcon"
+                              Classes="short-wild"
+                              Grid.Column="0"
+                              HorizontalAlignment="Stretch"
+                              HorizontalContentAlignment="Left"
+                              Background="Transparent" BorderThickness="0"
+                              IconContent="{StaticResource MinusIcon}" />
+                            <TextBlock
+                              x:Name="PART_CountTextBlock"
+                              Classes="default"
+                              Grid.Column="1"
+                              Margin="4,-2,4,0"
+                              FontSize="{DynamicResource MediumFontSize}" />
+                            <c:ButtonIcon
+                              x:Name="PART_ShortAddButtonIcon"
+                              Classes="short-wild"
+                              Grid.Column="2"
+                              HorizontalContentAlignment="Right"
+                              Background="Transparent" BorderThickness="0"
+                              IconContent="{StaticResource AddIcon}" />
+                        </Grid>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

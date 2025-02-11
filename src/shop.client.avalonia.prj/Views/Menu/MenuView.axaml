@@ -1,0 +1,81 @@
+<UserControl
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="using:Shop.UI.Avalonia.Controls" xmlns:converters="using:Shop.UI.Avalonia.Converters"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="using:Shop.Client.Avalonia.Views.Menu"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  x:DataType="local:MenuViewModel"
+  d:DesignHeight="450" d:DesignWidth="250"
+  mc:Ignorable="d"
+  x:Class="Shop.Client.Avalonia.Views.Menu.MenuView">
+
+    <Design.DataContext>
+        <local:MenuViewModel />
+    </Design.DataContext>
+
+    <UserControl.Resources>
+        <converters:SwitchConverter
+          x:Key="OpenIconConverter"
+          Default="{StaticResource RightArrowIcon}">
+            <converters:Case
+              Key="{x:False}"
+              Value="{StaticResource RightArrowIcon}" />
+            <converters:Case
+              Key="{x:True}"
+              Value="{StaticResource LeftArrowIcon}" />
+        </converters:SwitchConverter>
+    </UserControl.Resources>
+
+    <Border
+      Classes="container">
+        <Grid
+          RowDefinitions="*,auto">
+
+            <StackPanel
+              Grid.Row="0"
+              Margin="10,0"
+              Orientation="Vertical">
+
+                <controls:ButtonIcon
+                  Classes.short="{Binding !IsOpened}"
+                  Margin="0,8"
+                  Command="{Binding Commands.OpenHide}"
+                  IconContent="{Binding IsOpened, Converter={StaticResource OpenIconConverter}}"
+                  TextButton="Open/Hide" />
+
+                <ItemsControl
+                  Name="MenuButtonsContainer"
+                  ItemsSource="{Binding MenuData.MenuItems}"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel
+                              Orientation="Vertical" Spacing="8" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <controls:ButtonIcon
+                              x:DataType="local:MenuItem"
+                              Classes.short="{Binding !$parent[ItemsControl].DataContext.IsOpened}"
+                              Classes.selected="{Binding IsSelected}"
+                              Command="{Binding Command}"
+                              IconContent="{Binding DisplayName, Converter={StaticResource IconConverter}}"
+                              TextButton="{Binding DisplayName}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <controls:ButtonIcon
+              Classes.red="True"
+              Classes.short="{Binding !IsOpened}"
+              Grid.Row="1"
+              Margin="10,8"
+              Command="{Binding Commands.CloseApp}"
+              CommandParameter="{Binding $parent[Window]}"
+              IconContent="{StaticResource OffIcon}"
+              TextButton="CloseProgram" />
+        </Grid>
+    </Border>
+</UserControl>

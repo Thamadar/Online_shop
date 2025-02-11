@@ -1,0 +1,33 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Colors --> 
+    <Color x:Key="DarkSmoothColor">#1e1e1e</Color>
+    <Color x:Key="FullWhiteColor">#ffffff</Color>
+    <Color x:Key="FullBlackColor">#000000</Color>
+    <Color x:Key="SmokeGrayColor">#9e9b98</Color>
+    <Color x:Key="GrayDarkColor">#575557</Color> 
+
+    <Color x:Key="PriceWithSaleColor">#fa6a3c</Color>
+
+    <!-- Brushes -->
+    <SolidColorBrush
+        x:Key="DarkSmooth"
+        Color="{StaticResource DarkSmoothColor}" />
+    <SolidColorBrush
+        x:Key="FullWhite"
+        Color="{StaticResource FullWhiteColor}" />
+    <SolidColorBrush
+        x:Key="FullBlack"
+        Color="{StaticResource FullBlackColor}" />
+    <SolidColorBrush
+        x:Key="SmokeGray"
+        Color="{StaticResource SmokeGrayColor}" />
+    <SolidColorBrush
+        x:Key="GrayDark"
+        Color="{StaticResource GrayDarkColor}" />
+    <SolidColorBrush
+        x:Key="PriceWithSale"
+        Color="{StaticResource PriceWithSaleColor}" />
+</ResourceDictionary>
