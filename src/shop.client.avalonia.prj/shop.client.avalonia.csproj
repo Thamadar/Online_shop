@@ -33,8 +33,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\shop.model.prj\shop.model.csproj" />
-    <ProjectReference Include="..\shop.ui.avalonia.prj\shop.ui.avalonia.csproj" />
-    <ProjectReference Include="..\shop.ui.prj\shop.ui.avalonia.csproj" />
+    <ProjectReference Include="..\shop.ui.avalonia.prj\shop.ui.avalonia.csproj" /> 
   </ItemGroup>
 
 
