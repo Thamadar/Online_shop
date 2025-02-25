@@ -18,13 +18,11 @@ public class SwitchConverter : AvaloniaObject, ISwitchConverter, ICompositeConve
 		set { SetValue(DefaultProperty, value); }
 	}
 
-#pragma warning disable CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
 	public IValueConverter? PreConverter { get; set; }
 	public IValueConverter? PostConverter { get; set; }
 
 	public object? PostConverterParameter { get; set; }
 	public object? PreConverterParameter { get; set; }
-#pragma warning restore CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
 
 	[Content]
 	public CaseSet Cases { get; set; } = new();

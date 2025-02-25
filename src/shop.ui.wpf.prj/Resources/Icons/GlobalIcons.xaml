@@ -1,0 +1,69 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTemplate
+        x:Key="AddIcon"
+        TargetType="ContentControl">
+        <Viewbox
+            Stretch="Uniform">
+            <Path
+                Data="M6 8H0V6H6V0H8V6H14V8H8V14H6V8Z"
+                Fill="{TemplateBinding ContentControl.Foreground}" />
+        </Viewbox>
+    </ControlTemplate>
+
+    <ControlTemplate
+        x:Key="MinusIcon"
+        TargetType="ContentControl">
+        <Viewbox
+            Stretch="Uniform">
+            <Path
+                Data="M14 2H0V0H14V2Z"
+                Fill="{TemplateBinding ContentControl.Foreground}" />
+        </Viewbox>
+    </ControlTemplate>
+
+    <ControlTemplate
+        x:Key="OffIcon"
+        TargetType="ContentControl">
+        <Viewbox
+            Width="{TemplateBinding Width}"
+            Height="{TemplateBinding Height}"
+            Stretch="Uniform">
+            <Path
+                Data="M513.94 0v693.97h172.12V0zM175.708 175.708C67.129 284.287 0 434.314 0 600c0 331.371 268.629 600 600 600s600-268.629 600-600c0-165.686-67.13-315.713-175.708-424.292l-120.85 120.85c77.66 77.658 125.684 184.952 125.684 303.442c0 236.981-192.146 429.126-429.126 429.126c-236.981 0-429.126-192.145-429.126-429.126c0-118.49 48.025-225.784 125.684-303.442z"
+                Fill="{TemplateBinding ContentControl.Foreground}" />
+        </Viewbox>
+    </ControlTemplate>
+
+    <ControlTemplate
+        x:Key="RightArrowIcon">
+        <Viewbox
+            Width="{TemplateBinding Width}"
+            Height="{TemplateBinding Height}"
+            Stretch="Uniform">
+            <Path
+                Data="M256 120.768L306.432 64 768 512l-461.568 448L256 903.232 659.072 512z"
+                Fill="{TemplateBinding ContentControl.Foreground}" />
+        </Viewbox>
+    </ControlTemplate>
+
+    <ControlTemplate
+        x:Key="LeftArrowIcon">
+        <Viewbox
+            Width="{TemplateBinding Width}"
+            Height="{TemplateBinding Height}"
+            Stretch="Uniform">
+            <Path
+                Data="M256 120.768L306.432 64 768 512l-461.568 448L256 903.232 659.072 512z"
+                Fill="{TemplateBinding ContentControl.Foreground}"
+                RenderTransformOrigin="0.5,0.5">
+                <Path.RenderTransform>
+                    <ScaleTransform ScaleX="-1" ScaleY="1" />
+                </Path.RenderTransform>
+            </Path>
+        </Viewbox>
+    </ControlTemplate>
+
+</ResourceDictionary>

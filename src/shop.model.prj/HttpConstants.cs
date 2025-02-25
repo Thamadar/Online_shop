@@ -19,6 +19,6 @@ public static class HttpConstants
 
 	public const string postCreateOrder = orders + postCreateOrderTask;
 	 
-	public const string postGetUserAddressById = users + postGetUserAddressByIdTask;
+	public const string postGetUserAddressById = users + postGetUserAddressByIdTask; //TO DO: с заглвных + подчеркивания
 	public const string postGetUserIdByLogin   = users + postGetUserIdByLoginTask;
 }

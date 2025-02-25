@@ -1,15 +1,24 @@
 ﻿
 using ReactiveUI;
 using Shop.Client.WPF.Desktop.Extensions;
-using Shop.UI.WPF.Desktop;
+using Shop.UI.WPF;
+using System.Windows.Controls;
 
 namespace Shop.Client.WPF.Desktop.Services.Page;
 public abstract class PageBase : ViewModelBase, IPage
 {
 	private readonly MainInfo _mainInfo;
 
+	private Control _view;
 	private string _pageHeader = "UnknownPageHeader";
 	private bool _isLoaded;
+	 
+	/// <inheritdoc/>
+	public Control View
+	{
+		get => _view;
+		private set => this.RaiseAndSetIfChanged(ref _view, value);
+	}
 
 	/// <inheritdoc/>
 	public bool IsLoaded
@@ -28,6 +37,12 @@ public abstract class PageBase : ViewModelBase, IPage
 	public PageBase(MainInfo mainInfo)
 	{
 		_mainInfo = mainInfo; 
+	}
+
+	/// <inheritdoc/>
+	public void SetView(Control view)
+	{
+		View = view;
 	}
 
 	public virtual Task DisposeAsync()

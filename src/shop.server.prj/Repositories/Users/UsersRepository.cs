@@ -17,11 +17,10 @@ public class UsersRepository : IUsersRepository
 	{
 		var user = _userContext.Users.ToList().FirstOrDefault();
 		//КОСТЫЛЬ, Т.К. на клиенте нет какой-либо аутентификации.
-		return user?.Address ?? "";
+		return user?.Address ?? String.Empty;
 		//RIGHT VERSION.
 		return _userContext.Users.Where(x => x.Id == id).FirstOrDefault()?.Address ?? "";
-	}
-
+	} 
 
 	/// <inheritdoc/>
 	public async Task<Guid> GetUserIdByLogin(string login)

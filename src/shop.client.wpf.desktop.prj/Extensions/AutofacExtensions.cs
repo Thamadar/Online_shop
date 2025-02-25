@@ -1,8 +1,8 @@
 ﻿using Autofac;
 
 using System.Windows.Controls;
-
-using Shop.UI.WPF.Desktop; 
+ 
+using Shop.UI.WPF;
 
 namespace Shop.Client.WPF.Desktop.Extensions;
 public static class AutofacExtensions

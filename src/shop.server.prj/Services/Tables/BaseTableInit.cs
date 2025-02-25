@@ -19,7 +19,6 @@ public abstract class BaseTableInit<T> : IServerService
 	(SELECT * FROM sys.databases WHERE name = 'OnlineShop')
 	CREATE DATABASE OnlineShop";
 
-
 	/// <summary>
 	/// Получение количества текущих строк из таблицы.
 	/// </summary>

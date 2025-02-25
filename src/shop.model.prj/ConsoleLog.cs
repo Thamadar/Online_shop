@@ -6,8 +6,7 @@ public static class ConsoleLog
 	{ 
 		Console.WriteLine(message + "\n"); 
 	}
-
-
+	 
 	public static void WriteError(String message)
 	{
 		var oldColor = Console.ForegroundColor;
@@ -30,5 +29,5 @@ public static class ConsoleLog
 		Console.ForegroundColor = consoleColor;
 		Console.WriteLine(message + "\n");
 		Console.ForegroundColor = oldColor;
-	} 
+	}
 }

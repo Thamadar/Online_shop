@@ -22,6 +22,6 @@ public class ProductRepository : IProductRepository
 	/// <inheritdoc/>
 	public async Task<bool> IsProductsEmpty()
 	{
-		return !_productContext.Products.ToList().Any(); 
+		return !_productContext.Products.Any(); 
 	}
 }

@@ -13,7 +13,7 @@ public partial class App : Application
 {
 	private IContainer? _container;
 
-	protected override void OnStartup(StartupEventArgs e)
+	protected override async void OnStartup(StartupEventArgs e)
 	{
 		base.OnStartup(e);
 
@@ -22,19 +22,30 @@ public partial class App : Application
 		var mainInfo = _container.Resolve<MainInfo>();
 		mainInfo.SetIContainer(_container);
 
-		var mainWindow = GetMainWindow(_container);
+		var mainWindow = await GetMainWindow(_container);
 		mainWindow.Closed += OnMainWindowClosed;
-		mainWindow.Show();
+
+		try
+		{
+			mainWindow.Show();
+		}
+		catch(Exception ex)
+		{ 
+			MessageBox.Show($"Ошибка при открытии главного окна: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+			Application.Current.Shutdown(); 
+		}
+
+		mainWindow.Activate(); 
 	}
 
 	/// <summary>
 	/// Get main window view.
 	/// </summary> 
-	private MainWindowView GetMainWindow(IContainer container)
+	private async Task<MainWindowView> GetMainWindow(IContainer container)
 	{
 		var mainWindow = container.Resolve<MainWindowView>();
 		var viewModel  = container.Resolve<MainWindowViewModel>();
-		viewModel.LoadMainWindow();
+		await viewModel.LoadMainWindow();
 
 		mainWindow.DataContext = viewModel;
 

@@ -1,9 +1,6 @@
 ﻿using ReactiveUI;
 
-using System.ComponentModel; 
-using System.Runtime.CompilerServices; 
-
-namespace Shop.UI.WPF.Desktop
+namespace Shop.UI.WPF
 {
 	/// <summary>Базовый класс для ViewModel.</summary>
 	public class ViewModelBase : ReactiveObject, IDisposable

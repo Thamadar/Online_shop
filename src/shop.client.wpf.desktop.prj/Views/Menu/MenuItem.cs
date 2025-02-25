@@ -1,6 +1,6 @@
 ﻿using ReactiveUI;
 
-using Shop.UI.WPF.Desktop;
+using Shop.UI.WPF;
 
 namespace Shop.Client.WPF.Desktop.Views.Menu;
 

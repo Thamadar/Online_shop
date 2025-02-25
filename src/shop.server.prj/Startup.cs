@@ -24,7 +24,7 @@ public class Startup
 		services.AddScoped<IUsersRepository,   UsersRepository>();
 
 		//TO DO:Вынести регистрацию модулей в отдельный класс  
-		services.AddSingleton<IDatabaseInfo, DatabaseInfo>();
+		services.AddSingleton<IDatabaseInfo,  DatabaseInfo>();
 		services.AddSingleton<IServerService, ProductTableInit>();
 		services.AddSingleton<IServerService, OrderTableInit>();
 		services.AddSingleton<IServerService, UserTableInit>();

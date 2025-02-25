@@ -31,7 +31,7 @@ namespace Shop.Model.Database.Entities
 		/// <summary>
 		/// Стоимость товара до скидки. Может быть null, если нет скидки.
 		/// </summary>
-		public double? PriceBeforeSale { get; set; }
+		public double? PriceBeforeSale { get; set; } // Discont (размер скидки)
 
 		/// <summary>
 		/// Вес товара за 1 шт. в граммах.

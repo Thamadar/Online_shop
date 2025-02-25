@@ -44,7 +44,8 @@
                   IconContent="{StaticResource OffIcon}"
                   TextButton="SuperTest" />
                 <c:ButtonIcon
-                  Classes="short-wild"
+                  Classes="short" Classes.red="true"
+                  IsEnabled="False"
                   IconContent="{StaticResource OffIcon}" />
             </StackPanel>
         </Border>

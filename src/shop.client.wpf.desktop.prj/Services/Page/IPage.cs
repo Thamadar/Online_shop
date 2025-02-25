@@ -1,8 +1,15 @@
-﻿namespace Shop.Client.WPF.Desktop.Services;
+﻿using System.Windows.Controls;
+
+namespace Shop.Client.WPF.Desktop.Services;
 public interface IPage : IDisposable
 {
 
 	#region Properties
+
+	/// <summary>
+	/// Страница.
+	/// </summary>
+	public Control View { get; }
 
 	/// <summary>
 	/// Прогружена ли страница?
@@ -17,6 +24,11 @@ public interface IPage : IDisposable
 	#endregion
 
 	#region Methods 
+
+	/// <summary>
+	/// Установка View для ViewModel.
+	/// </summary> 
+	void SetView(Control view);
 
 	Task DisposeAsync();
 

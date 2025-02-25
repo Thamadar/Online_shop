@@ -1,7 +1,7 @@
 ﻿using ReactiveUI;
 
-using Shop.Client.WPF.Desktop.Services; 
-using Shop.UI.WPF.Desktop;
+using Shop.Client.WPF.Desktop.Services;
+using Shop.UI.WPF;
 
 namespace Shop.Client.WPF.Desktop.Views.Menu;
 public sealed partial class MenuViewModel : ViewModelBase

@@ -25,7 +25,7 @@ public class OrderTableInit : BaseTableInit<OrderEntity>
 	#endregion
 
 	/// <inheritdoc/>
-	protected override string TableName => "Orders";
+	protected override string TableName => "Orders"; // TO DO: в константу
 
 	public OrderTableInit(IDatabaseInfo databaseInfo) : base(databaseInfo)
 	{ }

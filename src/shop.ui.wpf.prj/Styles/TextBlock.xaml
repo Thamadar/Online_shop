@@ -2,14 +2,16 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style x:Key="default" TargetType="TextBlock">
+    <Style x:Key="textblock-default" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="{DynamicResource FontSize}" />
         <Setter Property="FontWeight" Value="Regular" />
         <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Padding" Value="3,6,3,4" />
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="header" BasedOn="{StaticResource default}" TargetType="TextBlock">
+    <Style x:Key="textblock-header" BasedOn="{StaticResource textblock-default}" TargetType="TextBlock">
         <Setter Property="FontSize" Value="{DynamicResource LargeFontSize}" />
         <Setter Property="FontWeight" Value="Regular" />
         <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
@@ -17,15 +19,18 @@
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="price-without-sale" BasedOn="{StaticResource default}" TargetType="TextBlock">
+    <Style x:Key="textblock-default-dark" BasedOn="{StaticResource textblock-default}" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource GrayDark}" />
+    </Style>
+
+    <Style x:Key="textblock-price-without-sale" BasedOn="{StaticResource textblock-default-dark}" TargetType="TextBlock">
         <Setter Property="FontSize" Value="{DynamicResource MediumFontSize}" />
         <Setter Property="FontWeight" Value="SemiBold" />
-        <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Bottom" />
     </Style>
 
-    <Style x:Key="price-with-sale" BasedOn="{StaticResource default}" TargetType="TextBlock">
+    <Style x:Key="textblock-price-with-sale" BasedOn="{StaticResource textblock-default}" TargetType="TextBlock">
         <Setter Property="FontSize" Value="{DynamicResource MediumFontSize}" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{DynamicResource PriceWithSale}" />
@@ -33,7 +38,7 @@
         <Setter Property="VerticalAlignment" Value="Bottom" />
     </Style>
 
-    <Style x:Key="sale" BasedOn="{StaticResource default}" TargetType="TextBlock">
+    <Style x:Key="textblock-sale" BasedOn="{StaticResource textblock-default}" TargetType="TextBlock">
         <Setter Property="FontWeight" Value="Regular" />
         <Setter Property="Foreground" Value="{DynamicResource GrayDark}" />
         <Setter Property="HorizontalAlignment" Value="Left" />

@@ -1,10 +1,105 @@
 ﻿<UserControl
-  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:Shop.Client.WPF.Desktop.Views.Pages"
-  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  d:DesignHeight="450" d:DesignWidth="800"
-  mc:Ignorable="d"
-  x:Class="Shop.Client.WPF.Desktop.Views.Pages.HomeView">
-  <Grid />
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Shop.UI.WPF.Controls;assembly=shop.ui.wpf" xmlns:converters="clr-namespace:Shop.UI.WPF.Converters;assembly=shop.ui.wpf"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:Shop.Client.WPF.Desktop.Views.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450" d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="Shop.Client.WPF.Desktop.Views.Pages.HomeView">
+    <Grid
+        Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="*" />
+            <ColumnDefinition
+                Width="auto" />
+        </Grid.ColumnDefinitions>
+        <ScrollViewer
+            Grid.Column="0"
+            HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <ItemsControl
+                ItemsSource="{Binding ProductItems}"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel
+                            VerticalAlignment="Top" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:ProductItem
+                            Margin="0,0,16,16" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Корзина -->
+        <Grid
+            Grid.Column="1"
+            Width="350">
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="auto" />
+                <RowDefinition
+                    Height="*" />
+                <RowDefinition
+                    Height="auto" />
+            </Grid.RowDefinitions>
+
+            <Grid
+                Grid.Row="0"
+                Margin="10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="*" />
+                    <ColumnDefinition
+                        Width="auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    Text="BASKET"
+                    Style="{StaticResource textblock-header}" />
+                <Button
+                    Grid.Column="1"
+                    Width="80"
+                    HorizontalAlignment="Right"
+                    Content="Clear"
+                    Background="Transparent"
+                    Command="{Binding Commands.ClearBasket}"
+                    Style="{StaticResource button-default}" />
+            </Grid>
+
+            <ScrollViewer
+                Grid.Row="1"
+                HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <ItemsControl
+                    ItemsSource="{Binding ProductInBasketItems}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel
+                                Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:ProductBasketItem
+                                Margin="0,0,8,8" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <Button
+                Grid.Row="2"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Center"
+                Content="MakeOrder"
+                Command="{Binding Commands.CreateOrder}"
+                Style="{DynamicResource button-default}" />
+        </Grid>
+    </Grid>
 </UserControl>

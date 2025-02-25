@@ -1,8 +1,11 @@
 ﻿using ReactiveUI;
-using Shop.UI.WPF.Desktop;
+using Autofac;
+using Shop.UI.WPF;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Windows.Controls;
 
 namespace Shop.Client.WPF.Desktop.Services;
 public interface IPageService : IShopService
@@ -82,8 +85,12 @@ public class PageService : ViewModelBase, IPageService
 		var page = default(T);
 
 		try
-		{
-			page = (T?)Activator.CreateInstance(typeof(T), arguments);
+		{   
+			var viewModel = _mainInfo.GetItem<T>(); 
+			var view      = _mainInfo.GetViewForViewModel<Control>(typeof(T));
+
+			viewModel.SetView(view);
+			page = viewModel;
 		}
 		finally
 		{ }

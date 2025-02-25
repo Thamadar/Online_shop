@@ -7,7 +7,7 @@
         "Action": "Start"
       },
       {
-        "Path": "shop.client.avalonia.prj\\shop.client.avalonia.csproj",
+        "Path": "shop.client.wpf.desktop.prj\\shop.client.wpf.desktop.csproj",
         "Action": "Start"
       }
     ]

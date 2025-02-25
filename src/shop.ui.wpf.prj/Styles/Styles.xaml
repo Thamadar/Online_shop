@@ -7,24 +7,22 @@
             Source="Colors.xaml" />
         <ResourceDictionary
             Source="Resources.xaml" />
-        <!--<ResourceDictionary
-            Source="Icons/GlobalIcons.xaml" />
         <ResourceDictionary
-            Source="Icons/MenuIcons.xaml" />-->
-        <!--<ResourceDictionary
+            Source="../Resources/Icons/GlobalIcons.xaml" />
+        <ResourceDictionary
+            Source="../Resources/Icons/MenuIcons.xaml" />
+        <ResourceDictionary
             Source="AddRemoveButton.xaml" />
         <ResourceDictionary
             Source="Border.xaml" />
         <ResourceDictionary
-            Source="ToggleButton.xaml" />
-        <ResourceDictionary
-            Source="ButtonIcon.xaml" />-->
+            Source="ButtonIcon.xaml" />
         <ResourceDictionary
             Source="Window.xaml" />
-        <!--<ResourceDictionary
+        <ResourceDictionary
             Source="Button.xaml" />
         <ResourceDictionary
-            Source="TextBox.xaml" />-->
+            Source="TextBox.xaml" />
         <ResourceDictionary
             Source="TextBlock.xaml" />
     </ResourceDictionary.MergedDictionaries>

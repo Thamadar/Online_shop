@@ -20,6 +20,6 @@ public class ServicesModule : Autofac.Module
 		builder.RegisterType<ProductsService>()
 			.As<IProductsService>()
 			.AsSelf()
-			.SingleInstance();
+			.SingleInstance(); 
 	}
 }

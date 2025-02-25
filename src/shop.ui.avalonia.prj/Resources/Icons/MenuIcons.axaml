@@ -3,6 +3,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:converters="using:Shop.UI.Avalonia.Converters">
 
+    <!-- Иконка профиля. -->
     <ControlTemplate
       x:Key="ProfileIcon">
         <Viewbox
@@ -12,6 +13,33 @@
           Stretch="Uniform">
             <Path
               Data="M12,11A5,5,0,1,0,7,6,5.006,5.006,0,0,0,12,11Zm0-8A3,3,0,1,1,9,6,3,3,0,0,1,12,3ZM3,22V18a5.006,5.006,0,0,1,5-5h8a5.006,5.006,0,0,1,5,5v4a1,1,0,0,1-2,0V18a3,3,0,0,0-3-3H8a3,3,0,0,0-3,3v4a1,1,0,0,1-2,0Z"
+              Fill="{TemplateBinding ContentControl.Foreground}" />
+        </Viewbox>
+    </ControlTemplate>
+
+    <!-- Иконка домика. -->
+    <ControlTemplate
+      x:Key="HomeIcon">
+        <Viewbox
+          Width="{TemplateBinding Width}"
+          Height="{TemplateBinding Height}"
+          Stretch="Uniform">
+            <Path
+              HorizontalAlignment="Center" VerticalAlignment="Center"
+              Data="M30.488 13.431l-14-12c-0.13-0.112-0.301-0.18-0.488-0.18s-0.358 0.068-0.489 0.181l0.001-0.001-14 12c-0.161 0.138-0.262 0.342-0.262 0.569v16c0 0.414 0.336 0.75 0.75 0.75h28c0.414-0 0.75-0.336 0.75-0.75v0-16c-0-0.227-0.101-0.431-0.261-0.569l-0.001-0.001zM11.75 29.25v-5.25c0-2.347 1.903-4.25 4.25-4.25s4.25 1.903 4.25 4.25v0 5.25zM29.25 29.25h-7.5v-5.25c0-3.176-2.574-5.75-5.75-5.75s-5.75 2.574-5.75 5.75v0 5.25h-7.5v-14.905l13.25-11.356 13.25 11.356z"
+              Fill="{TemplateBinding ContentControl.Foreground}" />
+        </Viewbox>
+    </ControlTemplate>
+
+    <!-- Иконка корзины. -->
+    <ControlTemplate
+      x:Key="BracketIcon">
+        <Viewbox
+          Width="{TemplateBinding Width}"
+          Height="{TemplateBinding Height}"
+          Stretch="Uniform">
+            <Path
+              Data="M2.44898 14.398L2.89619 14.1743L2.89619 14.1743L2.44898 14.398ZM12.551 14.398L12.9982 14.6216L12.9982 14.6216L12.551 14.398ZM0.703196 6H14.2968V5H0.703196V6ZM14 5.7032V6.14196H15V5.7032H14ZM12.3859 14H2.61409V15H12.3859V14ZM1 6.14196V5.7032H0V6.14196H1ZM2.89619 14.1743C1.6492 11.6804 1 8.93031 1 6.14196H0C0 9.08555 0.685346 11.9887 2.00176 14.6216L2.89619 14.1743ZM2.61409 14C2.73356 14 2.84277 14.0675 2.89619 14.1743L2.00176 14.6216C2.11773 14.8535 2.35478 15 2.61409 15V14ZM12.1038 14.1743C12.1572 14.0675 12.2664 14 12.3859 14V15C12.6452 15 12.8823 14.8535 12.9982 14.6216L12.1038 14.1743ZM14 6.14196C14 8.93031 13.3508 11.6804 12.1038 14.1743L12.9982 14.6216C14.3147 11.9887 15 9.08555 15 6.14196H14ZM14.2968 6C14.1329 6 14 5.86712 14 5.7032H15C15 5.31483 14.6852 5 14.2968 5V6ZM0.703196 5C0.314831 5 0 5.31483 0 5.7032H1C1 5.86712 0.867117 6 0.703196 6V5ZM3.92875 5.75725L6.92875 0.757248L6.07125 0.242752L3.07125 5.24275L3.92875 5.75725ZM8.07125 0.757248L11.0713 5.75725L11.9287 5.24275L8.92875 0.242752L8.07125 0.757248Z"
               Fill="{TemplateBinding ContentControl.Foreground}" />
         </Viewbox>
     </ControlTemplate>

@@ -7,7 +7,7 @@ using Shop.Client.WPF.Desktop.Http;
 using Shop.Client.WPF.Desktop.Services;
 using Shop.Client.WPF.Desktop.Views.Menu;
 using Shop.Client.WPF.Desktop.Views.Pages;
-using Shop.UI.WPF.Desktop;
+using Shop.UI.WPF;
 
 namespace Shop.Client.WPF.Desktop.Views;
 public sealed partial class MainWindowViewModel : ViewModelBase

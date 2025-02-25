@@ -1,5 +1,5 @@
 ﻿using ReactiveUI;
-using Shop.UI.WPF.Desktop;
+using Shop.UI.WPF;
 using System.IO;
 using System.Windows.Media.Imaging;
 

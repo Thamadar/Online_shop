@@ -72,7 +72,8 @@ public sealed partial class HomeViewModel : PageBase
 	}
 
 	public override async Task UnloadPageAsync()
-	{  
+	{
+		 
 		await base.UnloadPageAsync();
 	}
 
