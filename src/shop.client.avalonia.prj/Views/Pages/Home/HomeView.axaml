@@ -41,11 +41,11 @@
         <Grid
           Grid.Column="1"
           Width="350"
+          Margin="10,0"
           RowDefinitions="auto,*,auto">
 
             <Grid
               Grid.Row="0"
-              Margin="10,0"
               ColumnDefinitions="*, auto">
                 <TextBlock
                   Classes="header"
@@ -63,6 +63,7 @@
 
             <ScrollViewer
               Grid.Row="1"
+              Margin="-8,0"
               HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                 <ItemsControl
                   ItemsSource="{Binding ProductInBasketItems}"

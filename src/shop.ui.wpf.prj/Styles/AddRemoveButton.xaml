@@ -69,6 +69,7 @@
                                 <controls:ButtonIcon
                                     x:Name="PART_ShortAddButtonIcon"
                                     Grid.Column="2"
+                                    HorizontalAlignment="Stretch"
                                     HorizontalContentAlignment="Right"
                                     Background="Transparent" BorderThickness="0"
                                     IconContent="{DynamicResource AddIcon}"

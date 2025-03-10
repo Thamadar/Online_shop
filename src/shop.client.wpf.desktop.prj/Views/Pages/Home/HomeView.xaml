@@ -39,7 +39,8 @@
         <!-- Корзина -->
         <Grid
             Grid.Column="1"
-            Width="350">
+            Width="350"
+            Margin="10,0">
             <Grid.RowDefinitions>
                 <RowDefinition
                     Height="auto" />
@@ -50,8 +51,7 @@
             </Grid.RowDefinitions>
 
             <Grid
-                Grid.Row="0"
-                Margin="10,0">
+                Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition
                         Width="*" />
@@ -66,15 +66,15 @@
                     Grid.Column="1"
                     Width="80"
                     HorizontalAlignment="Right"
-                    Content="Clear"
-                    Background="Transparent"
+                    Content="Clear" 
                     Command="{Binding Commands.ClearBasket}"
-                    Style="{StaticResource button-default}" />
+                    Style="{DynamicResource button-default}" />
             </Grid>
 
             <ScrollViewer
                 Grid.Row="1"
-                HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"
+                Margin="-8,0">
                 <ItemsControl
                     ItemsSource="{Binding ProductInBasketItems}"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
@@ -87,7 +87,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <local:ProductBasketItem
-                                Margin="0,0,8,8" />
+                                Margin="0,0,0,8" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

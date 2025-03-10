@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="textblock-default" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
         <Setter Property="FontSize" Value="{DynamicResource FontSize}" />
         <Setter Property="FontWeight" Value="Regular" />
         <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />

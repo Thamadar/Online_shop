@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "WPF Client",
+    "Projects": [
+      {
+        "Path": "shop.server.prj\\shop.server.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "shop.client.wpf.desktop.prj\\shop.client.wpf.desktop.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

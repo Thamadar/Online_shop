@@ -25,19 +25,18 @@
             <Grid
               Grid.Column="1"
               Margin="10,0"
-              VerticalAlignment="Center"
               RowDefinitions="auto,auto">
                 <TextBlock
                   Classes="default" Classes.dark="true"
                   Grid.Row="0"
-                  Height="42"
-                  Margin="0,0,0,0"
+                  Height="44"
+                  Margin="0,5,0,0"
                   VerticalAlignment="Top"
                   Text="{Binding ProductName}"
                   TextTrimming="CharacterEllipsis" TextWrapping="Wrap" />
                 <Grid
                   Grid.Row="1"
-                  Margin="0,-8,0,0"
+                  Margin="0,-13,0,-10"
                   VerticalAlignment="Bottom"
                   ColumnDefinitions="auto,*">
                     <TextBlock
@@ -53,7 +52,7 @@
                     <TextBlock
                       Classes="sale"
                       Grid.Column="1"
-                      Margin="-4,1,0,0"
+                        Margin="-4,0,0,1"
                       IsVisible="{Binding PriceBeforeSale, Converter={x:Static ObjectConverters.IsNotNull}}">
                         <Run
                           Text="{Binding PriceBeforeSale, TargetNullValue=0, Mode=OneWay}"

@@ -13,6 +13,7 @@
     </Design.PreviewWith>
 
     <Style Selector="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="FontSize" Value="{DynamicResource FontSize}" />
         <Setter Property="Padding" Value="4,7,4,4" />

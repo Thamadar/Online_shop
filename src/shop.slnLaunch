@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Avalonia Client",
+    "Projects": [
+      {
+        "Path": "shop.server.prj\\shop.server.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "shop.client.avalonia.prj\\shop.client.avalonia.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

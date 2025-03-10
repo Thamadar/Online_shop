@@ -22,7 +22,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="16">
+                                CornerRadius="{DynamicResource ButtonCornerRadius}">
                         <Grid
                             Margin="{TemplateBinding Padding}"
                             VerticalAlignment="Center">
@@ -50,7 +50,8 @@
                                 Margin="7,-2,0,0"
                                 Foreground="{TemplateBinding Foreground}"
                                 Text="{TemplateBinding TextButton}"
-                                Style="{DynamicResource textblock-default}" />
+                                Style="{DynamicResource textblock-default}"
+                                FontWeight="{TemplateBinding FontWeight}"/>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -154,7 +155,7 @@
     <!-- Short -->
     <Style x:Key="IsShortSizeStyle" BasedOn="{StaticResource {x:Type controls:ButtonIcon}}" TargetType="{x:Type controls:ButtonIcon}">
         <Setter Property="MaxHeight" Value="44" />
-        <Setter Property="MaxWidth" Value="45" />
+        <Setter Property="MinWidth" Value="45" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate
@@ -164,7 +165,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="16">
+                                CornerRadius="{DynamicResource ButtonCornerRadius}">
                         <Grid
                             Margin="{TemplateBinding Padding}">
                             <ContentControl
@@ -174,8 +175,8 @@
                                 MinWidth="{TemplateBinding IconWidth}"
                                 MinHeight="{TemplateBinding IconHeight}"
                                 Margin="-1,-1,0,0"
-                                HorizontalAlignment="Center"
-                                HorizontalContentAlignment="Center"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 Template="{TemplateBinding IconContent}" />
                         </Grid>
                     </Border>

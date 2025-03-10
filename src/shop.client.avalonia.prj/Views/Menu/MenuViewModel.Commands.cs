@@ -16,6 +16,7 @@ public sealed partial class MenuViewModel
 			CloseApp = ReactiveCommand.Create<Window, Unit>(
 				wnd =>
 				{
+					//TO DO: убрать. Сделать через Application.
 					wnd.Close();
 					return Unit.Default;
 				}); 

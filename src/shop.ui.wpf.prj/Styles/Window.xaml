@@ -4,13 +4,15 @@
 
     <Style x:Key="NoChrome" TargetType="Window">
         <Setter Property="AllowsTransparency" Value="True" />
-        <Setter Property="Background" Value="{DynamicResource DarkSmooth}" /> 
+        <Setter Property="Background" Value="{DynamicResource DarkSmooth}" />
         <Setter Property="WindowStyle" Value="None" />
-    </Style>
-
-    <Style x:Key="MaximizedWindow" BasedOn="{StaticResource NoChrome}" TargetType="Window">
         <Setter Property="WindowState" Value="Maximized"/>
-        <Setter Property="Padding" Value="8" />
-    </Style>
+        <Setter Property="Padding" Value="0"/>
+        <Style.Triggers>
+            <Trigger Property="WindowState" Value="Maximized">
+                <Setter Property="Padding" Value="8"/>
+            </Trigger>
+        </Style.Triggers> 
+    </Style> 
 
 </ResourceDictionary>

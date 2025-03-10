@@ -82,12 +82,7 @@ public class AddRemoveButton : Control
 	{
 		get => (int)GetValue(MaxCountProperty);
 		set => SetValue(MaxCountProperty, value);
-	} 
-
-	static AddRemoveButton()
-	{
-		//DefaultStyleKeyProperty.OverrideMetadata(typeof(AddRemoveButton), new FrameworkPropertyMetadata(typeof(AddRemoveButton)));
-	}
+	}  
 
 	public AddRemoveButton()
 	{
@@ -105,16 +100,7 @@ public class AddRemoveButton : Control
 		_fullAddButtonIcon     = InitAddButtonIcon(GetTemplateChild("PART_FullAddButtonIcon")        as ButtonIcon);
 		_shortAddButtonIcon    = InitAddButtonIcon(GetTemplateChild("PART_ShortAddButtonIcon")       as ButtonIcon);
 		_shortRemoveButtonIcon = InitRemoveButtonIcon(GetTemplateChild("PART_ShortRemoveButtonIcon") as ButtonIcon);
-		_countTextBlock        = InitCountTextBlock(GetTemplateChild("PART_CountTextBlock")          as TextBlock);
-
-		if(_fullAddButtonIcon != null)
-			_fullAddButtonIcon.Command = (ICommand)AddCommand;
-
-		if(_shortAddButtonIcon != null)
-			_shortAddButtonIcon.Command = (ICommand)AddCommand;
-
-		if(_shortRemoveButtonIcon != null)
-			_shortRemoveButtonIcon.Command = (ICommand)RemoveCommand;
+		_countTextBlock        = InitCountTextBlock(GetTemplateChild("PART_CountTextBlock")          as TextBlock); 
 
 		if(_countTextBlock != null)
 		{
@@ -165,26 +151,28 @@ public class AddRemoveButton : Control
 
 	private ButtonIcon InitAddButtonIcon(ButtonIcon? control)
 	{
-		if(control == null)
+		var bind = new Binding(nameof(AddCommand))
 		{
-			return control;
-		}
-
-		control.Command = (System.Windows.Input.ICommand?)AddCommand;
+			Source              = this,
+			Mode                = BindingMode.TwoWay,
+			UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+		};
+		BindingOperations.SetBinding(control, ButtonIcon.CommandProperty, bind); 
 
 		return control;
 	}
 
 	private ButtonIcon InitRemoveButtonIcon(ButtonIcon? control)
 	{
-		if(control == null)
+		var bind = new Binding(nameof(RemoveCommand))
 		{
-			return control;
-		}
+			Source              = this,
+			Mode                = BindingMode.TwoWay,
+			UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+		};
+		BindingOperations.SetBinding(control, ButtonIcon.CommandProperty, bind);
 
-		control.Command = (System.Windows.Input.ICommand?)RemoveCommand;
-
-		return control;
+		return control; 
 	}
 
 	private TextBlock InitCountTextBlock(TextBlock? control)
