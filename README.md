@@ -10,20 +10,22 @@
 
 ----------------
 
- <img src="https://github.com/Thamadar/Online_shop/blob/main/Readme-preview-opened.jpg"> <br>
- <img src="https://github.com/Thamadar/Online_shop/blob/main/Readme-preview-collapsed.jpg"> 
+ <img src="https://github.com/Thamadar/Online_shop/blob/main/Readme-preview-opened.png"> <br>
+ <img src="https://github.com/Thamadar/Online_shop/blob/main/Readme-preview-collapsed.png"> 
 
 ----------------
 
 Для запуска необходимо иметь: <br>
 -.NET 7.0. <br>
--SQL Server (Желательно Express версия. Также база и таблицы сами инициализируются при запуске shop.server). <br>
+-SQL Server (Желательно Express версия. Также база и таблицы сами инициализируются при запуске shop.server). <br> 
 <br>
 Инструкция по запуску: <br>
 -Настройте при необходимости параметры сервера и подключения к серверу в shop.server/Properties/launchSerttings.json и в shop.server/appsettings.json  <br>
 -Настройте при необходимости параметры подключения к серверу в shop.сlient.ВыбранныйВамиКлиент/Configurations/ConnectionConfiguration в параметре Defaults (изначально адрес стоит "http://localhost:5100")  <br>
 -Запустите shop.server. <br>
--Запустите shop.client.ВыбранныйВамиКлиент. <br>
+Запуск server'а: <br>
+dotnet run --project "ваш путь\src\shop.server.prj\shop.server.csproj" --launch-profile "http" <br>
+-Запустите shop.client.ВыбранныйВамиКлиент. (WPF/Avalonia) <br>
 <br>
 ----------------
 <br>
@@ -34,5 +36,4 @@ P.S. Ещё в работе некоторые модули, такие как: 
 -Модальные окна: ожидания/оповещения <br>
 Серверная часть: <br>
 -Добавление версинирования у SQL-баз <br>
--Вынос SQL-запросов в отдельные SQL-файлы <br>
--Расширение таблиц в угоду так называемой правильности, как например: таблица историй действий пользователя, хэширование паролей, корректировка типов данных, версинирование действий для актуальности запросов
+-Вынос SQL-запросов в отдельные SQL-файлы <br> 

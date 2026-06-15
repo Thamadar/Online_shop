@@ -30,9 +30,10 @@ public sealed class OrdersController : ControllerBase
 	public async Task<ActionResult<OrderEntity[]?>> GetOrders()
 	{
 		try
-		{ 
+		{
+			var orders = await _ordersRepository.GetOrders();
 
-			return Ok( );
+			return Ok(orders);
 		}
 		catch(Exception exc)
 		{
@@ -47,10 +48,12 @@ public sealed class OrdersController : ControllerBase
 	[HttpGet("{id}")]
 	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OrderEntity))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<ActionResult<OrderEntity?>> GetOrderById([FromRoute] int id)
+	public async Task<ActionResult<OrderEntity?>> GetOrderById([FromRoute] Guid id)
 	{
 		try
-		{ 
+		{
+			var orders = await _ordersRepository.GetOrderById(id);
+
 			return Ok(null);
 		}
 		catch(Exception exc)

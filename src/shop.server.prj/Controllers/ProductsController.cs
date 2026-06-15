@@ -52,9 +52,9 @@ public sealed class ProductsController : ControllerBase
 	{
 		try
 		{
-			//var products = await _productRepository.FetchAllProducts();
+			var product = await _productRepository.GetProductById(id);
 
-			return Ok(null);
+			return Ok(product);
 		}
 		catch(Exception exc)
 		{

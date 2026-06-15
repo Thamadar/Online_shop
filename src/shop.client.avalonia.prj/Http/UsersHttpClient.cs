@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Shop.Client.Avalonia.Http;
@@ -16,68 +17,32 @@ public class UsersHttpClient
 	public UsersHttpClient(MainInfo mainInfo)
 	{
 		_mainInfo = mainInfo;
-	}
+	} 
 
 	/// <summary>
-	/// Получение адреса пользователя из БД через HTTP-запрос.
-	/// </summary>
-	/// <returns>id-пользователя</returns>
-	public async Task<string?> GetAddressById(Guid userId)
-	{
-		try
-		{
-			var httpClient = _mainInfo.HttpClient;
-
-			var cancellationToken = new CancellationToken();
-
-			var response = await httpClient.PostAsJsonAsync(
-				$@"{HttpConstants.users}",
-				userId,
-				cancellationToken).ConfigureAwait(false);
-
-			response.EnsureSuccessStatusCode();
-
-			return await response.Content.ReadAsStringAsync();  
-		}
-		catch(Exception exc)
-		{
-			ConsoleLog.WriteError($@"{nameof(ProductsHttpClient)}.{nameof(GetAddressById)} failed: {exc}");
-			return null;
-		}
-	}
-
-	/// <summary>
-	/// КОСТЫЛЬ, ИБО НЕТ аутентификации. - необходимо.
+	/// Получение User'а по Login'у.
+	/// TO DO: auth, authController.
 	/// </summary> 
-	public async Task<Guid?> GetUserIdByName(string name)
+	public async Task<UserEntity?> GetUserByLogin(string name)
 	{
 		try
 		{
 			var httpClient = _mainInfo.HttpClient;
 
 			var cancellationToken = new CancellationToken();
-			 
-			var response = await httpClient.PostAsJsonAsync(
-				$@"{HttpConstants.users}",
-				name,
+
+			var url = @$"{HttpConstants.users}by-login?login={Uri.EscapeDataString(name)}";
+
+			var response = await httpClient.GetFromJsonAsync<UserEntity>(
+				url,
+				new JsonSerializerOptions(JsonSerializerDefaults.Web),
 				cancellationToken).ConfigureAwait(false);
- 
-			response.EnsureSuccessStatusCode();
-			 
-			var userIdString = await response.Content.ReadAsStringAsync();
-			var resultUserIdString = userIdString.Replace($"\"", "");
-			if(Guid.TryParse(resultUserIdString, out Guid userId))
-			{
-				return userId;
-			}
-			else
-			{ 
-				return null;
-			}
+
+			return response;
 		}
 		catch(Exception exc)
 		{
-			ConsoleLog.WriteError($@"{nameof(ProductsHttpClient)}.{nameof(GetAddressById)} failed: {exc}");
+			ConsoleLog.WriteError($@"{nameof(UsersHttpClient)}.{nameof(GetUserByLogin)} failed: {exc}");
 			return null;
 		}
 	}

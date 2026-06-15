@@ -34,7 +34,7 @@ public class OrdersHttpClient
 		}
 		catch(Exception exc)
 		{
-			ConsoleLog.WriteError($@"{nameof(ProductsHttpClient)}.{nameof(CreateOrder)} failed: {exc}");
+			ConsoleLog.WriteError($@"{nameof(OrdersHttpClient)}.{nameof(CreateOrder)} failed: {exc}");
 			return null;
 		}
 	}
@@ -60,7 +60,7 @@ public class OrdersHttpClient
 		}
 		catch(Exception exc)
 		{
-			ConsoleLog.WriteError($@"{nameof(ProductsHttpClient)}.{nameof(CreateOrders)} failed: {exc}");
+			ConsoleLog.WriteError($@"{nameof(OrdersHttpClient)}.{nameof(CreateOrders)} failed: {exc}");
 			return null;
 		}
 	}

@@ -216,11 +216,7 @@ public class ProductsService : IProductsService
 	{
 		var result = default(bool);
 
-		StringBuilder stringBuilder = new StringBuilder();
-
-		stringBuilder.AppendJoin(';', _productsInBasket.Items.Where(x => x.CurrentSelectedCount > 0).Select(x => $"{x.Id},{x.CurrentSelectedCount}"));
-
-		var products = stringBuilder.ToString();
+		var products = _productsInBasket.Items.GetProductsFromString();
 
 		if(products.Length > 0)
 		{ 

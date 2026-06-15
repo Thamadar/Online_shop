@@ -95,10 +95,11 @@
                 </Grid>
                 <TextBlock
                     Grid.Row="1"
-                    Height="42"
+                    Height="43"
                     Margin="0,-2,0,0"
                     VerticalAlignment="Top"
                     Text="{Binding ProductName}"
+                    ToolTip="{Binding ProductName}"
                     Style="{StaticResource textblock-default-dark}"
                     TextTrimming="CharacterEllipsis" TextWrapping="Wrap" />
                 <TextBlock

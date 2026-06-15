@@ -27,7 +27,7 @@ public sealed class UsersController : ControllerBase
 	//[HttpGet("{id}")]
 	//[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
 	//[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	//public async Task<IActionResult> GetUserAddressById([FromBody] Guid guid)
+	//public async Task<IActionResult> GetUserAddressById(Guid guid)
 	//{
 	//	try
 	//	{
@@ -64,12 +64,35 @@ public sealed class UsersController : ControllerBase
 	}
 
 	/// <summary>
-	/// Получение id пользователя по логину (КОСТЫЛЬ, ИБО НЕТ аутентификации. - необходимо.)
+	/// Получение пользователя по логину (КОСТЫЛЬ, ИБО НЕТ аутентификации. - необходимо.)
+	/// TO DO: authController.
 	/// </summary> 
 	[HttpGet("{id}")]
 	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserEntity))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<ActionResult<UserEntity?>> GetUserIdByLogin([FromBody] string login)
+	public async Task<ActionResult<UserEntity?>> GetUserById([FromRoute] Guid guid)
+	{
+		try
+		{
+			var user = await _usersRepository.GetUserById(guid);
+
+			return Ok(user);
+		}
+		catch(Exception exc)
+		{
+			ConsoleLog.WriteError($@"{nameof(UsersController)}.{nameof(GetUserById)} failed: {exc}");
+			return StatusCode(StatusCodes.Status500InternalServerError, new ExceptionRepresenter(exc).ToString());
+		}
+	}
+
+	/// <summary>
+	/// Получение пользователя по логину (КОСТЫЛЬ, ИБО НЕТ аутентификации. - необходимо.)
+	/// TO DO: authController.
+	/// </summary> 
+	[HttpGet("by-login")]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserEntity))]
+	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+	public async Task<ActionResult<UserEntity?>> GetUserByLogin([FromQuery] string login)
 	{
 		try
 		{
@@ -79,7 +102,7 @@ public sealed class UsersController : ControllerBase
 		}
 		catch(Exception exc)
 		{
-			ConsoleLog.WriteError($@"{nameof(UsersController)}.{nameof(GetUserIdByLogin)} failed: {exc}");
+			ConsoleLog.WriteError($@"{nameof(UsersController)}.{nameof(GetUserByLogin)} failed: {exc}");
 			return StatusCode(StatusCodes.Status500InternalServerError, new ExceptionRepresenter(exc).ToString());
 		}
 	}
