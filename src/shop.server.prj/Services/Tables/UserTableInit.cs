@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 
 using Shop.Model.Database.Entities;
+using Shop.Server.Extensions;
 
 namespace Shop.Server.Services.Tables;
 
@@ -58,7 +59,10 @@ public class UserTableInit : BaseTableInit<UserEntity>
 	{
 		return new List<UserEntity>()
 		{
-			new UserEntity() { Login = "admin", Password = "admin", Address = "Россия; Московская область; Москва; улица Ленина; дом 13; кв. 45; подъезд 2" }
+			new UserEntity() {
+				Login = "admin",
+				Password = "admin".HashEncrypt(),
+				Address = "Россия; Московская область; Москва; улица Ленина; дом 13; кв. 45; подъезд 2" }
 		};
 	}
 }

@@ -228,7 +228,8 @@ public class ProductsService : IProductsService
 			{
 				 OrderAddress = address,
 				 UserId       = userId,
-				 Products     = products
+				 Products     = products,
+				 CreatedAt    = DateTime.Now
 			};
 
 			var orderResponse = await _ordersHttpClient.CreateOrder(orderEntity);

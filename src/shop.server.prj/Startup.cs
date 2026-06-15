@@ -22,12 +22,17 @@ public class Startup
 		services.AddScoped<IProductRepository, ProductRepository>();
 		services.AddScoped<IOrdersRepository,  OrdersRepository>();
 		services.AddScoped<IUsersRepository,   UsersRepository>();
+		 
+		//TO DO:Вынести регистрацию модулей в отдельный класс  
+		services.AddDbContext<ProductContext>(options => options.UseSqlServer(configRoot.GetConnectionString("DefaultConnection")));
+		services.AddDbContext<OrderContext>(options   => options.UseSqlServer(configRoot.GetConnectionString("DefaultConnection")));
+		services.AddDbContext<UserContext>(options    => options.UseSqlServer(configRoot.GetConnectionString("DefaultConnection")));
 
 		//TO DO:Вынести регистрацию модулей в отдельный класс  
-		services.AddSingleton<IDatabaseInfo,  DatabaseInfo>();
+		services.AddSingleton<IDatabaseInfo,  DatabaseInfo>(); 
 		services.AddSingleton<IServerService, ProductTableInit>();
 		services.AddSingleton<IServerService, OrderTableInit>();
-		services.AddSingleton<IServerService, UserTableInit>();
+		services.AddSingleton<IServerService, UserTableInit>(); 
 
 		using(var serviceProvider = services.BuildServiceProvider())
 		{
@@ -40,12 +45,7 @@ public class Startup
 
 		services.AddControllers(); 
 		services.AddEndpointsApiExplorer();
-		services.AddSwaggerGen();
-
-		//TO DO:Вынести регистрацию модулей в отдельный класс  
-		services.AddDbContext<ProductContext>(options => options.UseSqlServer(configRoot.GetConnectionString("DefaultConnection")));
-		services.AddDbContext<OrderContext>(options   => options.UseSqlServer(configRoot.GetConnectionString("DefaultConnection")));
-		services.AddDbContext<UserContext>(options    => options.UseSqlServer(configRoot.GetConnectionString("DefaultConnection")));
+		services.AddSwaggerGen(); 
 	}
 
 	public void Configure(WebApplication app, IWebHostEnvironment env)

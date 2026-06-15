@@ -13,9 +13,6 @@
   
   <ItemGroup>
     <Folder Include="Bracket\Products\" />
-    <Folder Include="Home\" />
-    <Folder Include="Models\" />
-    <Folder Include="Profile\" />
   </ItemGroup>
 
   <ItemGroup>

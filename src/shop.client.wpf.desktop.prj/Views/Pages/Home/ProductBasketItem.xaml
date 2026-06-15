@@ -39,12 +39,13 @@
                         Height="auto" />
                 </Grid.RowDefinitions>
                 <TextBlock
-                    Grid.Row="0" 
+                    Grid.Row="0"
                     Margin="0,0,0,0"
                     VerticalAlignment="Top"
                     Text="{Binding ProductName}"
                     Style="{StaticResource textblock-default-dark}"
-                    TextTrimming="CharacterEllipsis" TextWrapping="Wrap" />
+                    TextTrimming="CharacterEllipsis" TextWrapping="Wrap"
+                    ToolTip="{Binding ProductName}" />
 
                 <Grid
                     Grid.Row="1"

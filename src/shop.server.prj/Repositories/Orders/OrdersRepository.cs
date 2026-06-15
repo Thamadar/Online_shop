@@ -1,4 +1,5 @@
-﻿using Shop.Model.Database.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Shop.Model.Database.Entities;
 using Shop.Server.Entities;
 
 namespace Shop.Server.Repositories;
@@ -11,21 +12,36 @@ public class OrdersRepository : IOrdersRepository
 	{
 		_orderContext = orderContext;
 	}
+	  
+	/// <inheritdoc/>
+	public async Task<IEnumerable<OrderEntity>> GetOrders()
+	{
+		return await _orderContext.Orders.ToListAsync();
+	}
 
 	/// <inheritdoc/>
-	public async Task<bool> CreateOrder(OrderEntity orderEntity)
+	public async Task<OrderEntity?> GetOrderById(Guid id)
 	{
-		if(orderEntity.Products == null || orderEntity.UserId == default(Guid))
+		return await _orderContext.Orders
+		.Where(x => x.Id == id)
+		.FirstOrDefaultAsync();
+	}
+
+	/// <inheritdoc/>
+	public async Task<bool> PostOrders(OrderEntity[] orderEntities)
+	{ 
+		foreach(var entity in orderEntities)
 		{
-			return false;
-		}
+			if(entity.Products == null || entity.UserId == default(Guid))
+			{
+				return false;
+			} 
+		} 
 
-		orderEntity.CreatedAt = DateTime.Now;
-
-		_orderContext.Orders.Add(orderEntity);
+		await _orderContext.Orders.AddRangeAsync(orderEntities);
 		await _orderContext.SaveChangesAsync();
 
-		return true; 
-	}
- }
+		return true;
+	}    
+}
 

@@ -26,8 +26,8 @@ public class OrdersHttpClient
 			var cancellationToken = new CancellationToken();
 
 			var response = await httpClient.PostAsJsonAsync(
-				$@"{HttpConstants.postCreateOrder}",
-				orderEntity,
+				$@"{HttpConstants.orders}",
+				new OrderEntity[] { orderEntity },
 				cancellationToken).ConfigureAwait(false);
 
 			return response.IsSuccessStatusCode;
@@ -35,6 +35,32 @@ public class OrdersHttpClient
 		catch(Exception exc)
 		{
 			ConsoleLog.WriteError($@"{nameof(ProductsHttpClient)}.{nameof(CreateOrder)} failed: {exc}");
+			return null;
+		}
+	}
+
+	/// <summary>
+	/// Создание заказов в БД через HTTP-запрос.
+	/// </summary>
+	/// <returns></returns>
+	public async Task<bool?> CreateOrders(OrderEntity[] orderEntities)
+	{
+		try
+		{
+			var httpClient = _mainInfo.HttpClient;
+
+			var cancellationToken = new CancellationToken();
+
+			var response = await httpClient.PostAsJsonAsync(
+				$@"{HttpConstants.orders}",
+				orderEntities,
+				cancellationToken).ConfigureAwait(false);
+
+			return response.IsSuccessStatusCode;
+		}
+		catch(Exception exc)
+		{
+			ConsoleLog.WriteError($@"{nameof(ProductsHttpClient)}.{nameof(CreateOrders)} failed: {exc}");
 			return null;
 		}
 	}

@@ -5,14 +5,22 @@ namespace Shop.Server.Repositories;
 public interface IUsersRepository
 {
 	/// <summary>
-	/// Получение адреса пользователя по его идентификатору.
-	/// </summary>
-	/// <param name="id"></param>
-	/// <returns></returns>
-	Task<string> GetAddressById(Guid id);
+	/// Получение всех пользователей.
+	/// </summary> 
+	Task<IEnumerable<UserEntity>> GetUsers();
 
 	/// <summary>
-	/// КОСТЫЛЬ, ИБО НЕТ аутентификации. - необходимо.
+	/// Добавление пользователей.
 	/// </summary> 
-	Task<Guid> GetUserIdByLogin(string login);
+	Task<bool> PostUsers(UserEntity[] userEntities);
+
+	/// <summary>
+	/// Получение пользователя по id.
+	/// </summary> 
+	Task<UserEntity?> GetUserById(Guid id);
+
+	/// <summary>
+	/// КОСТЫЛЬ, ИБО НЕТ аутентификации (AuthController). - необходимо.
+	/// </summary> 
+	Task<UserEntity?> GetUserByLogin(string login);
 }

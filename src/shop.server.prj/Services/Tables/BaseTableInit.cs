@@ -4,8 +4,10 @@ namespace Shop.Server.Services.Tables;
 
 /// <summary>
 /// Базовый класс, имеющий в себе все необходимое для инициализации таблицы.
-/// </summary>
-/// <typeparam name="T"></typeparam>
+/// P.S.
+/// Можно было реализовать все инициализации БД через также EF, однако решил эту часть написать вручную через SqlClient,
+/// чтобы просто отобразить базовые SQL-навыки.
+/// </summary> 
 public abstract class BaseTableInit<T> : IServerService
 	where T : class
 {
@@ -64,8 +66,8 @@ public abstract class BaseTableInit<T> : IServerService
 	/// </summary>
 	public void Initialization()
 	{
-		CheckInitDB();
-
+		ConsoleLog.Write($"Проверка на наличие {TableName}.");
+		CheckInitDB(); 
 		ConsoleLog.Write($"Инициализация таблицы {TableName}."); 
 		TableInitialization(); 
 		ConsoleLog.WriteGreen($"Инициализация таблицы {TableName} завершено!"); 

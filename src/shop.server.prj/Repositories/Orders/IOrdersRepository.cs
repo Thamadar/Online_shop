@@ -3,11 +3,19 @@
 namespace Shop.Server.Repositories;
 
 public interface IOrdersRepository
-{
+{  
 	/// <summary>
-	/// Создание заказа.
-	/// </summary>
-	/// <param name="orderEntity"></param>
-	/// <returns>Success</returns>
-	Task<bool> CreateOrder(OrderEntity orderEntity);
+	/// Добавление товаров.
+	/// </summary> 
+	Task<bool> PostOrders(OrderEntity[] entities);
+
+	/// <summary>
+	/// Получение товара по id.
+	/// </summary> 
+	Task<OrderEntity?> GetOrderById(Guid id);
+
+	/// <summary>
+	/// Получение из базы данных (таблицы Orders) всех товаров.
+	/// </summary> 
+	Task<IEnumerable<OrderEntity>> GetOrders();
 }

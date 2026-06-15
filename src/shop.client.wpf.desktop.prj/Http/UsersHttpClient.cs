@@ -23,18 +23,14 @@ public class UsersHttpClient
 			var httpClient = _mainInfo.HttpClient;
 
 			var cancellationToken = new CancellationToken();
-
-			// Отправляем запрос и получаем ответ
-
+			 
 			var response = await httpClient.PostAsJsonAsync(
-				$@"{HttpConstants.postGetUserAddressById}",
+				$@"{HttpConstants.users}",
 				userId,
 				cancellationToken).ConfigureAwait(false);
-
-			// Проверяем, успешен ли ответ
+			 
 			response.EnsureSuccessStatusCode();
-
-			// Читаем содержимое ответа как строку
+			 
 			return await response.Content.ReadAsStringAsync();  
 		}
 		catch(Exception exc)
@@ -54,18 +50,14 @@ public class UsersHttpClient
 			var httpClient = _mainInfo.HttpClient;
 
 			var cancellationToken = new CancellationToken();
-
-			// Отправляем запрос и получаем ответ
-
+			 
 			var response = await httpClient.PostAsJsonAsync(
-				$@"{HttpConstants.postGetUserIdByLogin}",
+				$@"{HttpConstants.users}",
 				name,
 				cancellationToken).ConfigureAwait(false);
-
-			// Проверяем, успешен ли ответ
+			 
 			response.EnsureSuccessStatusCode();
-
-			// Читаем содержимое ответа как строку
+			 
 			var userIdString = await response.Content.ReadAsStringAsync();
 			var resultUserIdString = userIdString.Replace($"\"", "");
 			if(Guid.TryParse(resultUserIdString, out Guid userId))
@@ -73,8 +65,7 @@ public class UsersHttpClient
 				return userId;
 			}
 			else
-			{
-				// Если не удалось преобразовать в Guid, можно вернуть null или обработать ошибку
+			{ 
 				return null;
 			}
 		}

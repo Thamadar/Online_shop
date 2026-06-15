@@ -27,7 +27,7 @@ public class ProductsHttpClient
 			var cancellationToken = new CancellationToken();
 
 			var response = await httpClient.GetFromJsonAsync<ProductEntity[]>(
-				$@"{HttpConstants.getTotalProducts}",
+				$@"{HttpConstants.products}",
 				new JsonSerializerOptions(JsonSerializerDefaults.Web),
 				cancellationToken).ConfigureAwait(false);
 

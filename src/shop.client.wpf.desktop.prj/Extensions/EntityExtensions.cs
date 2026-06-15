@@ -1,11 +1,13 @@
 ﻿using ReactiveUI;
 
 using Shop.Client.WPF.Desktop.Views.Pages;
-using Shop.Model.Database.Entities; 
+using Shop.Model.Database.Entities;
+using System.Globalization;
 
 namespace Shop.Client.WPF.Desktop.Extensions;
 public static class EntityExtensions
 {
+	private static CultureInfo _currentCulture = CultureInfo.CurrentUICulture;
 
 	public static List<ProductItemVM> ConvertToVM(
 		this IEnumerable<ProductEntity> productEntity)
@@ -24,9 +26,11 @@ public static class EntityExtensions
 		Func<Task>? addCommand = null,
 		Func<Task>? removeCommand = null)
 	{
+		var cultureName = _currentCulture.Name;
+
 		return new ProductItemVM(
 			productEntity.Id,
-			productEntity.ProductName,
+			productEntity.Localizations.FirstOrDefault(x => x.LangCode == cultureName)?.DisplayName ?? "-",
 			productEntity.CurrentCount,
 			productEntity.Price,
 			productEntity.PriceBeforeSale,
