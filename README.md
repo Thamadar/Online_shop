@@ -11,7 +11,8 @@
 ----------------
 
  <img src="https://github.com/Thamadar/Online_shop/blob/main/Readme-preview-opened.png"> <br>
- <img src="https://github.com/Thamadar/Online_shop/blob/main/Readme-preview-collapsed.png"> 
+ <img src="https://github.com/Thamadar/Online_shop/blob/main/Readme-preview-collapsed.png"> <br>
+ <img src="https://github.com/Thamadar/Online_shop/blob/main/Readme-api.png"> <br>
  
 Для запуска необходимо иметь: <br>
 -.NET 7.0. <br>
