@@ -22,7 +22,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{DynamicResource ButtonCornerRadius}">
+                        CornerRadius="{DynamicResource ButtonCornerRadius}">
                         <Grid
                             Margin="{TemplateBinding Padding}"
                             VerticalAlignment="Center">
@@ -48,10 +48,10 @@
                                 x:Name="PART_TextTextBlock"
                                 Grid.Column="1"
                                 Margin="7,-2,0,0"
-                                Foreground="{TemplateBinding Foreground}"
                                 Text="{TemplateBinding TextButton}"
-                                Style="{DynamicResource textblock-default}"
-                                FontWeight="{TemplateBinding FontWeight}"/>
+                                FontWeight="{TemplateBinding FontWeight}"
+                                Foreground="{TemplateBinding Foreground}"
+                                Style="{DynamicResource textblock-default}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -73,7 +73,7 @@
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsRed" Value="True" />
-                                <Condition Property="IsSelected"  Value="False" />
+                                <Condition Property="IsSelected" Value="False" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_MainBorder" Property="Background" Value="#922424" />
                         </MultiTrigger>
@@ -83,7 +83,7 @@
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsRed" Value="True" />
                                 <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsSelected"  Value="False" />
+                                <Condition Property="IsSelected" Value="False" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_MainBorder" Property="Background" Value="#ad1f1f" />
                             <Setter Property="Cursor" Value="Hand" />
@@ -165,7 +165,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{DynamicResource ButtonCornerRadius}">
+                        CornerRadius="{DynamicResource ButtonCornerRadius}">
                         <Grid
                             Margin="{TemplateBinding Padding}">
                             <ContentControl
@@ -198,18 +198,18 @@
                         <!-- Triggers IsRed -->
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="IsRed" Value="True" /> 
-                                <Condition Property="IsSelected"  Value="False" />
+                                <Condition Property="IsRed" Value="True" />
+                                <Condition Property="IsSelected" Value="False" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_MainBorder" Property="Background" Value="#922424" />
-                        </MultiTrigger> 
+                        </MultiTrigger>
 
                         <!-- MultiTrigger IsRed для IsMouseOver -->
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsRed" Value="True" />
                                 <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsSelected"  Value="False" />
+                                <Condition Property="IsSelected" Value="False" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_MainBorder" Property="Background" Value="#ad1f1f" />
                             <Setter Property="Cursor" Value="Hand" />

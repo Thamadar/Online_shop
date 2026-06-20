@@ -1,8 +1,10 @@
-﻿using Shop.Model.Database.Entities;
-using Shop.Model;
-using Shop.Server.Repositories;
-
+﻿
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc; 
+using Shop.Server.Data; 
+using Shop.Server.Services.API;
+using Shop.Dto;
+using Shop.Utilities;
 
 namespace Shop.Server.Controllers;
 
@@ -12,15 +14,15 @@ namespace Shop.Server.Controllers;
 /// </summary>
 [ApiController]
 [Route(HttpConstants.orders)]
-public sealed class OrdersController : ControllerBase
+public sealed class OrdersController : ShopControllerBase
 {
-	private readonly IOrdersRepository _ordersRepository;
+	private readonly IOrdersAPIService _ordersAPIService;
 
-	public OrdersController(IOrdersRepository ordersRepository)
+	public OrdersController(IMapper mapper, IOrdersAPIService ordersAPIService) : base(mapper)
 	{
-		_ordersRepository = ordersRepository;
+		_ordersAPIService = ordersAPIService;
 	} 
-	 
+
 	/// <summary>
 	/// Получение всех заказов.
 	/// </summary> 
@@ -31,7 +33,7 @@ public sealed class OrdersController : ControllerBase
 	{
 		try
 		{
-			var orders = await _ordersRepository.GetOrders();
+			var orders = await _ordersAPIService.GetOrders();
 
 			return Ok(orders);
 		}
@@ -52,9 +54,9 @@ public sealed class OrdersController : ControllerBase
 	{
 		try
 		{
-			var orders = await _ordersRepository.GetOrderById(id);
+			var orders = await _ordersAPIService.GetOrderById(id);
 
-			return Ok(null);
+			return Ok();
 		}
 		catch(Exception exc)
 		{
@@ -73,7 +75,7 @@ public sealed class OrdersController : ControllerBase
 	{
 		try
 		{
-			var orderSuccess = await _ordersRepository.PostOrders(parameters);
+			var orderSuccess = await _ordersAPIService.PostOrders(parameters);
 
 			return Ok(orderSuccess);
 		}
@@ -87,7 +89,7 @@ public sealed class OrdersController : ControllerBase
 	/// Обновление заказа.
 	/// </summary> 
 	[HttpPut("{id}")]
-	[ProducesResponseType(StatusCodes.Status200OK)]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
 	public async Task<IActionResult> UpdateOrderById(
 		[FromRoute] int id,
@@ -110,7 +112,7 @@ public sealed class OrdersController : ControllerBase
 	/// Удаление заказа.
 	/// </summary> 
 	[HttpDelete("{id}")]
-	[ProducesResponseType(StatusCodes.Status200OK)]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
 	public async Task<IActionResult> DeleteOrder([FromRoute] int id)
 	{

@@ -1,4 +1,5 @@
-﻿using Shop.Model.Database.Entities;
+﻿
+using Shop.Server.Data;
 
 namespace Shop.Server.Repositories;
 

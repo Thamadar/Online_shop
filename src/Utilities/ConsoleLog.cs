@@ -1,13 +1,13 @@
-﻿namespace Shop.Model;
+﻿namespace Shop.Utilities;
 
 public static class ConsoleLog
 {  
-	public static void Write(String message)
+	public static void Write(string message)
 	{ 
 		Console.WriteLine(message + "\n"); 
 	}
 	 
-	public static void WriteError(String message)
+	public static void WriteError(string message)
 	{
 		var oldColor = Console.ForegroundColor;
 		Console.ForegroundColor = ConsoleColor.Red;
@@ -15,7 +15,7 @@ public static class ConsoleLog
 		Console.ForegroundColor = oldColor;
 	}
 
-	public static void WriteGreen(String message)
+	public static void WriteGreen(string message)
 	{
 		var oldColor = Console.ForegroundColor;
 		Console.ForegroundColor = ConsoleColor.Green;
@@ -23,7 +23,7 @@ public static class ConsoleLog
 		Console.ForegroundColor = oldColor;
 	}
 
-	public static void Write(String message, ConsoleColor consoleColor)
+	public static void Write(string message, ConsoleColor consoleColor)
 	{
 		var oldColor = Console.ForegroundColor;
 		Console.ForegroundColor = consoleColor;

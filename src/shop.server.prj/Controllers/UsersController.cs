@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Shop.Model;
-using Shop.Model.Database.Entities;
-using Shop.Server.Repositories;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;  
+using Shop.Server.Services.API;
+using Shop.Dto.Users;
+using Shop.Dto;
+using Shop.Utilities;
 
 namespace Shop.Server.Controllers;
 
@@ -12,47 +13,26 @@ namespace Shop.Server.Controllers;
 /// </summary>
 [ApiController]
 [Route(HttpConstants.users)]
-public sealed class UsersController : ControllerBase
+public sealed class UsersController : ShopControllerBase
 {
-	private readonly IUsersRepository _usersRepository;
+	private readonly IUsersAPIService _usersAPIService;
 
-	public UsersController(IUsersRepository usersRepository)
+	public UsersController(IMapper mapper, IUsersAPIService usersAPIService) : base(mapper)
 	{
-		_usersRepository = usersRepository;
-	}
-
-	///// <summary>
-	///// Получение адреса пользователя по Id.
-	///// </summary> 
-	//[HttpGet("{id}")]
-	//[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-	//[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	//public async Task<IActionResult> GetUserAddressById(Guid guid)
-	//{
-	//	try
-	//	{
-	//		var userAddress = await _usersRepository.GetAddressById(guid);
-
-	//		return Ok(userAddress);
-	//	}
-	//	catch(Exception exc)
-	//	{
-	//		ConsoleLog.WriteError($@"{nameof(UsersController)}.{nameof(GetUserAddressById)} failed: {exc}");
-	//		return StatusCode(StatusCodes.Status500InternalServerError, new ExceptionRepresenter(exc).ToString());
-	//	}
-	//} 
+		_usersAPIService = usersAPIService;
+	} 
 
 	/// <summary>
 	/// Получение всех пользователей.
 	/// </summary> 
 	[HttpGet]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserEntity>))]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetUsersResponse))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<ActionResult<IEnumerable<UserEntity>>> GetUsers()
+	public async Task<ActionResult<GetUsersResponse>> GetUsers()
 	{
 		try
 		{ 
-			var users = await _usersRepository.GetUsers();
+			var users = await _usersAPIService.GetUsers();
 
 			return Ok(users);
 		}
@@ -68,13 +48,13 @@ public sealed class UsersController : ControllerBase
 	/// TO DO: authController.
 	/// </summary> 
 	[HttpGet("{id}")]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserEntity))]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetUserItemDto))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<ActionResult<UserEntity?>> GetUserById([FromRoute] Guid guid)
+	public async Task<ActionResult<GetUserItemDto?>> GetUserById([FromRoute] Guid guid)
 	{
 		try
 		{
-			var user = await _usersRepository.GetUserById(guid);
+			var user = await _usersAPIService.GetUserById(guid);
 
 			return Ok(user);
 		}
@@ -89,14 +69,15 @@ public sealed class UsersController : ControllerBase
 	/// Получение пользователя по логину (КОСТЫЛЬ, ИБО НЕТ аутентификации. - необходимо.)
 	/// TO DO: authController.
 	/// </summary> 
-	[HttpGet("by-login")]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserEntity))]
+	[HttpGet("by-login/{login}&{}")]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetUserItemDto))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<ActionResult<UserEntity?>> GetUserByLogin([FromQuery] string login)
+	public async Task<ActionResult<GetUserItemDto?>> GetUserByLogin(string login)
 	{
 		try
 		{
-			var user = await _usersRepository.GetUserByLogin(login);
+			var user = await _usersAPIService.GetUserByLogin(login);
+			
 
 			return Ok(user);
 		}
@@ -110,16 +91,19 @@ public sealed class UsersController : ControllerBase
 	/// <summary>
 	/// Создание пользователей.
 	/// </summary> 
-	[HttpPost]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))]
+	[HttpPost("batch")]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActionResult<CreateUserResponse>))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<IActionResult> PostUsers([FromBody] UserEntity[] parameters)
+	public async Task<ActionResult<CreateUsersResponse>> PostUsers([FromBody] CreateUsersRequest request)
 	{
+		if(!ModelState.IsValid)
+			return BadRequest(ModelState);
+
 		try
 		{
-			var userSuccess = await _usersRepository.PostUsers(parameters);
+			var usersRepsonse = await _usersAPIService.CreateUsers(request);
 
-			return Ok(); 
+			return Ok(usersRepsonse); 
 		}
 		catch(Exception exc)
 		{
@@ -131,21 +115,19 @@ public sealed class UsersController : ControllerBase
 	/// <summary>
 	/// Обновление пользователя.
 	/// </summary> 
-	[HttpPut("{id}")]
-	[ProducesResponseType(StatusCodes.Status200OK)]
+	[HttpPut]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<IActionResult> UpdateUserById(
-		[FromRoute] int id,
-		[FromBody] UserEntity parameters)
+	public async Task<IActionResult> UpdateUsers([FromBody] EditUserItemRequest parameters)
 	{
 		try
 		{
-			//var userSuccess = await _usersRepository.UpdateUser(parameters);
+			//var userSuccess = await _usersAPIService.UpdateUsers(parameters);
 			return Ok();
 		}
 		catch(Exception exc)
 		{
-			ConsoleLog.WriteError($@"{nameof(UsersController)}.{nameof(UpdateUserById)} failed: {exc}");
+			ConsoleLog.WriteError($@"{nameof(UsersController)}.{nameof(UpdateUsers)} failed: {exc}");
 			return StatusCode(StatusCodes.Status500InternalServerError, new ExceptionRepresenter(exc).ToString());
 		}
 	}
@@ -155,7 +137,7 @@ public sealed class UsersController : ControllerBase
 	/// Удаление пользователя.
 	/// </summary> 
 	[HttpDelete("{id}")]
-	[ProducesResponseType(StatusCodes.Status200OK)]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
 	public async Task<IActionResult> DeleteUser([FromRoute] int id)
 	{

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
- 
-using Shop.Server.Entities;
+using Shop.Server.Data;
+using Shop.Server.Mappers;
 using Shop.Server.Repositories;
 using Shop.Server.Services;
 using Shop.Server.Services.Tables;
@@ -18,6 +18,8 @@ public class Startup
 
 	public void ConfigureServices(IServiceCollection services)
 	{
+		services.AddAutoMapper(typeof(UserProfile));
+
 		//TO DO:Вынести регистрацию модулей в отдельный класс  
 		services.AddScoped<IProductRepository, ProductRepository>();
 		services.AddScoped<IOrdersRepository,  OrdersRepository>();

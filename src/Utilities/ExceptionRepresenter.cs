@@ -1,4 +1,4 @@
-﻿namespace Shop.Model;
+﻿namespace Shop.Utilities;
 public class ExceptionRepresenter
 {
 	/// <summary>

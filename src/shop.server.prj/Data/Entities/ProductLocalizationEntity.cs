@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace Shop.Model.Database.Entities;
+namespace Shop.Server.Data;
 
 /// <summary>
 /// Объект, инкапсулирующий локализацию для товара (ProductEntity).

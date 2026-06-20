@@ -27,17 +27,17 @@
             Style="{StaticResource container}">
             <TextBlock
                 Margin="12,0"
-                Style="{StaticResource textblock-default}"
                 Text="{Binding PageHeader, Converter={StaticResource StringAllSymbolsToUpperConverter}}"
                 FontSize="{DynamicResource LargeFontSize}"
-                FontWeight="SemiBold" Foreground="#fff" />
+                FontWeight="SemiBold" Foreground="#fff"
+                Style="{StaticResource textblock-default}" />
         </Border>
         <Border
             Grid.Row="1"
             Margin="8,0,8,8"
             Style="{StaticResource container}">
             <ContentPresenter
-                Content="{Binding View}"  />
+                Content="{Binding View}" />
         </Border>
     </Grid>
 </UserControl>

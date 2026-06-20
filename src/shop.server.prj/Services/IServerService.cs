@@ -3,7 +3,7 @@
 public interface IServerService
 {
 	/// <summary>
-	/// Реализация инициализации.
+	/// Инициализацировать.
 	/// </summary>
 	public void Initialization();
 }

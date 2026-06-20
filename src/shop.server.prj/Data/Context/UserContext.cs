@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Shop.Model.Database.Entities;
 
-namespace Shop.Server.Entities; 
+namespace Shop.Server.Data;
 
 public class UserContext : DbContext
 {

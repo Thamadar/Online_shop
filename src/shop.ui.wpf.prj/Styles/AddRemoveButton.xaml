@@ -5,11 +5,11 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <converters:IsNotNullOrEmptyObjectToVisibilityConverter
-            x:Key="IsNotNullOrEmptyObjectToVisibilityConverter" />
-    
+        x:Key="IsNotNullOrEmptyObjectToVisibilityConverter" />
+
     <converters:IsNullOrEmptyObjectToVisibilityConverter
-            x:Key="IsNullOrEmptyObjectToVisibilityConverter" />
-    
+        x:Key="IsNullOrEmptyObjectToVisibilityConverter" />
+
     <Style TargetType="controls:AddRemoveButton">
         <Setter Property="Background" Value="{DynamicResource GrayDark}" />
         <Setter Property="BorderBrush" Value="#FFF" />
@@ -31,7 +31,8 @@
                         CornerRadius="16">
                         <Grid>
                             <Grid
-                                Visibility="{TemplateBinding Count, Converter={StaticResource IsNullOrEmptyObjectToVisibilityConverter}}">
+                                Visibility="{TemplateBinding Count,
+                                                             Converter={StaticResource IsNullOrEmptyObjectToVisibilityConverter}}">
                                 <controls:ButtonIcon
                                     x:Name="PART_FullAddButtonIcon"
                                     HorizontalAlignment="Stretch"
@@ -43,7 +44,8 @@
                             <Grid
                                 Margin="{TemplateBinding Padding}"
                                 VerticalAlignment="Center"
-                                Visibility="{TemplateBinding Count, Converter={StaticResource IsNotNullOrEmptyObjectToVisibilityConverter}}">
+                                Visibility="{TemplateBinding Count,
+                                                             Converter={StaticResource IsNotNullOrEmptyObjectToVisibilityConverter}}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition
                                         Width="*" />

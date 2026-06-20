@@ -1,8 +1,10 @@
-﻿using Shop.Model;
-using Shop.Server.Repositories;
-
-using Microsoft.AspNetCore.Mvc;
-using Shop.Model.Database.Entities;
+﻿
+using AutoMapper;
+using Microsoft.AspNetCore.Mvc; 
+using Shop.Server.Data; 
+using Shop.Server.Services.API;
+using Shop.Dto;
+using Shop.Utilities;
 
 namespace Shop.Server.Controllers;
 
@@ -12,13 +14,13 @@ namespace Shop.Server.Controllers;
 /// </summary>
 [ApiController]
 [Route(HttpConstants.products)]
-public sealed class ProductsController : ControllerBase
+public sealed class ProductsController : ShopControllerBase
 {
-	private readonly IProductRepository _productRepository;
+	private readonly IProductsAPIService _productsAPIService;
 
-	public ProductsController(IProductRepository productRepository)
+	public ProductsController(IMapper mapper, IProductsAPIService productsAPIService) : base(mapper) 
 	{
-		_productRepository = productRepository;
+		_productsAPIService = productsAPIService;
 	}
 
 	/// <summary>
@@ -31,7 +33,7 @@ public sealed class ProductsController : ControllerBase
 	{
 		try
 		{
-			var products = await _productRepository.GetProducts();
+			var products = await _productsAPIService.GetProducts();
 
 			return Ok(products);
 		}
@@ -52,7 +54,7 @@ public sealed class ProductsController : ControllerBase
 	{
 		try
 		{
-			var product = await _productRepository.GetProductById(id);
+			var product = await _productsAPIService.GetProductById(id);
 
 			return Ok(product);
 		}
@@ -67,7 +69,7 @@ public sealed class ProductsController : ControllerBase
 	/// Добавление товаров.
 	/// </summary> 
 	[HttpPost]
-	[ProducesResponseType(StatusCodes.Status200OK)]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
 	public async Task<IActionResult> PostProducts([FromBody] ProductEntity[] parameters)
 	{
@@ -87,7 +89,7 @@ public sealed class ProductsController : ControllerBase
 	/// Обновление товара.
 	/// </summary> 
 	[HttpPut("{id}")]
-	[ProducesResponseType(StatusCodes.Status200OK)]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
 	public async Task<IActionResult> UpdateProductById(
 		[FromRoute] int id,
@@ -110,7 +112,7 @@ public sealed class ProductsController : ControllerBase
 	/// Удаление товара.
 	/// </summary> 
 	[HttpDelete("{id}")]
-	[ProducesResponseType(StatusCodes.Status200OK)]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
 	public async Task<IActionResult> DeleteProduct([FromRoute] int id)
 	{

@@ -1,6 +1,6 @@
-﻿using Microsoft.Data.SqlClient;
-using Shop.Model;
-using Shop.Model.Database.Entities; 
+﻿using Microsoft.Data.SqlClient; 
+using Shop.Utilities;
+using Shop.Server.Data;
 
 namespace Shop.Server.Services.Tables;
 
@@ -111,7 +111,7 @@ public class ProductTableInit : BaseTableInit<ProductEntity>
 	/// <inheritdoc/>
 	protected override List<ProductEntity> GetDataForInsert()
 	{
-		//TO DO: add factory.
+		//TO DO: add builder.
 		return new List<ProductEntity>()
 		{
 			new ProductEntity() { ProductName = "TomatoesCommon", Price = 150, Weight = 250, CurrentCount = 3, Image = File.ReadAllBytes(@"Assets\Images\tomatoes-common-product.png"),

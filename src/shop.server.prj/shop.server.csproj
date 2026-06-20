@@ -8,18 +8,21 @@
   </PropertyGroup> 
   
   <ItemGroup> 
+    <PackageReference Include="AutoMapper" Version="16.1.1" /> 
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" /> 
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.20" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.20" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.20" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />  
      
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\shop.model.prj\shop.model.csproj" />
-  </ItemGroup>
  
   <ItemGroup>
     <None Remove=".gitignore" />
+  </ItemGroup>
+ 
+  <ItemGroup>
+    <ProjectReference Include="..\shop.model.prj\shop.dto.csproj" />
+    <ProjectReference Include="..\Utilities\shop.utilities.csproj" />
   </ItemGroup> 
 </Project>

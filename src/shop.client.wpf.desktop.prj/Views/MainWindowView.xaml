@@ -4,11 +4,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:Shop.Client.WPF.Desktop.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:menu="clr-namespace:Shop.Client.WPF.Desktop.Views.Menu"
     xmlns:pageC="clr-namespace:Shop.Client.WPF.Desktop.Views.Pages"
-    MinWidth="1300" MinHeight="768" 
+    MinWidth="1300" MinHeight="768"
     Style="{StaticResource NoChrome}"
     mc:Ignorable="d"
     x:Class="Shop.Client.WPF.Desktop.Views.MainWindowView">
- 
+
     <Grid
         Margin="8">
         <Grid.ColumnDefinitions>

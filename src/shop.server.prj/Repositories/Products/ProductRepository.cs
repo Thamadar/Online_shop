@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Shop.Model.Database.Entities;
 
-using Shop.Server.Entities; 
+using Shop.Server.Data;
 
 namespace Shop.Server.Repositories;
 

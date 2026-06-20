@@ -69,11 +69,11 @@
                         <DataTemplate>
                             <controls:ButtonIcon
                                 Margin="0,0,0,8"
-                                IsSelected="{Binding IsSelected}"
                                 Command="{Binding Command}"
                                 IconContent="{Binding DisplayName, Converter={StaticResource IconConverter}}"
+                                IsSelected="{Binding IsSelected}"
                                 IsShortSizeStyle="{Binding DataContext.IsOpened, RelativeSource={RelativeSource AncestorType=ItemsControl}, Converter={StaticResource InverseBooleanConverter}}"
-                                TextButton="{Binding DisplayName}" /> 
+                                TextButton="{Binding DisplayName}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

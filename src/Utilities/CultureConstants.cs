@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shop.Model;
+namespace Shop.Utilities;
 public static class CultureConstants
 {
 	public const string RU = "ru-RU";

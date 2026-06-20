@@ -8,7 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shop.model", "shop.model.prj\shop.model.csproj", "{F3E58036-B414-4661-BEBA-F500C64ECC13}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shop.dto", "shop.model.prj\shop.dto.csproj", "{F3E58036-B414-4661-BEBA-F500C64ECC13}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shop.server", "shop.server.prj\shop.server.csproj", "{7CCE7A80-376A-4165-869B-26382938CD35}"
 EndProject
@@ -19,6 +19,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shop.client.wpf.desktop", "shop.client.wpf.desktop.prj\shop.client.wpf.desktop.csproj", "{69D10D29-512D-4654-AA5A-AC1974560442}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shop.ui.wpf", "shop.ui.wpf.prj\shop.ui.wpf.csproj", "{D32A4C41-DBBA-4E2D-BF5C-F10C65364204}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shop.utilities", "Utilities\shop.utilities.csproj", "{73D617EE-5328-44CF-9985-1F7F04E60B7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,10 @@ Global
 		{D32A4C41-DBBA-4E2D-BF5C-F10C65364204}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D32A4C41-DBBA-4E2D-BF5C-F10C65364204}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D32A4C41-DBBA-4E2D-BF5C-F10C65364204}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73D617EE-5328-44CF-9985-1F7F04E60B7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73D617EE-5328-44CF-9985-1F7F04E60B7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73D617EE-5328-44CF-9985-1F7F04E60B7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73D617EE-5328-44CF-9985-1F7F04E60B7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

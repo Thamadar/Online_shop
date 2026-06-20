@@ -16,4 +16,8 @@
   <ItemGroup>
     <None Remove=".gitignore" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Utilities\shop.utilities.csproj" />
+  </ItemGroup>
 </Project>

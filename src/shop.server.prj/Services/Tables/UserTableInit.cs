@@ -1,7 +1,6 @@
-﻿using Microsoft.Data.SqlClient;
-
-using Shop.Model.Database.Entities;
+﻿using Microsoft.Data.SqlClient; 
 using Shop.Server.Extensions;
+using Shop.Server.Data;
 
 namespace Shop.Server.Services.Tables;
 

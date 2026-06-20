@@ -1,4 +1,6 @@
-﻿/// <summary>Константы стандартных URI ядра.</summary>
+﻿namespace Shop.Dto;
+
+/// <summary>Константы стандартных URI ядра.</summary>
 public static class HttpConstants
 {  
 	public const string apiV1 = "api/v1/";

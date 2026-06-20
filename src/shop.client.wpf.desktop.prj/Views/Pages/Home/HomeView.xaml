@@ -66,15 +66,15 @@
                     Grid.Column="1"
                     Width="80"
                     HorizontalAlignment="Right"
-                    Content="Clear" 
+                    Content="Clear"
                     Command="{Binding Commands.ClearBasket}"
                     Style="{DynamicResource button-default}" />
             </Grid>
 
             <ScrollViewer
                 Grid.Row="1"
-                HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"
-                Margin="-8,0">
+                Margin="-8,0"
+                HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                 <ItemsControl
                     ItemsSource="{Binding ProductInBasketItems}"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">

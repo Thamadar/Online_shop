@@ -15,10 +15,10 @@
 
         <converters:IsNullOrEmptyObjectToVisibilityConverter
             x:Key="IsNullOrEmptyObjectToVisibilityConverter" />
-        
+
         <converters:IsNotNullOrEmptyObjectConverter
             x:Key="IsNotNullOrEmptyObjectConverter" />
-  
+
     </UserControl.Resources>
 
     <Border
@@ -99,9 +99,9 @@
                     Margin="0,-2,0,0"
                     VerticalAlignment="Top"
                     Text="{Binding ProductName}"
-                    ToolTip="{Binding ProductName}"
                     Style="{StaticResource textblock-default-dark}"
-                    TextTrimming="CharacterEllipsis" TextWrapping="Wrap" />
+                    TextTrimming="CharacterEllipsis" TextWrapping="Wrap"
+                    ToolTip="{Binding ProductName}" />
                 <TextBlock
                     Grid.Row="2"
                     Margin="0,-4,0,0"

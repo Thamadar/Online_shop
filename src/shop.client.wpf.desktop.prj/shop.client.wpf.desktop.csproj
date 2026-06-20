@@ -20,7 +20,7 @@
   </ItemGroup> 
 
   <ItemGroup>
-    <ProjectReference Include="..\shop.model.prj\shop.model.csproj" />
+    <ProjectReference Include="..\shop.model.prj\shop.dto.csproj" />
     <ProjectReference Include="..\shop.ui.wpf.prj\shop.ui.wpf.csproj" />
   </ItemGroup>
 
