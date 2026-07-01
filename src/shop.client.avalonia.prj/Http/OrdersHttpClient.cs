@@ -1,5 +1,6 @@
-﻿using Shop.Model;
-using Shop.Model.Database.Entities;
+﻿using Shop.Dto;
+using Shop.Dto.Orders; 
+using Shop.Utilities;
 
 using System.Net.Http.Json;  
 
@@ -15,9 +16,8 @@ public class OrdersHttpClient
 
 	/// <summary>
 	/// Создание заказа в БД через HTTP-запрос.
-	/// </summary>
-	/// <returns></returns>
-	public async Task<bool?> CreateOrder(OrderEntity orderEntity)
+	/// </summary> 
+	public async Task<CreateOrderResponse?> CreateOrder(CreateOrderRequest createOrderRequest)
 	{
 		try
 		{
@@ -25,12 +25,12 @@ public class OrdersHttpClient
 
 			var cancellationToken = new CancellationToken();
 
-			var response = await httpClient.PostAsJsonAsync(
+			var responseMessage = await httpClient.PostAsJsonAsync(
 				$@"{HttpConstants.orders}",
-				new OrderEntity[] { orderEntity },
+				createOrderRequest,
 				cancellationToken).ConfigureAwait(false);
 
-			return response.IsSuccessStatusCode;
+			return await responseMessage.Content.ReadFromJsonAsync<CreateOrderResponse>();  
 		}
 		catch(Exception exc)
 		{
@@ -41,9 +41,8 @@ public class OrdersHttpClient
 
 	/// <summary>
 	/// Создание заказов в БД через HTTP-запрос.
-	/// </summary>
-	/// <returns></returns>
-	public async Task<bool?> CreateOrders(OrderEntity[] orderEntities)
+	/// </summary> 
+	public async Task<CreateOrdersResponse?> CreateOrders(CreateOrdersRequest createOrdersRequest)
 	{
 		try
 		{
@@ -51,12 +50,12 @@ public class OrdersHttpClient
 
 			var cancellationToken = new CancellationToken();
 
-			var response = await httpClient.PostAsJsonAsync(
-				$@"{HttpConstants.orders}",
-				orderEntities,
+			var responseMessage = await httpClient.PostAsJsonAsync(
+				$@"{HttpConstants.orders}/batch",
+				createOrdersRequest,
 				cancellationToken).ConfigureAwait(false);
 
-			return response.IsSuccessStatusCode;
+			return await responseMessage.Content.ReadFromJsonAsync<CreateOrdersResponse>();  
 		}
 		catch(Exception exc)
 		{

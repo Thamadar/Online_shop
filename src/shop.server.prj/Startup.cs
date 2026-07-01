@@ -3,6 +3,7 @@ using Shop.Server.Data;
 using Shop.Server.Mappers;
 using Shop.Server.Repositories;
 using Shop.Server.Services;
+using Shop.Server.Services.API;
 using Shop.Server.Services.Tables;
 
 namespace Shop.Server;
@@ -18,23 +19,11 @@ public class Startup
 
 	public void ConfigureServices(IServiceCollection services)
 	{
-		services.AddAutoMapper(typeof(UserProfile));
-
-		//TO DO:Вынести регистрацию модулей в отдельный класс  
-		services.AddScoped<IProductRepository, ProductRepository>();
-		services.AddScoped<IOrdersRepository,  OrdersRepository>();
-		services.AddScoped<IUsersRepository,   UsersRepository>();
-		 
-		//TO DO:Вынести регистрацию модулей в отдельный класс  
-		services.AddDbContext<ProductContext>(options => options.UseSqlServer(configRoot.GetConnectionString("DefaultConnection")));
-		services.AddDbContext<OrderContext>(options   => options.UseSqlServer(configRoot.GetConnectionString("DefaultConnection")));
-		services.AddDbContext<UserContext>(options    => options.UseSqlServer(configRoot.GetConnectionString("DefaultConnection")));
-
-		//TO DO:Вынести регистрацию модулей в отдельный класс  
-		services.AddSingleton<IDatabaseInfo,  DatabaseInfo>(); 
-		services.AddSingleton<IServerService, ProductTableInit>();
-		services.AddSingleton<IServerService, OrderTableInit>();
-		services.AddSingleton<IServerService, UserTableInit>(); 
+		ConfigureMappers(services);
+		ConfigureRepositories(services);
+		ConfigureDbContexts(services);
+		ConfigureTables(services);
+		ConfigureAPIServices(services);
 
 		using(var serviceProvider = services.BuildServiceProvider())
 		{
@@ -63,5 +52,42 @@ public class Startup
 		app.MapControllers(); 
 
 		app.Run();
-	} 
+	}
+
+	private void ConfigureMappers(IServiceCollection services)
+	{
+		services.AddAutoMapper(typeof(OrdersProfile));
+		services.AddAutoMapper(typeof(ProductsProfile));
+		services.AddAutoMapper(typeof(UserProfile));
+	}
+
+	private void ConfigureAPIServices(IServiceCollection services)
+	{
+		services.AddScoped<IProductsAPIService, ProductsAPIService>();
+		services.AddScoped<IOrdersAPIService,   OrdersAPIService>();
+		services.AddScoped<IUsersAPIService,    UsersAPIService>();
+	}
+
+	private void ConfigureRepositories(IServiceCollection services)
+	{
+		services.AddScoped<IProductsRepository, ProductsRepository>();
+		services.AddScoped<IOrdersRepository,  OrdersRepository>();
+		services.AddScoped<IUsersRepository,   UsersRepository>(); 
+	}
+
+	private void ConfigureDbContexts(IServiceCollection services)
+	{ 
+		services.AddDbContext<ProductContext>(options => options.UseSqlServer(configRoot.GetConnectionString("DefaultConnection")));
+		services.AddDbContext<OrderContext>(options   => options.UseSqlServer(configRoot.GetConnectionString("DefaultConnection")));
+		services.AddDbContext<UserContext>(options    => options.UseSqlServer(configRoot.GetConnectionString("DefaultConnection")));
+	}
+
+	private void ConfigureTables(IServiceCollection services)
+	{
+		//TO DO: Добавить Dispose после инициализации, чтобы освободить ресурсы?
+		services.AddSingleton<IDatabaseInfo, DatabaseInfo>();
+		services.AddSingleton<IServerService, ProductTableInit>();
+		services.AddSingleton<IServerService, OrderTableInit>();
+		services.AddSingleton<IServerService, UserTableInit>();
+	}
 }

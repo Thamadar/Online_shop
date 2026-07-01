@@ -5,6 +5,7 @@ using Shop.Server.Data;
 using Shop.Server.Services.API;
 using Shop.Dto;
 using Shop.Utilities;
+using Shop.Dto.Orders;
 
 namespace Shop.Server.Controllers;
 
@@ -27,13 +28,13 @@ public sealed class OrdersController : ShopControllerBase
 	/// Получение всех заказов.
 	/// </summary> 
 	[HttpGet]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OrderEntity[]))]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetOrdersDto))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<ActionResult<OrderEntity[]?>> GetOrders()
+	public async Task<ActionResult<GetOrdersDto>> GetOrders()
 	{
 		try
 		{
-			var orders = await _ordersAPIService.GetOrders();
+			var orders = await _ordersAPIService.GetOrdersAsync();
 
 			return Ok(orders);
 		}
@@ -47,16 +48,16 @@ public sealed class OrdersController : ShopControllerBase
 	/// <summary>
 	/// Получение заказа по id.
 	/// </summary> 
-	[HttpGet("{id}")]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OrderEntity))]
+	[HttpGet("{id:guid}")]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetOrderDto))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<ActionResult<OrderEntity?>> GetOrderById([FromRoute] Guid id)
+	public async Task<ActionResult<GetOrderDto>> GetOrderById([FromRoute] Guid id)
 	{
 		try
 		{
-			var orders = await _ordersAPIService.GetOrderById(id);
+			var order = await _ordersAPIService.GetOrderByIdAsync(id);
 
-			return Ok();
+			return Ok(order);
 		}
 		catch(Exception exc)
 		{
@@ -68,27 +69,93 @@ public sealed class OrdersController : ShopControllerBase
 	/// <summary>
 	/// Создание заказов.
 	/// </summary> 
-	[HttpPost]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))]
+	[HttpPost("batch")]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateOrdersResponse))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<IActionResult> PostOrders([FromBody] OrderEntity[] parameters)
+	public async Task<ActionResult<CreateOrdersResponse>> PostOrders([FromBody] CreateOrdersRequest parameters)
 	{
+		if(!ModelState.IsValid)
+			return BadRequest(ModelState);
 		try
 		{
-			var orderSuccess = await _ordersAPIService.PostOrders(parameters);
+			var ordersResponse = await _ordersAPIService.CreateOrdersAsync(parameters);
 
-			return Ok(orderSuccess);
+			return Ok(ordersResponse);
 		}
 		catch(Exception exc)
 		{
 			ConsoleLog.WriteError($@"{nameof(OrdersController)}.{nameof(PostOrders)} failed: {exc}");
 			return StatusCode(StatusCodes.Status500InternalServerError, new ExceptionRepresenter(exc).ToString());
 		}
-	} 
+	}
+
+	/// <summary>
+	/// Создание заказа.
+	/// </summary> 
+	[HttpPost]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateOrderResponse))]
+	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+	public async Task<ActionResult<CreateOrderResponse>> PostOrder([FromBody] CreateOrderRequest parameters)
+	{
+		if(!ModelState.IsValid)
+			return BadRequest(ModelState);
+		try
+		{
+			var orderResponse = await _ordersAPIService.CreateOrderAsync(parameters);
+
+			return Ok(orderResponse);
+		}
+		catch(Exception exc)
+		{
+			ConsoleLog.WriteError($@"{nameof(OrdersController)}.{nameof(PostOrder)} failed: {exc}");
+			return StatusCode(StatusCodes.Status500InternalServerError, new ExceptionRepresenter(exc).ToString());
+		}
+	}
+
+	/// <summary>
+	/// Успешное завершение заказа.
+	/// </summary> 
+	[HttpPost("{id:guid}/complete")]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))]
+	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+	public async Task<IActionResult> CompleteOrder([FromRoute] Guid id)
+	{
+		try
+		{
+			await _ordersAPIService.CompletionOrderAsync(id);
+			return Ok();
+		}
+		catch(Exception exc)
+		{
+			ConsoleLog.WriteError($@"{nameof(OrdersController)}.{nameof(CompleteOrder)} failed: {exc}");
+			return StatusCode(StatusCodes.Status500InternalServerError, new ExceptionRepresenter(exc).ToString());
+		}
+	}
+
+	/// <summary>
+	/// Отмена заказа.
+	/// </summary> 
+	[HttpPost("{id:guid}/cancel")]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))]
+	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+	public async Task<IActionResult> CancelOrder([FromRoute] Guid id)
+	{
+		try
+		{
+			await _ordersAPIService.CancellationOrderAsync(id);
+			return Ok();
+		}
+		catch(Exception exc)
+		{
+			ConsoleLog.WriteError($@"{nameof(OrdersController)}.{nameof(CancelOrder)} failed: {exc}");
+			return StatusCode(StatusCodes.Status500InternalServerError, new ExceptionRepresenter(exc).ToString());
+		}
+	}
+
 	/// <summary>
 	/// Обновление заказа.
 	/// </summary> 
-	[HttpPut("{id}")]
+	[HttpPut("{id:guid}")]
 	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
 	public async Task<IActionResult> UpdateOrderById(
@@ -97,35 +164,14 @@ public sealed class OrdersController : ShopControllerBase
 	{
 		try
 		{
-
-			return Ok();
+			//TO DO:
+			return StatusCode(StatusCodes.Status404NotFound);
 		}
 		catch(Exception exc)
 		{
 			ConsoleLog.WriteError($@"{nameof(OrdersController)}.{nameof(UpdateOrderById)} failed: {exc}");
 			return StatusCode(StatusCodes.Status500InternalServerError, new ExceptionRepresenter(exc).ToString());
 		}
-	}
-
-
-	/// <summary>
-	/// Удаление заказа.
-	/// </summary> 
-	[HttpDelete("{id}")]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))]
-	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<IActionResult> DeleteOrder([FromRoute] int id)
-	{
-		try
-		{
-
-			return Ok();
-		}
-		catch(Exception exc)
-		{
-			ConsoleLog.WriteError($@"{nameof(OrdersController)}.{nameof(DeleteOrder)} failed: {exc}");
-			return StatusCode(StatusCodes.Status500InternalServerError, new ExceptionRepresenter(exc).ToString());
-		}
-	}
+	} 
 }
 

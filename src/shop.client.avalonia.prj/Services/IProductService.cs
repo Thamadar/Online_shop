@@ -58,5 +58,5 @@ public interface IProductsService : IShopService
 	/// <summary>
 	/// Создание заказа, отправка его через HTTP на сервер.
 	/// </summary> 
-	Task<bool> CreateOrder(Guid userId, string address);
+	Task<bool> CreateOrder();
 }

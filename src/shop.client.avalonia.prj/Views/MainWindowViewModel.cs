@@ -57,8 +57,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 
 		var arrParameters = new object[] {
 			_mainInfo,
-			_mainInfo.GetItem<IProductsService>(),
-			_mainInfo.GetItem<UsersHttpClient>()
+			_mainInfo.GetItem<IProductsService>()
 		}.ToArray();
 		await _pageService.GoToPageAsync<HomeViewModel>(arrParameters); 
 	}

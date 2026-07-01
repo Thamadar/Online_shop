@@ -6,16 +6,9 @@ public record CreateUsersRequest([Required][MinLength(1)] List<CreateUserRequest
 public record CreateUserRequest(
 	[Required][StringLength(100)] string Login,
 	[Required] string Password,
-	[Required] string Address);
+	[Required][StringLength(150)] string Address);
 
-public record CreateUsersResponse(
-	List<CreateUserResponse> Created,
-	List<BatchError> Failed,
-	int TotalCreated,
-	int TotalFailed); 
+public record CreateUsersResponse(List<CreateUserResponse> Created); 
 public record CreateUserResponse(
 	Guid Id,
-	string Login,
-	string Password,
-	string Address,
 	DateTime CreatedAt);

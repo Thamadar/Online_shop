@@ -42,11 +42,11 @@
                   ColumnDefinitions="auto,*">
                     <TextBlock
                       Classes.dark="true"
-                      Classes.price-with-sale="{Binding PriceBeforeSale, Converter={x:Static ObjectConverters.IsNotNull}}"
-                      Classes.price-without-sale="{Binding PriceBeforeSale, Converter={x:Static ObjectConverters.IsNull}}"
+                      Classes.price-with-sale="{Binding DiscountValue, Converter={x:Static ObjectConverters.IsNotNull}}"
+                      Classes.price-without-sale="{Binding DiscountValue, Converter={x:Static ObjectConverters.IsNull}}"
                       Grid.Column="0">
                         <Run
-                          Text="{Binding Price, TargetNullValue=0, Mode=OneWay}" />
+                          Text="{Binding ResultPrice, TargetNullValue=0, Mode=OneWay}" />
                         <Run
                           Text="₽" />
                     </TextBlock>
@@ -54,9 +54,9 @@
                       Classes="sale"
                       Grid.Column="1"
                         Margin="-4,0,0,1"
-                      IsVisible="{Binding PriceBeforeSale, Converter={x:Static ObjectConverters.IsNotNull}}">
+                        IsVisible="{Binding DiscountValue, Converter={x:Static ObjectConverters.IsNotNull}}">
                         <Run
-                          Text="{Binding PriceBeforeSale, TargetNullValue=0, Mode=OneWay}"
+                          Text="{Binding BasePrice, TargetNullValue=0, Mode=OneWay}"
                           TextDecorations="Strikethrough" />
                         <Run
                           Text="₽"

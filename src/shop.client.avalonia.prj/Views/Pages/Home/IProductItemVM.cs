@@ -1,5 +1,6 @@
 ﻿using Avalonia.Media.Imaging;
 using ReactiveUI;
+using Shop.Dto.Products;
 
 namespace Shop.Client.Avalonia.Views.Pages;
 
@@ -23,12 +24,22 @@ public interface IProductItemVM
 	/// <summary>
 	/// Текущая стоимость товара в рублях.
 	/// </summary>
-	double Price { get; }
+	decimal BasePrice { get; }
 
 	/// <summary>
-	/// Стоимость товара до скидки. Может быть null, если нет скидки.
+	/// Итоговая стоимость товара в рублях.
 	/// </summary>
-	double? PriceBeforeSale { get; }
+	decimal ResultPrice { get; }
+
+	/// <summary>
+	/// Размер скидки. Тип единицы измерения - DiscountUnit.
+	/// </summary>
+	decimal? DiscountValue { get; }
+
+	/// <summary>
+	/// Тип измерения скидки.
+	/// </summary> 
+	DiscountUnit DiscountUnit { get; }
 
 	/// <summary>
 	/// Вес товара за 1 шт. в граммах.
@@ -41,7 +52,7 @@ public interface IProductItemVM
 	Bitmap Image { get; }
 
 	/// <summary>
-	/// Количество выбранных товаров пользователем
+	/// Количество выбранных товаров пользователем.
 	/// </summary>
 	int CurrentSelectedCount { get; set; }
 

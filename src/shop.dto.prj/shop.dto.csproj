@@ -6,11 +6,6 @@
     <Nullable>enable</Nullable>
     <RootNamespace>Shop.Dto</RootNamespace>
   </PropertyGroup>
- 
-  <ItemGroup>
-    <Folder Include="Orders\" />
-    <Folder Include="Products\" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Remove=".gitignore" />

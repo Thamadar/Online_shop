@@ -1,10 +1,10 @@
-﻿using Shop.Dto.Products;
-using Shop.Server.Services.API.Interfaces;
+﻿
+using Shop.Dto.Products; 
 
-namespace Shop.Server.Services.API;
+namespace Shop.Server.Repositories;
 
-public interface IProductsAPIService : IAPIService
-{
+public interface IProductsRepository
+{ 
 	/// <summary>
 	/// Получение всех товаров.
 	/// </summary> 
@@ -13,7 +13,7 @@ public interface IProductsAPIService : IAPIService
 	/// <summary>
 	/// Получение товара по ID.
 	/// </summary> 
-	Task<GetProductResponse> GetProductByIdAsync(int id);
+	Task<GetProductResponse> GetProductByIdAsync(int productId);
 
 	/// <summary>
 	/// Получение товара по ключу имени (ProductName).
@@ -33,10 +33,22 @@ public interface IProductsAPIService : IAPIService
 	/// <summary>
 	/// Изменение скидки товара.
 	/// </summary> 
-	Task EditProductDiscountAsync(int productId, EditProductDiscountRequest editProductDiscountRequest);
+	Task EditProductDiscountAsync(int productId, decimal discountValue, DiscountUnit discountUnit);
 
 	/// <summary>
 	/// Удаление скидки товара.
 	/// </summary> 
 	Task ClearProductDiscountAsync(int productId);
+
+	/// <summary>
+	/// Существует ли какой-либо товар с данным именем?
+	/// </summary> 
+	bool IsAnyNameExist(string name);
+
+	/// <summary>
+	/// Существует ли какой-либо товар с каким-либо именем из списка?
+	/// </summary> 
+	/// <param name="names">список именем на проверку</param>
+	/// <returns>возвращает список уже существующих именем</returns>
+	List<string> CheckNamesExist(List<string> names);
 }

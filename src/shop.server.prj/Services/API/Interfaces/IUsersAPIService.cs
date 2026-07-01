@@ -7,17 +7,43 @@ namespace Shop.Server.Services.API;
 public interface IUsersAPIService : IAPIService
 {
 
-	Task<GetUsersResponse> GetUsers();
+	/// <summary>
+	/// Получение всех пользователей.
+	/// </summary> 
+	Task<GetUsersDto> GetUsersAsync();
 
-	Task<CreateUserResponse> CreateUser(CreateUserRequest createUserRequest);
-	Task<CreateUsersResponse> CreateUsers(CreateUsersRequest createUsersRequest); 
+	/// <summary>
+	/// Получение пользователя по Id.
+	/// </summary> 
+	Task<GetUserDto> GetUserByIdAsync(Guid id);
 
-	Task<EditUserResponse> EditUser(EditUserRequest editUserRequest); 
-	//TO DO: add.
-	//Task<EditUsersResponse> EditUsers(EditUsersRequest editUsersRequest);
+	/// <summary>
+	/// Получение пользователя по Login.
+	/// </summary> 
+	Task<GetUserDto> GetUserByLoginAsync(string login);
 
+	/// <summary>
+	/// Создание пользователя.
+	/// </summary> 
+	Task<CreateUserResponse> CreateUserAsync(CreateUserRequest createUserRequest);
+	/// <summary>
+	/// Создание пользователей.
+	/// </summary> 
+	Task<CreateUsersResponse> CreateUsersAsync(CreateUsersRequest createUsersRequest);
 
-	Task<bool> DeleteUser(Guid userId); 
-	Task<List<BatchError>> DeleteUsers(List<Guid> usersId);
+	/// <summary>
+	/// Редактирование пользователя.
+	/// </summary> 
+	Task<EditUserResponse> EditUserAsync(EditUserRequest editUserRequest);
+
+	/// <summary>
+	/// Удаление пользователя.
+	/// </summary> 
+	Task DeleteUserAsync(Guid userId);
+
+	/// <summary>
+	/// Удаление пользователей.
+	/// </summary> 
+	Task<List<BatchError>> DeleteUsersAsync(List<Guid> usersId);
 
 }

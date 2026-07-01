@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
+using AutoMapper.QueryableExtensions; 
+using Microsoft.EntityFrameworkCore; 
 using Shop.Dto.Users;
 using Shop.Server.Data; 
 
@@ -18,18 +18,18 @@ public class UsersRepository : IUsersRepository
 	}
 	 
 	/// <inheritdoc/>
-	public async Task<GetUsersResponse> GetUsers()
+	public async Task<GetUsersDto> GetUsersAsync()
 	{
 		try
 		{
-			var userResponseList = await _userContext.Users
+			var userDtoList = await _userContext.Users
 				.AsNoTracking()
-				.ProjectTo<GetUserResponse>(_mapper.ConfigurationProvider)
+				.ProjectTo<GetUserDto>(_mapper.ConfigurationProvider)
 				.ToListAsync();
 
-			return new GetUsersResponse(
-				Users: userResponseList,
-				TotalCount: userResponseList.Count); 
+			return new GetUsersDto(
+				Users: userDtoList,
+				TotalCount: userDtoList.Count); 
 		}
 		catch(Exception ex)
 		{
@@ -38,94 +38,104 @@ public class UsersRepository : IUsersRepository
 	}
 
 	/// <inheritdoc/>
-	public bool IsAnyLoginExists(string login)
+	public async Task<GetUserDto> GetUserByIdAsync(Guid id)
 	{
-		return _userContext.Users.Any(x => x.Login == login);
-	}
-
-	/// <inheritdoc/>
-	public async Task<UserEntity> GetUserById(Guid id)
-	{
-		var user = await _userContext.Users
-			.AsNoTracking()
-			.Where(x => x.Id == id)
-			.FirstOrDefaultAsync();
-
-		if(user != null)
-		{
-			return user;
-		}
-
-		throw new InvalidOperationException($"Не удалось найти пользователя по Id: {id}");
-	}
-
-	/// <inheritdoc/>
-	public async Task<UserEntity> GetUserByLogin(string login)
-	{
-		var user = await _userContext.Users
-			.AsNoTracking()
-			.Where(x => x.Login == login)
-			.FirstOrDefaultAsync();
-
-		if(user != null)
-		{
-			return user;
-		}
-
-		throw new InvalidOperationException($"Не удалось найти пользователя по Login: {login}");
-	}
-
-	/// <inheritdoc/>
-	public async Task<UserEntity> CreateUser(CreateUserRequest request)
-	{
-		var id = Guid.NewGuid();
-
-		for(int i = 0; i < 10; i++)
-		{
-			if(!_userContext.Users.Any(x => x.Id == id))
-			{
-				break;
-			}
-
-			id = Guid.NewGuid();
-		}
-
-		var entity = new UserEntity()
-		{
-			Id        = id,
-			Login     = request.Login,
-			Password  = request.Password,
-			Address   = request.Address,
-			CreatedAt = DateTime.Now,
-			UpdatedAt = DateTime.Now,
-		};
 		try
-		{ 
-			await _userContext.Users.AddAsync(entity);
-			await _userContext.SaveChangesAsync();
+		{
+			var userEntity = await _userContext.Users.FindAsync(id);
+
+			return _mapper.Map<GetUserDto>(userEntity);  
 		}
 		catch(Exception ex)
 		{
-			throw new InvalidOperationException("Не удалось создать пользователя", ex);
+			throw new InvalidOperationException($"Не удалось получить пользователей по Id: {id}", ex);
 		} 
-
-		return entity; 
 	}
 
 	/// <inheritdoc/>
-	public async Task<List<UserEntity>> CreateUsersBatch(List<UserEntity> usersBatch)
+	public async Task<GetUserDto> GetUserByLoginAsync(string login)
 	{
-		using var transaction = await _userContext.Database.BeginTransactionAsync();
 		try
 		{
-			await _userContext.Users.AddRangeAsync(usersBatch);
-			await _userContext.SaveChangesAsync();  
+			var user = await _userContext.Users
+				.AsNoTracking()
+				.Where(x => x.Login == login)
+				.ProjectTo<GetUserDto>(_mapper.ConfigurationProvider)
+				.FirstAsync();
+
+			return user;
+		}
+		catch(Exception ex)
+		{
+			throw new InvalidOperationException($"Не удалось получить пользователей по Login: {login}", ex);
+		} 
+	}
+
+	/// <inheritdoc/>
+	public async Task<CreateUserResponse> CreateUserAsync(CreateUserRequest request)
+	{
+		await using var transaction = await _userContext.Database.BeginTransactionAsync();
+		try
+		{
+			var entity = _mapper.Map<UserEntity>(request);
+			await _userContext.Users.AddAsync(entity);
+			await _userContext.SaveChangesAsync(); 
+
+			var userResponse = _mapper.Map<CreateUserResponse>(entity);  
 			await transaction.CommitAsync();
-			return usersBatch;
+
+			return userResponse;
+		}
+		catch(Exception ex)
+		{
+			await transaction.RollbackAsync();
+
+			throw new InvalidOperationException("Не удалось создать и добавить пользователя в БД", ex);
+		}  
+	}
+
+	/// <inheritdoc/>
+	public async Task<CreateUsersResponse> CreateUsersBatchAsync(CreateUsersRequest requestBatch)
+	{   
+		await using var transaction = await _userContext.Database.BeginTransactionAsync();
+		try
+		{
+			var entities = _mapper.Map<List<UserEntity>>(requestBatch.Users); 
+			 
+			await _userContext.Users.AddRangeAsync(entities);
+			await _userContext.SaveChangesAsync();   
+
+			var usersResponse = new CreateUsersResponse(_mapper.Map<List<CreateUserResponse>>(entities));
+			await transaction.CommitAsync();
+
+			return usersResponse;
+
 		}  
 		catch(Exception ex)
-		{ 
-			throw new InvalidOperationException("Не удалось создать пользователей", ex);
+		{
+			await transaction.RollbackAsync();
+
+			throw new InvalidOperationException("Не удалось создать и добавить пользователей в БД", ex);
 		}
 	}
+
+
+	/// <inheritdoc/>
+	public bool IsAnyLoginExist(string login)
+	{
+		return _userContext.Users
+			.AsNoTracking()
+			.Any(x => x.Login == login);
+	}
+
+	/// <inheritdoc/>
+	public List<string> CheckLoginsExist(List<string> logins)
+	{
+		var existLogins = _userContext.Users
+			.ToList()
+			.Select(x => x.Login);
+
+		return logins.Where(x => existLogins.Any(y => y == x)).ToList();
+	}
+
 }

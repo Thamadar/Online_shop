@@ -1,13 +1,9 @@
-﻿using Avalonia.Controls;
-using Shop.Model;
-using Shop.Model.Database.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Json;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using Shop.Dto;
+using Shop.Dto.Users;
+using Shop.Utilities;
+
+using System.Net.Http.Json; 
+using System.Text.Json; 
 
 namespace Shop.Client.Avalonia.Http;
 public class UsersHttpClient
@@ -23,7 +19,7 @@ public class UsersHttpClient
 	/// Получение User'а по Login'у.
 	/// TO DO: auth, authController.
 	/// </summary> 
-	public async Task<UserEntity?> GetUserByLogin(string name)
+	public async Task<GetUserDto?> GetUserByLogin(string name)
 	{
 		try
 		{
@@ -31,9 +27,9 @@ public class UsersHttpClient
 
 			var cancellationToken = new CancellationToken();
 
-			var url = @$"{HttpConstants.users}by-login?login={Uri.EscapeDataString(name)}";
+			var url = @$"{HttpConstants.users}by-login/{Uri.EscapeDataString(name)}"; 
 
-			var response = await httpClient.GetFromJsonAsync<UserEntity>(
+			var response = await httpClient.GetFromJsonAsync<GetUserDto>(
 				url,
 				new JsonSerializerOptions(JsonSerializerDefaults.Web),
 				cancellationToken).ConfigureAwait(false);

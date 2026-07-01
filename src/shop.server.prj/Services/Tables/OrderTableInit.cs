@@ -17,10 +17,12 @@ public class OrderTableInit : BaseTableInit<OrderEntity>
 		[UserId] UNIQUEIDENTIFIER NOT NULL,
 		[Products] NVARCHAR(MAX) NOT NULL,
 		[OrderAddress] NVARCHAR(MAX) NOT NULL,
-		[CreatedAt] DATETIME NOT NULL)";
+		[CreatedAt] DATETIME NOT NULL,
+		[CompletedAt] DATETIME,
+		[IsCancelled] bit NOT NULL)";
 
 	/// <inheritdoc/>
-	protected override string InsertDefaultDataInTableQuery => "";
+	protected override string InsertDefaultDataInTableQuery => String.Empty;
 
 	#endregion
 

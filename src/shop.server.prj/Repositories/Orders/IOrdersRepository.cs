@@ -1,22 +1,48 @@
 ﻿
-using Shop.Server.Data;
+using Shop.Dto.Orders; 
 
 namespace Shop.Server.Repositories;
 
 public interface IOrdersRepository
-{  
+{      
 	/// <summary>
-	/// Добавление товаров.
+	/// Получение всех заказов.
 	/// </summary> 
-	Task<bool> PostOrders(OrderEntity[] entities);
+	Task<GetOrdersDto> GetOrdersAsync();
 
 	/// <summary>
-	/// Получение товара по id.
+	/// Получение всех заказов пользователя по его userId.
 	/// </summary> 
-	Task<OrderEntity?> GetOrderById(Guid id);
+	Task<GetOrdersDto> GetOrdersByUserIdAsync(Guid userId);
 
 	/// <summary>
-	/// Получение из базы данных (таблицы Orders) всех товаров.
+	/// Получение заказа по ID заказа.
 	/// </summary> 
-	Task<IEnumerable<OrderEntity>> GetOrders();
+	Task<GetOrderDto> GetOrderByIdAsync(Guid orderId);
+
+	/// <summary>
+	/// Создание заказа.
+	/// </summary> 
+	Task<CreateOrderResponse> CreateOrderAsync(CreateOrderRequest createOrderRequest);
+
+	/// <summary>
+	/// Создание заказов.
+	/// </summary> 
+	Task<CreateOrdersResponse> CreateOrdersAsync(CreateOrdersRequest createOrdersRequest);
+
+	/// <summary>
+	/// Редактирование заказа.
+	/// </summary>
+	/// TO DO
+	//Task<EditOrderResponse> EditOrderAsync(EditOrderRequest editOrderRequest);
+
+	/// <summary>
+	/// Успешное завершение заказа.
+	/// </summary> 
+	Task CompletionOrderAsync(Guid orderId);
+
+	/// <summary>
+	/// Отмена заказа.
+	/// </summary> 
+	Task CancellationOrderAsync(Guid orderId);
 }

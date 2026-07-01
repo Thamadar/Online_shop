@@ -15,9 +15,7 @@ public sealed partial class HomeViewModel : PageBase
 {
 	private readonly MainInfo _mainInfo;
 
-	private readonly IProductsService _productsService;
-
-	private readonly UsersHttpClient _usersHttpClient;
+	private readonly IProductsService _productsService; 
 
 	private ReadOnlyObservableCollection<IProductItemVM> _productInBasketItems = new(new());
 	private ReadOnlyObservableCollection<IProductItemVM> _productItems = new(new());
@@ -36,20 +34,18 @@ public sealed partial class HomeViewModel : PageBase
 		: this(MainInfo.DesignMainInfo,
 			  new ProductsService(MainInfo.DesignMainInfo,
 				  new ProductsHttpClient(MainInfo.DesignMainInfo),
-				  new OrdersHttpClient(MainInfo.DesignMainInfo)),
-			  new UsersHttpClient(MainInfo.DesignMainInfo))
+				  new UsersHttpClient(MainInfo.DesignMainInfo),
+				  new OrdersHttpClient(MainInfo.DesignMainInfo)))
 	{
 	}
 
 	public HomeViewModel(
 		MainInfo mainInfo,
-		IProductsService productsService,
-		UsersHttpClient usersHttpClient)
+		IProductsService productsService)
 		: base(mainInfo)
 	{
 		_mainInfo        = mainInfo;
-		_productsService = productsService;
-		_usersHttpClient = usersHttpClient;
+		_productsService = productsService; 
 
 		PageHeader = "HomePageHeader";
 

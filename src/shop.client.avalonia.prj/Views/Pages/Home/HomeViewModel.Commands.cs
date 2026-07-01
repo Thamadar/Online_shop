@@ -1,12 +1,13 @@
-﻿using ReactiveUI; 
+﻿using ReactiveUI;
+using System.Windows.Input;
 
 namespace Shop.Client.Avalonia.Views.Pages;
 public sealed partial class HomeViewModel
 {
 	public sealed class HomeViewModelCommands
 	{
-		public IReactiveCommand ClearBasket { get; }
-		public IReactiveCommand CreateOrder { get; }
+		public ICommand ClearBasket { get; }
+		public ICommand CreateOrder { get; }
 
 		public HomeViewModelCommands(HomeViewModel vm)
 		{
@@ -33,21 +34,6 @@ public sealed partial class HomeViewModel
 	/// </summary> 
 	public async Task CreateOrder()
 	{
-		//TO DO: auth.
-		var userEntity = await _usersHttpClient.GetUserByLogin("admin");
-
-		if(userEntity != null)
-		{
-			var createOrderSuccess = await _productsService.CreateOrder(userEntity.Id, userEntity.Address);
-
-			if(createOrderSuccess)
-			{
-				//TO DO: MessageBox: success.
-			}
-		}
-		else
-		{
-			//TO DO: вывод MessageBoxError.
-		}
+		await _productsService.CreateOrder(); 
 	}
 }

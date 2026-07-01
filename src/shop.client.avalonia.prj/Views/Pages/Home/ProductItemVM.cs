@@ -1,7 +1,7 @@
 ﻿using Avalonia.Media.Imaging;
 
 using ReactiveUI;
-
+using Shop.Dto.Products;
 using Shop.UI.Avalonia;
 
 namespace Shop.Client.Avalonia.Views.Pages;
@@ -15,28 +15,28 @@ public class ProductItemVM : ViewModelBase, IProductItemVM
  
 	/// <inheritdoc/>
 	public int Id { get; }
-
-
+	 
 	/// <inheritdoc/>
 	public string ProductName { get; }
-
-
+	 
 	/// <inheritdoc/>
 	public int CurrentCount { get; set; }
-
+	 
+	/// <inheritdoc/>
+	public decimal BasePrice { get; }
 
 	/// <inheritdoc/>
-	public double Price { get; }
-
+	public decimal ResultPrice { get; }
 
 	/// <inheritdoc/>
-	public double? PriceBeforeSale { get; }
+	public decimal? DiscountValue { get; }
 
+	/// <inheritdoc/>
+	public DiscountUnit DiscountUnit { get; }
 
 	/// <inheritdoc/>
 	public double Weight { get; }
-
-
+	 
 	/// <inheritdoc/>
 	public Bitmap Image
 	{
@@ -65,8 +65,10 @@ public class ProductItemVM : ViewModelBase, IProductItemVM
 		int id,
 		string productName,
 		int currentCount,
-		double price,
-		double? priceBeforeSale,
+		decimal basePrice,
+		decimal resultPrice,
+		decimal discountValue,
+		DiscountUnit discountUnit,
 		double weight,
 		int? currentSelectedCount       = null,
 		IReactiveCommand? addCommand    = null,
@@ -75,12 +77,12 @@ public class ProductItemVM : ViewModelBase, IProductItemVM
 		Id                   = id;
 		ProductName          = productName;
 		CurrentCount         = currentCount;
-		Price                = price; 
+		BasePrice            = basePrice; 
+		ResultPrice          = resultPrice;
+		DiscountValue        = discountValue == 0 ? null : discountValue;
+		DiscountUnit         = discountUnit;
 		Weight               = weight;
-		CurrentSelectedCount = currentSelectedCount ?? 0;
-		PriceBeforeSale      = priceBeforeSale == -1 ?
-							   null :
-							   priceBeforeSale;
+		CurrentSelectedCount = currentSelectedCount ?? 0; 
 
 		if(addCommand != null)
 		{
@@ -99,14 +101,16 @@ public class ProductItemVM : ViewModelBase, IProductItemVM
 		int id,
 		string productName,
 		int currentCount,
-		double price,
-		double? priceBeforeSale,
+		decimal basePrice,
+		decimal resultPrice,
+		decimal discountValue,
+		DiscountUnit discountUnit,
 		double weight,
 		byte[] image,
 		int? currentSelectedCount       = null,
 		IReactiveCommand? addCommand    = null,
 		IReactiveCommand? removeCommand = null)
-		: this(id, productName, currentCount, price, priceBeforeSale, weight, currentSelectedCount, addCommand, removeCommand)
+		: this(id, productName, currentCount, basePrice, resultPrice, discountValue, discountUnit, weight, currentSelectedCount, addCommand, removeCommand)
 	{ 
 		Image = GetImageFromByteArray(image); 
 	}
@@ -118,14 +122,16 @@ public class ProductItemVM : ViewModelBase, IProductItemVM
 		int id,
 		string productName,
 		int currentCount,
-		double price,
-		double? priceBeforeSale,
-		double weight, 
+		decimal basePrice,
+		decimal resultPrice,
+		decimal discountValue,
+		DiscountUnit discountUnit,
+		double weight,
 		Bitmap image,
 		int? currentSelectedCount = null,
 		IReactiveCommand? addCommand = null,
 		IReactiveCommand? removeCommand = null)
-		: this(id, productName, currentCount, price, priceBeforeSale, weight, currentSelectedCount, addCommand, removeCommand)
+		: this(id, productName, currentCount, basePrice, resultPrice, discountValue, discountUnit, weight, currentSelectedCount, addCommand, removeCommand)
 	{ 
 		Image                = image; 
 	}
@@ -161,8 +167,10 @@ public class ProductItemVM : ViewModelBase, IProductItemVM
 			Id,
 			ProductName,
 			CurrentCount,
-			Price,
-			PriceBeforeSale,
+			BasePrice,
+			ResultPrice,
+			DiscountValue ?? 0,
+			DiscountUnit,
 			Weight,
 			Image,
 			CurrentSelectedCount,

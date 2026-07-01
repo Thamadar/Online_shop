@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using AutoMapper; 
 using Shop.Dto.Users;
 using Shop.Server.Data;
 
@@ -7,26 +7,34 @@ namespace Shop.Server.Mappers;
 public class UserProfile : Profile
 {
 	public UserProfile()
-	{
-		// Маппинг из сущности UserEntity в GetUserResponse
-		CreateMap<UserEntity, GetUserResponse>()
-		.ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
-		.ForMember(d => d.Address, opt => opt.MapFrom(s => s.Address));
+	{ 
 
-		CreateMap<GetUserResponse, UserEntity>();
+		#region ToEntity
 
-		CreateMap<UserEntity, GetUserItemDto>()
-			.ForMember(dest => dest.Id,
-					   opt => opt.MapFrom(src => src.Id))
-			.ForMember(dest => dest.Address,
-					   opt => opt.MapFrom(src => src.Address));
-		CreateMap<GetUserItemDto, UserEntity>()
-			.ForMember(dest => dest.Id,
-					   opt => opt.MapFrom(src => src.Id))
-			.ForMember(dest => dest.Address,
-					   opt => opt.MapFrom(src => src.Address));
+		CreateMap<GetUserDto, UserEntity>()
+			.ForMember(d => d.Id, o => o.MapFrom(x => x.Id))
+			.ForMember(d => d.Address, o => o.MapFrom(x => x.Address));
 
-		CreateMap<IEnumerable<UserEntity>, GetUsersDto>()
-			.ForMember(dest => dest.Users, opt => opt.MapFrom(src => src));
+		CreateMap<CreateUserRequest, UserEntity>() 
+			.ForMember(d => d.Login, o => o.MapFrom(x => x.Login))
+			.ForMember(d => d.Address, o => o.MapFrom(x => x.Address))
+			.ForMember(d => d.Password, o => o.MapFrom(x => x.Password)) 
+			.ForMember(d => d.CreatedAt, o => o.MapFrom(x => DateTime.UtcNow))
+			.ForMember(d => d.UpdatedAt, o => o.MapFrom(x => DateTime.UtcNow)); 
+
+		#endregion
+		 
+		#region ToResponse
+
+		CreateMap<UserEntity, GetUserDto>()
+			.ForCtorParam(nameof(GetUserDto.Id), o => o.MapFrom(x => x.Id))
+			.ForCtorParam(nameof(GetUserDto.Address), o => o.MapFrom(x => x.Address));
+
+		CreateMap<UserEntity, CreateUserResponse>()
+			.ForCtorParam(nameof(CreateUserResponse.Id), o => o.MapFrom(x => x.Id))
+			.ForCtorParam(nameof(CreateUserResponse.CreatedAt), o => o.MapFrom(x => x.CreatedAt)); 
+
+		#endregion
+
 	}
 }

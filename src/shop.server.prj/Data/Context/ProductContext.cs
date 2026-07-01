@@ -12,10 +12,14 @@ public class ProductContext : DbContext
 	}
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
-	{ 
-		modelBuilder.Entity<ProductLocalizationEntity>()
-			.HasKey(l => new { l.ProductId, l.LangCode });
+	{
+		modelBuilder.Entity<ProductEntity>()
+			.Property(x => x.DiscountUnit)
+			.HasConversion<int>()
+			.HasColumnType("int");
 
+		modelBuilder.Entity<ProductLocalizationEntity>()
+			.HasKey(l => new { l.ProductId, l.LangCode }); 
 		modelBuilder.Entity<ProductEntity>()
 			.HasMany(p => p.Localizations)
 			.WithOne(l => l.Product)

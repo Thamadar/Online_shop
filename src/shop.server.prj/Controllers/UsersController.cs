@@ -1,9 +1,9 @@
-﻿using AutoMapper;
+﻿using AutoMapper; 
 using Microsoft.AspNetCore.Mvc;  
-using Shop.Server.Services.API;
-using Shop.Dto.Users;
 using Shop.Dto;
-using Shop.Utilities;
+using Shop.Dto.Users;
+using Shop.Server.Services.API;
+using Shop.Utilities; 
 
 namespace Shop.Server.Controllers;
 
@@ -26,14 +26,13 @@ public sealed class UsersController : ShopControllerBase
 	/// Получение всех пользователей.
 	/// </summary> 
 	[HttpGet]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetUsersResponse))]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetUsersDto))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<ActionResult<GetUsersResponse>> GetUsers()
+	public async Task<ActionResult<GetUsersDto>> GetUsers()
 	{
 		try
 		{ 
-			var users = await _usersAPIService.GetUsers();
-
+			var users = await _usersAPIService.GetUsersAsync(); 
 			return Ok(users);
 		}
 		catch(Exception exc)
@@ -47,15 +46,14 @@ public sealed class UsersController : ShopControllerBase
 	/// Получение пользователя по логину (КОСТЫЛЬ, ИБО НЕТ аутентификации. - необходимо.)
 	/// TO DO: authController.
 	/// </summary> 
-	[HttpGet("{id}")]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetUserItemDto))]
+	[HttpGet("{id:guid}")]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetUserDto))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<ActionResult<GetUserItemDto?>> GetUserById([FromRoute] Guid guid)
+	public async Task<ActionResult<GetUserDto>> GetUserById([FromRoute] Guid guid)
 	{
 		try
 		{
-			var user = await _usersAPIService.GetUserById(guid);
-
+			var user = await _usersAPIService.GetUserByIdAsync(guid); 
 			return Ok(user);
 		}
 		catch(Exception exc)
@@ -69,17 +67,15 @@ public sealed class UsersController : ShopControllerBase
 	/// Получение пользователя по логину (КОСТЫЛЬ, ИБО НЕТ аутентификации. - необходимо.)
 	/// TO DO: authController.
 	/// </summary> 
-	[HttpGet("by-login/{login}&{}")]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetUserItemDto))]
+	[HttpGet("by-login/{login}")]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetUserDto))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<ActionResult<GetUserItemDto?>> GetUserByLogin(string login)
+	public async Task<ActionResult<GetUserDto>> GetUserByLogin([FromRoute] string login)
 	{
 		try
 		{
-			var user = await _usersAPIService.GetUserByLogin(login);
-			
-
-			return Ok(user);
+			var user = await _usersAPIService.GetUserByLoginAsync(login); 
+			return Ok(user); 
 		}
 		catch(Exception exc)
 		{
@@ -92,7 +88,7 @@ public sealed class UsersController : ShopControllerBase
 	/// Создание пользователей.
 	/// </summary> 
 	[HttpPost("batch")]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActionResult<CreateUserResponse>))]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateUserResponse))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
 	public async Task<ActionResult<CreateUsersResponse>> PostUsers([FromBody] CreateUsersRequest request)
 	{
@@ -101,8 +97,7 @@ public sealed class UsersController : ShopControllerBase
 
 		try
 		{
-			var usersRepsonse = await _usersAPIService.CreateUsers(request);
-
+			var usersRepsonse = await _usersAPIService.CreateUsersAsync(request); 
 			return Ok(usersRepsonse); 
 		}
 		catch(Exception exc)
@@ -118,12 +113,13 @@ public sealed class UsersController : ShopControllerBase
 	[HttpPut]
 	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<IActionResult> UpdateUsers([FromBody] EditUserItemRequest parameters)
+	public async Task<IActionResult> UpdateUsers([FromBody] EditUserRequest request)
 	{
 		try
 		{
-			//var userSuccess = await _usersAPIService.UpdateUsers(parameters);
-			return Ok();
+			return StatusCode(StatusCodes.Status404NotFound);
+			//var response = await _usersAPIService.EditUserAsync(request); 
+			//return Ok(response);
 		}
 		catch(Exception exc)
 		{
@@ -136,15 +132,16 @@ public sealed class UsersController : ShopControllerBase
 	/// <summary>
 	/// Удаление пользователя.
 	/// </summary> 
-	[HttpDelete("{id}")]
+	[HttpDelete("{id:guid}")]
 	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<IActionResult> DeleteUser([FromRoute] int id)
+	public async Task<IActionResult> DeleteUser([FromRoute] Guid id)
 	{
 		try
 		{
-
-			return Ok();
+			return StatusCode(StatusCodes.Status404NotFound);
+			//await _usersAPIService.DeleteUserAsync(id); 
+			//return Ok();
 		}
 		catch(Exception exc)
 		{

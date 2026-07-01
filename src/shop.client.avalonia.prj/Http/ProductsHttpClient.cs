@@ -1,5 +1,6 @@
-﻿using Shop.Model;
-using Shop.Model.Database.Entities; 
+﻿using Shop.Dto;
+using Shop.Dto.Products; 
+using Shop.Utilities;
 
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -16,9 +17,8 @@ public class ProductsHttpClient
 
 	/// <summary>
 	/// Получение всех товаров из БД через HTTP-запрос.
-	/// </summary>
-	/// <returns></returns>
-	public async Task<ProductEntity[]?> FetchAllProducts()
+	/// </summary> 
+	public async Task<GetProductsResponse?> FetchAllProducts()
 	{
 		try
 		{
@@ -26,7 +26,7 @@ public class ProductsHttpClient
 
 			var cancellationToken = new CancellationToken();
 
-			var response = await httpClient.GetFromJsonAsync<ProductEntity[]>(
+			var response = await httpClient.GetFromJsonAsync<GetProductsResponse>(
 				$@"{HttpConstants.products}",
 				new JsonSerializerOptions(JsonSerializerDefaults.Web),
 				cancellationToken).ConfigureAwait(false);

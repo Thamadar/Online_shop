@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using Azure.Core;
+﻿using AutoMapper; 
 using Shop.Dto;
-using Shop.Dto.Users;
-using Shop.Server.Data;
+using Shop.Dto.Users; 
 using Shop.Server.Repositories;
 
 namespace Shop.Server.Services.API;
@@ -12,70 +10,81 @@ public class UsersAPIService : IUsersAPIService
 	private readonly IUsersRepository _usersRepository;
 	private readonly IMapper _mapper;
 
-	public UsersAPIService(IMapper mapper, IUsersRepository usersRepository) 
+	public UsersAPIService(IMapper mapper, IUsersRepository repository) 
 	{
 		_mapper = mapper;
-		_usersRepository = usersRepository;
+		_usersRepository = repository;
 	}
 
 	/// <inheritdoc/>
-	public async Task<GetUsersResponse> GetUsers()
+	public async Task<GetUsersDto> GetUsersAsync()
 	{
-		var usersResponse = await _usersRepository.GetUsers();
+		var usersResponse = await _usersRepository.GetUsersAsync();
 		return usersResponse;
 	}
 
 	/// <inheritdoc/>
-	public async Task<CreateUserResponse> CreateUser(CreateUserRequest request)
+	public async Task<GetUserDto> GetUserByIdAsync(Guid id)
 	{
-		if(_usersRepository.IsAnyLoginExists(request.Login))
-			throw new ArgumentException("Login already exists");
-
-		//var userEntity = _mapper.Map<UserEntity>(createUserRequest);
-		var result = _usersRepository.CreateUser(request);
-		return _mapper.Map<CreateUserResponse>(result);
-
-	}
-	/// <inheritdoc/>
-	public async Task<CreateUsersResponse> CreateUsers(CreateUsersRequest createUsersRequest)
-	{
-		// 1. Проверка на дубликаты (бизнес-логика)
-		var logins = request.Users.Select(u => u.Login).ToList();
-		var existing = await _userRepository.FindByLogins(logins);
-		if(existing.Count > 0)
-			throw new DuplicateException($"Logins already exist: {existing.Select(e => e.Login)}");
-
-		// 2. bulk INSERT через CreateBatch
-		var usersEntities = request.Users.Select(u => _mapper.Map<User>(u)).ToList();
-		var results = await _usersRepository.CreateBatch(usersEntities);
-
-		// 3. Формируем ответ
-		return new CreateUsersResponse(
-			Created: results.Select(r => _mapper.Map<CreateUserResponse>(r)).ToList(),
-			Failed: Enumerable.Empty<BatchError>(),
-			TotalCreated: results.Count(),
-			TotalFailed 
-		);
+		var userResponse = await _usersRepository.GetUserByIdAsync(id);
+		return userResponse;
 	}
 
 	/// <inheritdoc/>
-	public async Task<EditUserResponse> EditUser(EditUserRequest editUserRequest)
+	public async Task<GetUserDto> GetUserByLoginAsync(string login)
 	{
+		var userResponse = await _usersRepository.GetUserByLoginAsync(login);
+		return userResponse;
+	}
 
+	/// <inheritdoc/>
+	public async Task<CreateUserResponse> CreateUserAsync(CreateUserRequest request)
+	{
+		if(_usersRepository.IsAnyLoginExist(request.Login))
+			throw new ArgumentException("Пользователь с таким логином уже существует. ");
+		 
+		var resultResponse = await _usersRepository.CreateUserAsync(request);
+		return resultResponse;
+
+	}
+	/// <inheritdoc/>
+	public async Task<CreateUsersResponse> CreateUsersAsync(CreateUsersRequest createUsersRequest)
+	{ 
+
+		var logins = createUsersRequest.Users.Select(u => u.Login).ToList();
+		var loginsExist = _usersRepository.CheckLoginsExist(logins); 
+		if(loginsExist.Count > 0)
+			throw new ArgumentException($"Пользователи с таким логином уже существуют: {loginsExist}");
+		 
+		var resultResponse = await _usersRepository.CreateUsersBatchAsync(createUsersRequest);
+		return resultResponse;
+	}
+
+	/// <inheritdoc/>
+	public async Task<EditUserResponse> EditUserAsync(EditUserRequest editUserRequest)
+	{
+		//TO DO...
+
+		throw new ArgumentException($"Вызван нереализованный метод {nameof(EditUserAsync)}");
 	}
 	//TO DO: add.
 	//Task<EditUsersResponse> EditUsers(EditUsersRequest editUsersRequest);
 
 
 	/// <inheritdoc/>
-	public async Task<bool> DeleteUser(Guid userId)
+	public async Task DeleteUserAsync(Guid userId)
 	{
 
+		//TO DO...
+
+		throw new ArgumentException($"Вызван нереализованный метод {nameof(DeleteUserAsync)}");
 	}
 	/// <inheritdoc/>
-	public async Task<List<BatchError>> DeleteUsers(List<Guid> usersId)
+	public async Task<List<BatchError>> DeleteUsersAsync(List<Guid> usersId)
 	{
 
+		//TO DO... 
+		throw new ArgumentException($"Вызван нереализованный метод {nameof(DeleteUsersAsync)}");
 	}
 
 	/// <inheritdoc/>

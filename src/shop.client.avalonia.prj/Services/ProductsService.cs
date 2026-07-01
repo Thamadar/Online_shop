@@ -2,8 +2,7 @@
 using Shop.Client.Avalonia.Extensions;
 using Shop.Client.Avalonia.Http;
 using Shop.Client.Avalonia.Views.Pages;
-using Shop.Model.Database.Entities;
-using System.Text;
+using Shop.Dto.Orders;  
 
 namespace Shop.Client.Avalonia.Services;
  
@@ -16,6 +15,7 @@ public class ProductsService : IProductsService
 
 	private readonly ProductsHttpClient _productsHttpClient;
 	private readonly OrdersHttpClient _ordersHttpClient;
+	private readonly UsersHttpClient _usersHttpClient;
 	private readonly MainInfo _mainInfo;
 
 	#endregion
@@ -29,10 +29,12 @@ public class ProductsService : IProductsService
 	public ProductsService(
 		MainInfo mainInfo,
 		ProductsHttpClient productsHttpClient,
+		UsersHttpClient usersHttpClient,
 		OrdersHttpClient ordersHttpClient)
 	{
 		_mainInfo           = mainInfo;
 		_productsHttpClient = productsHttpClient;
+		_usersHttpClient    = usersHttpClient;
 		_ordersHttpClient   = ordersHttpClient;
 	}
 
@@ -65,7 +67,7 @@ public class ProductsService : IProductsService
 			_productsInBasket.Clear();
 
 			_totalProducts
-				.AddRange(products
+				.AddRange(products.Products
 				.Select(x => x.ConvertToVM(
 					addCommand:    async () => await AddProductToBasket(x.Id),
 					removeCommand: async () => await RemoveProductFromBasket(x.Id))));
@@ -200,8 +202,7 @@ public class ProductsService : IProductsService
 	/// <inheritdoc/>
 	public async Task<bool> RemoveAllProductsFromBasket()
 	{
-		var result = default(bool);
-
+		var result = default(bool); 
 		foreach(var product in _totalProducts.Items)
 		{
 			await TotalRemoveProductFromBasket(product.Id);
@@ -212,28 +213,19 @@ public class ProductsService : IProductsService
 
 
 	/// <inheritdoc/>
-	public async Task<bool> CreateOrder(Guid userId, string address)
+	public async Task<bool> CreateOrder()
 	{
 		var result = default(bool);
-
+		var userEntity = await _usersHttpClient.GetUserByLogin("admin");
 		var products = _productsInBasket.Items.GetProductsFromString();
 
-		if(products.Length > 0)
-		{ 
-			var orderEntity = new OrderEntity()
+		if(userEntity != null && products.Length > 0)
+		{
+			var orderRequest = new CreateOrderRequest(userEntity.Id, products, userEntity.Address); 
+			var orderResponse = await _ordersHttpClient.CreateOrder(orderRequest);
+			if(orderResponse != null)
 			{
-				 OrderAddress = address,
-				 UserId       = userId,
-				 Products     = products,
-				 CreatedAt    = DateTime.Now, 
-			};
-
-			var orderResponse = await _ordersHttpClient.CreateOrder(orderEntity);
-			if(orderResponse != null &&
-			   orderResponse.Value)
-			{
-				await RemoveAllProductsFromBasket();
-
+				await RemoveAllProductsFromBasket(); 
 				return true;
 			}
 		} 
