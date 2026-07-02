@@ -11,8 +11,8 @@ public sealed partial class HomeViewModel
 
 		public HomeViewModelCommands(HomeViewModel vm)
 		{
-			ClearBasket = ReactiveCommand.Create(async () => { await vm.ClearBasket(); });
-			CreateOrder = ReactiveCommand.Create(async () => { await vm.CreateOrder(); });
+			ClearBasket = ReactiveCommand.Create(() => { vm.ClearBasket(); });
+			CreateOrder = ReactiveCommand.Create(() => { vm.CreateOrder(); });
 		}
 	}
 
@@ -24,16 +24,16 @@ public sealed partial class HomeViewModel
 	/// Очистка текущей корзины.
 	/// </summary>
 	/// <returns></returns>
-	public async Task ClearBasket()
+	public void ClearBasket()
 	{
-		await _productsService.RemoveAllProductsFromBasket();
+		_productsService.RemoveAllProductsFromBasket(); 
 	}
 
 	/// <summary>
 	/// Создание заказа
 	/// </summary> 
-	public async Task CreateOrder()
+	public async void CreateOrder()
 	{
-		await _productsService.CreateOrder(); 
+		await _productsService.CreateOrderAsync(); 
 	}
 }

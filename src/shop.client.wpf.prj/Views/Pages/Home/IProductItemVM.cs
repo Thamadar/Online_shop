@@ -1,0 +1,74 @@
+﻿using ReactiveUI;
+using Shop.Dto.Products;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
+
+namespace Shop.Client.WPF.Views.Pages;
+
+public interface IProductItemVM
+{
+	/// <summary>
+	/// Идентификатор товара.
+	/// </summary> 
+	int Id { get; }
+
+	/// <summary>
+	/// Наименование товара.
+	/// </summary>
+	string ProductName { get; }
+
+	/// <summary>
+	/// Текущее доступное количество товаров.
+	/// </summary>
+	int CurrentCount { get; }
+
+	/// <summary>
+	/// Текущая стоимость товара в рублях.
+	/// </summary>
+	decimal BasePrice { get; }
+
+	/// <summary>
+	/// Итоговая стоимость товара в рублях.
+	/// </summary>
+	decimal ResultPrice { get; }
+
+	/// <summary>
+	/// Размер скидки. Тип единицы измерения - DiscountUnit.
+	/// </summary>
+	decimal? DiscountValue { get; }
+
+	/// <summary>
+	/// Тип измерения скидки.
+	/// </summary> 
+	DiscountUnit DiscountUnit { get; }
+
+	/// <summary>
+	/// Вес товара за 1 шт. в граммах.
+	/// </summary>
+	double Weight { get; }
+
+	/// <summary>
+	/// Изображение товара.
+	/// </summary>
+	BitmapImage Image { get; }
+
+	/// <summary>
+	/// Количество выбранных товаров пользователем.
+	/// </summary>
+	int CurrentSelectedCount { get; set; }
+
+	/// <summary>
+	/// Command, реагирующий на нажатие "+". По дефолту пуст и используется стандартный от AddRemoveButton.cs, где плюсуется CurrentSelectedCount.
+	/// </summary>
+	ICommand? AddCommand { get; }
+
+	/// <summary>
+	/// Command, реагирующий на нажатие "-". По дефолту пуст и используется стандартный от AddRemoveButton.cs, где минусуетя CurrentSelectedCount.
+	/// </summary>
+	ICommand? RemoveCommand { get; }
+
+	/// <summary>
+	/// Клонирование экземпляра.
+	/// </summary> 
+	ProductItemVM Clone();
+}

@@ -30,6 +30,11 @@ public sealed partial class HomeViewModel : PageBase
 	/// </summary>
 	public ReadOnlyObservableCollection<IProductItemVM> ProductItems => _productItems;
 
+	/// <summary>
+	/// Отслеживание изменений цены всех выбранных товаров, находящихся в корзине.
+	/// </summary>
+	public IObservable<decimal?> ResultBasketPriceObservable { get; }
+
 	public HomeViewModel()
 		: this(MainInfo.DesignMainInfo,
 			  new ProductsService(MainInfo.DesignMainInfo,
@@ -49,6 +54,8 @@ public sealed partial class HomeViewModel : PageBase
 
 		PageHeader = "HomePageHeader";
 
+		ResultBasketPriceObservable = _productsService.ResultBasketPriceObservable;
+
 		_productsService
 			.ConnectToProductsItems()
 			.ObserveOn(RxApp.MainThreadScheduler)
@@ -66,7 +73,7 @@ public sealed partial class HomeViewModel : PageBase
 
 	public override async Task LoadPageAsync()
 	{
-		var products = await _productsService.UpdateProductsItems(); 
+		var products = await _productsService.UpdateProductsItemsAsync(); 
 
 		await base.LoadPageAsync();
 	}

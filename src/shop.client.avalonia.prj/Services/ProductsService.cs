@@ -1,8 +1,13 @@
 ﻿using DynamicData;
+using DynamicData.Binding;
+using ReactiveUI;
 using Shop.Client.Avalonia.Extensions;
 using Shop.Client.Avalonia.Http;
 using Shop.Client.Avalonia.Views.Pages;
-using Shop.Dto.Orders;  
+using Shop.Dto.Orders;
+using System.Collections.ObjectModel;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 
 namespace Shop.Client.Avalonia.Services;
  
@@ -12,15 +17,35 @@ public class ProductsService : IProductsService
 
 	private readonly ISourceList<IProductItemVM> _productsInBasket  = new SourceList<IProductItemVM>();
 	private readonly ISourceList<IProductItemVM> _totalProducts     = new SourceList<IProductItemVM>();
+	private readonly Subject<decimal?> _resultBasketPriceSubject = new Subject<decimal?>(); 
 
+	private readonly MainInfo _mainInfo; 
 	private readonly ProductsHttpClient _productsHttpClient;
 	private readonly OrdersHttpClient _ordersHttpClient;
-	private readonly UsersHttpClient _usersHttpClient;
-	private readonly MainInfo _mainInfo;
+	private readonly UsersHttpClient _usersHttpClient; 
+	private readonly List<IDisposable> _disposables = new List<IDisposable>(); 
+
+	private decimal? _resultBasketPrice;
+
+	/// <summary>
+	/// Цена всех выбранных товаров, находящихся в корзине.
+	/// </summary>
+	private decimal? ResultBasketPrice
+	{
+		get => _resultBasketPrice;
+		set
+		{
+			_resultBasketPrice = value;
+			_resultBasketPriceSubject.OnNext(value);
+		}
+	}
 
 	#endregion
 
 	#region Properties
+
+	/// <inheritdoc/>
+	public IObservable<decimal?> ResultBasketPriceObservable => _resultBasketPriceSubject.AsObservable(); 
 
 	#endregion
 
@@ -36,6 +61,15 @@ public class ProductsService : IProductsService
 		_productsHttpClient = productsHttpClient;
 		_usersHttpClient    = usersHttpClient;
 		_ordersHttpClient   = ordersHttpClient;
+		 
+		_productsInBasket
+			.Connect()
+			.ObserveOn(RxApp.MainThreadScheduler)
+			.Subscribe(changeSet =>
+			{
+				CalculateResultBasketPrice();
+			})
+			.AddTo(_disposables);
 	}
 
 	#endregion
@@ -55,7 +89,7 @@ public class ProductsService : IProductsService
 	}
 
 	/// <inheritdoc/>
-	public async Task<bool> UpdateProductsItems()
+	public async Task<bool> UpdateProductsItemsAsync()
 	{
 		var result = default(bool);
 
@@ -69,8 +103,8 @@ public class ProductsService : IProductsService
 			_totalProducts
 				.AddRange(products.Products
 				.Select(x => x.ConvertToVM(
-					addCommand:    async () => await AddProductToBasket(x.Id),
-					removeCommand: async () => await RemoveProductFromBasket(x.Id))));
+					addCommand:    () => AddProductToBasket(x.Id),
+					removeCommand: () => RemoveProductFromBasket(x.Id))));
 
 			//TO DO: ЗАГРУЗКА личной сохраненной ранее корзины пользователя из бд/локального json файла
 
@@ -82,73 +116,55 @@ public class ProductsService : IProductsService
 	}
 	 
 	/// <inheritdoc/>
-	public async Task<bool> AddProductToBasket(int idProduct)
+	public Task<bool> AddProductToBasket(int idProduct)
 	{
 		var result = default(bool);
 
-		var productInBasket = _productsInBasket.Items.Where(x => x.Id == idProduct).FirstOrDefault();
-		if(productInBasket != null)
+		var productFromBasket = _productsInBasket.Items.FirstOrDefault(x => x.Id == idProduct);
+		if(productFromBasket != null)
 		{
-			//TO DO: КАКАЯ-ТО работа по запросу на сервер, дабы проверить этот плюс и в случае чего записать к себе в БД, дабы пользователь имел сохранную корзину всегда, а не в памяти.
-
-			var countWithPlus = productInBasket.CurrentSelectedCount + 1;
-
-			productInBasket.CurrentSelectedCount = countWithPlus <= productInBasket.CurrentCount ?
-												   countWithPlus :
-												   productInBasket.CurrentCount;
-
-			var productInTotal = _totalProducts.Items.Where(x => x.Id == idProduct).FirstOrDefault();
-
-			if(productInTotal != null)
+			var resultSelectedProductCount = productFromBasket.CurrentSelectedCount + 1;
+			if(productFromBasket.CurrentSelectedCount + 1 <= productFromBasket.CurrentCount)
 			{
-				productInTotal.CurrentSelectedCount = productInBasket.CurrentSelectedCount;
-			}
+				var productFromTotalList = _totalProducts.Items.FirstOrDefault(x => x.Id == idProduct); 
+				if(productFromTotalList != null)
+				{ 
+					productFromTotalList.CurrentSelectedCount = resultSelectedProductCount;
+					productFromBasket.CurrentSelectedCount      = resultSelectedProductCount;
 
-			return true;
+					result = true;
+				}
+			}  
+		}
+		else
+		{
+			var addProduct = _totalProducts.Items.FirstOrDefault(x => x.Id == idProduct); 
+			if(addProduct != null)
+			{
+				var resultSelectedProductCount = addProduct.CurrentSelectedCount + 1;
+				addProduct.CurrentSelectedCount = resultSelectedProductCount <= addProduct.CurrentCount ?
+												  resultSelectedProductCount :
+												  addProduct.CurrentCount;
+
+				addProduct = addProduct.Clone(); 
+				_productsInBasket.Add(addProduct);
+
+				result = true;
+			}
 		}
 
-		var addProduct = _totalProducts.Items.Where(x => x.Id == idProduct).FirstOrDefault();
-
-		if(addProduct != null)
-		{
-			var countWithPlus = addProduct.CurrentSelectedCount + 1;
-
-			addProduct.CurrentSelectedCount = countWithPlus <= addProduct.CurrentCount ?
-											  countWithPlus :
-											  addProduct.CurrentCount;
-
-			addProduct = addProduct.Clone();
-
-			_productsInBasket.Add(addProduct);
-
-			return true;
-		} 
-		
-		return result;
-	}
+		CalculateResultBasketPrice();
+		return Task.FromResult(result);
+	} 
 
 	/// <inheritdoc/>
-	public async Task<bool> AddProductToBasket(int[] idProducts)
-	{
-		throw new NotImplementedException();
-	}
-
-	/// <inheritdoc/>
-	public async Task<bool> RemoveProductFromBasket(int[] idProducts)
-	{
-		throw new NotImplementedException();
-	}
-
-	/// <inheritdoc/>
-	public async  Task<bool> RemoveProductFromBasket(int idProduct)
+	public Task<bool> RemoveProductFromBasket(int idProduct)
 	{ 
 		var result = default(bool);
 
 		var productInBasket = _productsInBasket.Items.Where(x => x.Id == idProduct).FirstOrDefault();
 		if(productInBasket != null)
 		{
-			//TO DO: КАКАЯ-ТО работа по запросу на сервер, дабы проверить этот минус и в случае чего записать к себе в БД, дабы пользователь имел сохранную корзину всегда, а не в памяти.
-
 			var countWithMinus = productInBasket.CurrentSelectedCount - 1; 
 			productInBasket.CurrentSelectedCount = countWithMinus <= 0 ?
 												   0 :
@@ -166,23 +182,34 @@ public class ProductsService : IProductsService
 				_productsInBasket.Remove(productInBasket);
 			}
 
-			return true;
-		} 
+			result = true;
+		}
 
-		return result;
+		CalculateResultBasketPrice();
+		return Task.FromResult(result);
 	}
 
 
 	/// <inheritdoc/>
-	public async Task<bool> TotalRemoveProductFromBasket(int idProduct)
+	public Task<bool> AddProductToBasket(int[] idProducts)
 	{
-		var result = default(bool);
+		CalculateResultBasketPrice();
+		return Task.FromResult(false);
+	}
 
+	/// <inheritdoc/>
+	public Task<bool> RemoveProductFromBasket(int[] idProducts)
+	{
+		CalculateResultBasketPrice();
+		return Task.FromResult(false);
+	}
+
+	/// <inheritdoc/>
+	public void TotalRemoveProductFromBasket(int idProduct)
+	{
 		var productInBasket = _productsInBasket.Items.Where(x => x.Id == idProduct).FirstOrDefault();
 		if(productInBasket != null)
 		{
-			//TO DO: КАКАЯ-ТО работа по запросу на сервер, дабы проверить этот минус и в случае чего записать к себе в БД, дабы пользователь имел сохранную корзину всегда, а не в памяти.
-
 			productInBasket.CurrentSelectedCount = 0; 
 			var productInTotal = _totalProducts.Items.Where(x => x.Id == idProduct).FirstOrDefault();
 
@@ -192,28 +219,21 @@ public class ProductsService : IProductsService
 			}
 
 			_productsInBasket.Remove(productInBasket);
-
-			return true;
 		}
-
-		return result;
 	}
 
 	/// <inheritdoc/>
-	public async Task<bool> RemoveAllProductsFromBasket()
-	{
-		var result = default(bool); 
+	public void RemoveAllProductsFromBasket()
+	{ 
 		foreach(var product in _totalProducts.Items)
 		{
-			await TotalRemoveProductFromBasket(product.Id);
-		}
-
-		return true;
+			TotalRemoveProductFromBasket(product.Id);
+		} 
 	}
 
 
 	/// <inheritdoc/>
-	public async Task<bool> CreateOrder()
+	public async Task<bool> CreateOrderAsync()
 	{
 		var result = default(bool);
 		var userEntity = await _usersHttpClient.GetUserByLogin("admin");
@@ -225,12 +245,26 @@ public class ProductsService : IProductsService
 			var orderResponse = await _ordersHttpClient.CreateOrder(orderRequest);
 			if(orderResponse != null)
 			{
-				await RemoveAllProductsFromBasket(); 
-				return true;
+				RemoveAllProductsFromBasket();
+				result = true;
 			}
 		} 
 
-		return false;
+		return result;
+	}
+
+	/// <summary>
+	/// Высчитывание итоговой цены за все товары в корзине пользователя.
+	/// </summary>
+	private void CalculateResultBasketPrice()
+	{
+		decimal resultSum = 0;
+		foreach(var product in _productsInBasket.Items)
+		{
+			resultSum = resultSum + (product.ResultPrice * product.CurrentSelectedCount);
+		}
+
+		ResultBasketPrice = resultSum == 0 ? null : resultSum;
 	}
 
 	#endregion

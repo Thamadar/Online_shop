@@ -1,6 +1,7 @@
 ﻿using Avalonia.Media.Imaging;
 using ReactiveUI;
 using Shop.Dto.Products;
+using System.Windows.Input;
 
 namespace Shop.Client.Avalonia.Views.Pages;
 
@@ -59,12 +60,12 @@ public interface IProductItemVM
 	/// <summary>
 	/// Command, реагирующий на нажатие "+". По дефолту пуст и используется стандартный от AddRemoveButton.cs, где плюсуется CurrentSelectedCount.
 	/// </summary>
-	IReactiveCommand? AddCommand { get; }
+	ICommand? AddCommand { get; }
 
 	/// <summary>
 	/// Command, реагирующий на нажатие "-". По дефолту пуст и используется стандартный от AddRemoveButton.cs, где минусуетя CurrentSelectedCount.
 	/// </summary>
-	IReactiveCommand? RemoveCommand { get; }
+	ICommand? RemoveCommand { get; }
 
 	/// <summary>
 	/// Клонирование экземпляра.

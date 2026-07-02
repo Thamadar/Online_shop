@@ -1,0 +1,39 @@
+﻿using ReactiveUI;
+using System.Windows.Input;
+
+namespace Shop.Client.WPF.Views.Pages;
+public sealed partial class HomeViewModel
+{
+	public sealed class HomeViewModelCommands
+	{
+		public ICommand ClearBasket { get; }
+		public ICommand CreateOrder { get; }
+
+		public HomeViewModelCommands(HomeViewModel vm)
+		{
+			ClearBasket = ReactiveCommand.Create(() => { vm.ClearBasket(); });
+			CreateOrder = ReactiveCommand.Create(() => { vm.CreateOrder(); });
+		}
+	}
+
+	private HomeViewModelCommands? _commands;
+
+	public HomeViewModelCommands Commands => _commands ??= new(this);
+
+	/// <summary>
+	/// Очистка текущей корзины.
+	/// </summary>
+	/// <returns></returns>
+	public void ClearBasket()
+	{
+		_productsService.RemoveAllProductsFromBasket();
+	}
+
+	/// <summary>
+	/// Создание заказа
+	/// </summary> 
+	public async void CreateOrder()
+	{
+		await _productsService.CreateOrderAsync();
+	}
+}

@@ -14,7 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shop.client.avalonia", "sho
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shop.ui.avalonia", "shop.ui.avalonia.prj\shop.ui.avalonia.csproj", "{A326B2E6-02DB-4CAE-82EC-680C9C61BDBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shop.client.wpf.desktop", "shop.client.wpf.desktop.prj\shop.client.wpf.desktop.csproj", "{69D10D29-512D-4654-AA5A-AC1974560442}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shop.client.wpf", "shop.client.wpf.prj\shop.client.wpf.csproj", "{69D10D29-512D-4654-AA5A-AC1974560442}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shop.ui.wpf", "shop.ui.wpf.prj\shop.ui.wpf.csproj", "{D32A4C41-DBBA-4E2D-BF5C-F10C65364204}"
 EndProject

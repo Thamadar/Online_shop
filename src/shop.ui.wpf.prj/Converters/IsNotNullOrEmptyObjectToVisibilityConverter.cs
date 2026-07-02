@@ -34,8 +34,8 @@ public class IsNotNullOrEmptyObjectToVisibilityConverter : IValueConverter
 					}
 				case Type type when type == typeof(decimal):
 					{
-						var decimalValue = (decimal)value;
-						return decimalValue == 0 ? Visibility.Collapsed : Visibility.Visible;
+						var decimalValue = (decimal?)value;
+						return (decimalValue == null || decimalValue == 0) ? Visibility.Collapsed : Visibility.Visible;
 					}
 				case Type type when type == typeof(float):
 					{

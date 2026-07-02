@@ -4,10 +4,16 @@
   xmlns:controls="using:Shop.UI.Avalonia.Controls" xmlns:converters="using:Shop.UI.Avalonia.Converters"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="using:Shop.Client.Avalonia.Views.Pages"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:localConverters="using:Shop.Client.Avalonia.Converters"
   x:DataType="local:ProductItemVM"
   d:DesignHeight="450" d:DesignWidth="300"
   mc:Ignorable="d"
   x:Class="Shop.Client.Avalonia.Views.Pages.ProductBasketItem">
+
+  <UserControl.Resources> 
+        <localConverters:BasketResultSumConverter
+            x:Key="BasketResultSumConverter" />
+  </UserControl.Resources>
 
     <Border
       Classes="container-product"
@@ -45,8 +51,17 @@
                       Classes.price-with-sale="{Binding DiscountValue, Converter={x:Static ObjectConverters.IsNotNull}}"
                       Classes.price-without-sale="{Binding DiscountValue, Converter={x:Static ObjectConverters.IsNull}}"
                       Grid.Column="0">
-                        <Run
-                          Text="{Binding ResultPrice, TargetNullValue=0, Mode=OneWay}" />
+                        <Run>
+                            <Run.Text>
+                              <MultiBinding
+                               Converter="{StaticResource BasketResultSumConverter}">
+                                 <Binding
+                                     Path="ResultPrice" />
+                                 <Binding
+                                     Path="CurrentSelectedCount" />
+                                </MultiBinding>
+                            </Run.Text>
+                        </Run>
                         <Run
                           Text="₽" />
                     </TextBlock>

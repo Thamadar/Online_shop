@@ -3,6 +3,7 @@
 using ReactiveUI;
 using Shop.Dto.Products;
 using Shop.UI.Avalonia;
+using System.Windows.Input;
 
 namespace Shop.Client.Avalonia.Views.Pages;
 
@@ -52,10 +53,10 @@ public class ProductItemVM : ViewModelBase, IProductItemVM
 	}
 
 	/// <inheritdoc/>
-	public IReactiveCommand? AddCommand { get; }
+	public ICommand? AddCommand { get; }
 
 	/// <inheritdoc/>
-	public IReactiveCommand? RemoveCommand { get; }
+	public ICommand? RemoveCommand { get; }
 
 
 	/// <summary>
@@ -71,8 +72,8 @@ public class ProductItemVM : ViewModelBase, IProductItemVM
 		DiscountUnit discountUnit,
 		double weight,
 		int? currentSelectedCount       = null,
-		IReactiveCommand? addCommand    = null,
-		IReactiveCommand? removeCommand = null)
+		ICommand? addCommand    = null,
+		ICommand? removeCommand = null)
 	{
 		Id                   = id;
 		ProductName          = productName;
@@ -108,8 +109,8 @@ public class ProductItemVM : ViewModelBase, IProductItemVM
 		double weight,
 		byte[] image,
 		int? currentSelectedCount       = null,
-		IReactiveCommand? addCommand    = null,
-		IReactiveCommand? removeCommand = null)
+		ICommand? addCommand    = null,
+		ICommand? removeCommand = null)
 		: this(id, productName, currentCount, basePrice, resultPrice, discountValue, discountUnit, weight, currentSelectedCount, addCommand, removeCommand)
 	{ 
 		Image = GetImageFromByteArray(image); 
@@ -129,8 +130,8 @@ public class ProductItemVM : ViewModelBase, IProductItemVM
 		double weight,
 		Bitmap image,
 		int? currentSelectedCount = null,
-		IReactiveCommand? addCommand = null,
-		IReactiveCommand? removeCommand = null)
+		ICommand? addCommand = null,
+		ICommand? removeCommand = null)
 		: this(id, productName, currentCount, basePrice, resultPrice, discountValue, discountUnit, weight, currentSelectedCount, addCommand, removeCommand)
 	{ 
 		Image                = image; 

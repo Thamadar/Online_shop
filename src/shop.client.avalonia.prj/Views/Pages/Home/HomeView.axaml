@@ -1,4 +1,4 @@
-<UserControl
+﻿<UserControl
   xmlns="https://github.com/avaloniaui"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:controls="using:Shop.UI.Avalonia.Controls" xmlns:converters="using:Shop.UI.Avalonia.Converters"
@@ -42,7 +42,7 @@
           Grid.Column="1"
           Width="350"
           Margin="10,0"
-          RowDefinitions="auto,*,auto">
+          RowDefinitions="auto,*,auto,auto">
 
             <Grid
               Grid.Row="0"
@@ -60,7 +60,8 @@
                   Background="Transparent"
                   Command="{Binding Commands.ClearBasket}" />
             </Grid>
-
+            
+            <!-- Товары -->
             <ScrollViewer
               Grid.Row="1"
               Margin="-8,0"
@@ -81,10 +82,33 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
-
+            
+            <!-- Итоговая сумма корзины -->
+           <StackPanel
+           Grid.Row="2"
+           IsVisible="{Binding ResultBasketPriceObservable^,
+                               Converter={x:Static ObjectConverters.IsNotNull}}"
+           Orientation="Vertical">
+               <TextBlock
+               Classes="default"
+               HorizontalAlignment="Center"
+               Text="Result"/> 
+               <TextBlock
+               Classes="header"
+               Margin="0,-8,0,0"
+               HorizontalAlignment="Center" >
+                  <Run
+                    Text="{Binding ResultBasketPriceObservable^}"/>
+                  <Run
+                    Text="₽"
+                    TextDecorations="Strikethrough" />
+               </TextBlock>
+           </StackPanel>
+           
+            <!-- Сделать заказ -->
             <Button
               Classes="default"
-              Grid.Row="2"
+              Grid.Row="3"
               HorizontalAlignment="Stretch"
               HorizontalContentAlignment="Center"
               Content="MakeOrder"

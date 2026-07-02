@@ -7,7 +7,7 @@
         "Action": "Start"
       },
       {
-        "Path": "shop.client.wpf.desktop.prj\\shop.client.wpf.desktop.csproj",
+        "Path": "shop.client.wpf.desktop.prj\\shop.client.wpf.csproj",
         "Action": "Start"
       }
     ]
