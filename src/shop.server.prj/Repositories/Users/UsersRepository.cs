@@ -9,12 +9,12 @@ namespace Shop.Server.Repositories;
 public class UsersRepository : IUsersRepository
 {
 	private readonly IMapper _mapper;
-	private readonly UserContext _userContext; 
+	private readonly ServerContext _serverContext; 
 
-	public UsersRepository(IMapper mapper, UserContext userContext)
+	public UsersRepository(IMapper mapper, ServerContext serverContext)
 	{
 		_mapper = mapper;
-		_userContext = userContext;
+		_serverContext = serverContext;
 	}
 	 
 	/// <inheritdoc/>
@@ -22,7 +22,7 @@ public class UsersRepository : IUsersRepository
 	{
 		try
 		{
-			var userDtoList = await _userContext.Users
+			var userDtoList = await _serverContext.Users
 				.AsNoTracking()
 				.ProjectTo<GetUserDto>(_mapper.ConfigurationProvider)
 				.ToListAsync();
@@ -42,7 +42,7 @@ public class UsersRepository : IUsersRepository
 	{
 		try
 		{
-			var userEntity = await _userContext.Users.FindAsync(id);
+			var userEntity = await _serverContext.Users.FindAsync(id);
 
 			return _mapper.Map<GetUserDto>(userEntity);  
 		}
@@ -57,7 +57,7 @@ public class UsersRepository : IUsersRepository
 	{
 		try
 		{
-			var user = await _userContext.Users
+			var user = await _serverContext.Users
 				.AsNoTracking()
 				.Where(x => x.Login == login)
 				.ProjectTo<GetUserDto>(_mapper.ConfigurationProvider)
@@ -74,12 +74,12 @@ public class UsersRepository : IUsersRepository
 	/// <inheritdoc/>
 	public async Task<CreateUserResponse> CreateUserAsync(CreateUserRequest request)
 	{
-		await using var transaction = await _userContext.Database.BeginTransactionAsync();
+		await using var transaction = await _serverContext.Database.BeginTransactionAsync();
 		try
 		{
 			var entity = _mapper.Map<UserEntity>(request);
-			await _userContext.Users.AddAsync(entity);
-			await _userContext.SaveChangesAsync(); 
+			await _serverContext.Users.AddAsync(entity);
+			await _serverContext.SaveChangesAsync(); 
 
 			var userResponse = _mapper.Map<CreateUserResponse>(entity);  
 			await transaction.CommitAsync();
@@ -97,13 +97,13 @@ public class UsersRepository : IUsersRepository
 	/// <inheritdoc/>
 	public async Task<CreateUsersResponse> CreateUsersBatchAsync(CreateUsersRequest requestBatch)
 	{   
-		await using var transaction = await _userContext.Database.BeginTransactionAsync();
+		await using var transaction = await _serverContext.Database.BeginTransactionAsync();
 		try
 		{
 			var entities = _mapper.Map<List<UserEntity>>(requestBatch.Users); 
 			 
-			await _userContext.Users.AddRangeAsync(entities);
-			await _userContext.SaveChangesAsync();   
+			await _serverContext.Users.AddRangeAsync(entities);
+			await _serverContext.SaveChangesAsync();   
 
 			var usersResponse = new CreateUsersResponse(_mapper.Map<List<CreateUserResponse>>(entities));
 			await transaction.CommitAsync();
@@ -123,7 +123,7 @@ public class UsersRepository : IUsersRepository
 	/// <inheritdoc/>
 	public bool IsAnyLoginExist(string login)
 	{
-		return _userContext.Users
+		return _serverContext.Users
 			.AsNoTracking()
 			.Any(x => x.Login == login);
 	}
@@ -131,7 +131,7 @@ public class UsersRepository : IUsersRepository
 	/// <inheritdoc/>
 	public List<string> CheckLoginsExist(List<string> logins)
 	{
-		var existLogins = _userContext.Users
+		var existLogins = _serverContext.Users
 			.ToList()
 			.Select(x => x.Login);
 

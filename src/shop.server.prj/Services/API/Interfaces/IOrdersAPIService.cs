@@ -10,17 +10,17 @@ public interface IOrdersAPIService : IAPIService
 	/// <summary>
 	/// Получение всех заказов.
 	/// </summary> 
-	Task<GetOrdersDto> GetOrdersAsync();
+	Task<GetOrdersResponse> GetOrdersAsync();
 
 	/// <summary>
 	/// Получение всех заказов пользователя по его userId.
 	/// </summary> 
-	Task<GetOrdersDto> GetOrdersByUserIdAsync(Guid userId);
+	Task<GetOrdersResponse> GetOrdersByUserIdAsync(Guid userId);
 
 	/// <summary>
 	/// Получение заказа по ID заказа.
 	/// </summary> 
-	Task<GetOrderDto> GetOrderByIdAsync(Guid orderId);
+	Task<GetOrderResponse> GetOrderByIdAsync(Guid orderId);
 
 	/// <summary>
 	/// Создание заказа.
@@ -30,7 +30,7 @@ public interface IOrdersAPIService : IAPIService
 	/// <summary>
 	/// Создание заказов.
 	/// </summary> 
-	Task<CreateOrdersResponse> CreateOrdersAsync(CreateOrdersRequest createOrdersRequest);
+	//Task<CreateOrdersResponse> CreateOrdersAsync(CreateOrdersRequest createOrdersRequest);
 
 	/// <summary>
 	/// Редактирование заказа.

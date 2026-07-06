@@ -3,12 +3,18 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Shop.Dto.Orders;
 
-public record GetOrdersDto(
-	[Required] List<GetOrderDto> Orders);
-public record GetOrderDto(
+public record GetOrdersRequest(
+	[Required] List<GetOrderRequest> Orders);
+public record GetOrderRequest(
+	[Required] Guid Id,
+	[Required] Guid UserId);
+
+public record GetOrdersResponse(
+	[Required] List<GetOrderResponse> Orders);
+public record GetOrderResponse(
 	[Required] Guid Id,
 	[Required] Guid UserId,
-	[Required] string Products, //TO DO: Переделать на ProductOrderEntity...
+	[Required] List<OrderProductResponse> OrderProducts,  
 	[Required] string OrderAddress,
 	[Required] DateTime CreatedAt);
 

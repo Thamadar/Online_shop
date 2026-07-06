@@ -23,12 +23,10 @@ public class OrderEntity
 	public Guid UserId { get; set; }
 
 	/// <summary>
-	/// Товары из заказа. (id, количество. Разделение через ;).
-	/// Пример: "2,5;3,1;6,3"
-	/// TO DO: отдельная таблица. Убрать эту логику, заменив на ту, что ProductLocalizationEntity.
+	/// Список продуктов в заказе.
 	/// </summary>
-	[NotNull]
-	public string Products { get; set; }
+	[Required]
+	public ICollection<OrderProductEntity> OrderProducts { get; set; }
 
 	/// <summary>
 	/// Адрес заказа.
@@ -51,13 +49,13 @@ public class OrderEntity
 	/// Был ли отменен заказ?
 	/// </summary>
 	[NotNull]
-	public bool IsCancelled { get; private set; }
+	public bool IsCancelled { get; private set; } 
 
 	/// <summary>
 	/// Завершен ли заказ?
 	/// </summary>
 	[NotMapped]
-	public bool IsCompleted => CompletedAt.HasValue;
+	public bool IsCompleted => CompletedAt.HasValue; 
 
 	/// <summary>
 	/// Завершение заказа.
@@ -70,7 +68,7 @@ public class OrderEntity
 		if(IsCancelled)
 			throw new InvalidOperationException("Отмененный заказ нельзя завершить.");
 
-		CompletedAt = DateTime.UtcNow;
+		CompletedAt = DateTime.UtcNow; 
 	}
 
 	/// <summary>
@@ -82,6 +80,6 @@ public class OrderEntity
 			throw new InvalidOperationException("Завершенный заказ нельзя отменить.");
 
 		IsCancelled = true;
-		CompletedAt = DateTime.UtcNow;
+		CompletedAt = DateTime.UtcNow; 
 	}
 }

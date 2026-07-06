@@ -13,7 +13,7 @@ public record GetProductResponse(
 	int Id,
 	string ProductName,
 	IReadOnlyList<ProductLocalizationResponse> Localizations,
-	int CurrentCount,
+	int AvailableCount,
 	decimal BasePrice,
 	CreateProductDiscountDto Discount,
 	decimal ResultPrice,

@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using Shop.Dto.Orders;
-using Shop.Dto.Users;
+using Shop.Dto.Orders; 
 using Shop.Server.Data;
 
 namespace Shop.Server.Repositories;
@@ -10,25 +9,25 @@ namespace Shop.Server.Repositories;
 public class OrdersRepository : IOrdersRepository
 { 
 	private readonly IMapper _mapper;
-	private readonly OrderContext _orderContext;
+	private readonly ServerContext _serverContext; 
 
-	public OrdersRepository(IMapper mapper, OrderContext orderContext)
+	public OrdersRepository(IMapper mapper, ServerContext serverContext)
 	{
-		_mapper = mapper;
-		_orderContext = orderContext;
+		_mapper        = mapper;
+		_serverContext = serverContext; 
 	}
-	  
+
 	/// <inheritdoc/>
-	public async Task<GetOrdersDto> GetOrdersAsync()
+	public async Task<GetOrdersResponse> GetOrdersAsync()
 	{
 		try
 		{
-			var orderResponseList = await _orderContext.Orders
+			var orderResponseList = await _serverContext.Orders
 				.AsNoTracking()
-				.ProjectTo<GetOrderDto>(_mapper.ConfigurationProvider)
+				.ProjectTo<GetOrderResponse>(_mapper.ConfigurationProvider)
 				.ToListAsync();
 
-			return new GetOrdersDto(orderResponseList);
+			return new GetOrdersResponse(orderResponseList);
 		}
 		catch(Exception ex)
 		{
@@ -37,17 +36,17 @@ public class OrdersRepository : IOrdersRepository
 	}
 
 	/// <inheritdoc/>
-	public async Task<GetOrdersDto> GetOrdersByUserIdAsync(Guid userId)
+	public async Task<GetOrdersResponse> GetOrdersByUserIdAsync(Guid userId)
 	{
 		try
 		{
-			var orders = await _orderContext.Orders
+			var orderResponseList = await _serverContext.Orders
 				.AsNoTracking()
 				.Where(x => x.UserId == userId)
-				.ProjectTo<GetOrdersDto>(_mapper.ConfigurationProvider)
-				.FirstAsync();
+				.ProjectTo<GetOrderResponse>(_mapper.ConfigurationProvider)
+				.ToListAsync();
 
-			return orders;
+			return new GetOrdersResponse(orderResponseList);
 		}
 		catch(Exception ex)
 		{
@@ -56,14 +55,14 @@ public class OrdersRepository : IOrdersRepository
 	}
 
 	/// <inheritdoc/>
-	public async Task<GetOrderDto> GetOrderByIdAsync(Guid orderId)
+	public async Task<GetOrderResponse> GetOrderByIdAsync(Guid orderId)
 	{
 		try
 		{
-			var orderEntity = await _orderContext.Orders
+			var orderEntity = await _serverContext.Orders
 				.FindAsync(orderId);
 
-			return _mapper.Map<GetOrderDto>(orderEntity);
+			return _mapper.Map<GetOrderResponse>(orderEntity);
 		}
 		catch(Exception ex)
 		{
@@ -74,12 +73,12 @@ public class OrdersRepository : IOrdersRepository
 	/// <inheritdoc/>
 	public async Task<CreateOrderResponse> CreateOrderAsync(CreateOrderRequest createOrderRequest)
 	{
-		await using var transaction = await _orderContext.Database.BeginTransactionAsync();
+		await using var transaction = await _serverContext.Database.BeginTransactionAsync();
 		try
 		{
-			var entity = _mapper.Map<OrderEntity>(createOrderRequest);
-			await _orderContext.Orders.AddAsync(entity);
-			await _orderContext.SaveChangesAsync();
+			var entity = _mapper.Map<OrderEntity>(createOrderRequest); 
+			await _serverContext.Orders.AddAsync(entity);
+			await _serverContext.SaveChangesAsync();
 
 			var orderResponse = _mapper.Map<CreateOrderResponse>(entity);
 
@@ -97,12 +96,12 @@ public class OrdersRepository : IOrdersRepository
 	/// <inheritdoc/>
 	public async Task<CreateOrdersResponse> CreateOrdersAsync(CreateOrdersRequest createOrdersRequest)
 	{
-		await using var transaction = await _orderContext.Database.BeginTransactionAsync();
+		await using var transaction = await _serverContext.Database.BeginTransactionAsync();
 		try
 		{ 
 			var entities = _mapper.Map<List<OrderEntity>>(createOrdersRequest.Orders);
-			await _orderContext.Orders.AddRangeAsync(entities);
-			await _orderContext.SaveChangesAsync();
+			await _serverContext.Orders.AddRangeAsync(entities);
+			await _serverContext.SaveChangesAsync();
 
 			var ordersResponse = new CreateOrdersResponse(_mapper.Map<List<CreateOrderResponse>>(entities)); 
 
@@ -118,17 +117,24 @@ public class OrdersRepository : IOrdersRepository
 	}
 
 	/// <inheritdoc/>
-	public async Task CompletionOrderAsync(Guid orderId)
+	public async Task<List<OrderProductResponse>> CompletionOrderAsync(Guid orderId)
 	{
-		await using var transaction = await _orderContext.Database.BeginTransactionAsync();
+		await using var transaction = await _serverContext.Database.BeginTransactionAsync();
 		try
 		{
-			var entity = await _orderContext.Orders.FindAsync(orderId);
+			var entity = await _serverContext.Orders.FindAsync(orderId);
 
 			if(entity != null)
 			{
-				entity.Complete(); 
-				await transaction.CommitAsync(); 
+				entity.Complete();
+
+				var orderProducts = _mapper.Map<List<OrderProductResponse>>(entity.OrderProducts);
+				entity.OrderProducts.Clear();
+
+				await _serverContext.SaveChangesAsync();
+				await transaction.CommitAsync();
+
+				return orderProducts;
 			}
 			else
 			{
@@ -143,17 +149,24 @@ public class OrdersRepository : IOrdersRepository
 	}
 
 	/// <inheritdoc/>
-	public async Task CancellationOrderAsync(Guid orderId)
+	public async Task<List<OrderProductResponse>> CancellationOrderAsync(Guid orderId)
 	{
-		await using var transaction = await _orderContext.Database.BeginTransactionAsync();
+		await using var transaction = await _serverContext.Database.BeginTransactionAsync();
 		try
 		{
-			var entity = await _orderContext.Orders.FindAsync(orderId);
+			var entity = await _serverContext.Orders.FindAsync(orderId);
 
 			if(entity != null)
 			{
 				entity.Cancel();
+
+				var orderProducts = _mapper.Map<List<OrderProductResponse>>(entity.OrderProducts);
+				entity.OrderProducts.Clear();
+
+				await _serverContext.SaveChangesAsync();
 				await transaction.CommitAsync();
+
+				return orderProducts; 
 			}
 			else
 			{

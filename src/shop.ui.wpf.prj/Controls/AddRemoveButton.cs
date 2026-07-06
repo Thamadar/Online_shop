@@ -139,7 +139,7 @@ public class AddRemoveButton : Control
 		}
 		if(MaxCount == 0)
 		{
-			_isMaxCount = false; 
+			_isMaxCount = true; 
 		}
 		else
 		{

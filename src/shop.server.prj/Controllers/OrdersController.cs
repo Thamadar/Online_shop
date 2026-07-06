@@ -28,9 +28,9 @@ public sealed class OrdersController : ShopControllerBase
 	/// Получение всех заказов.
 	/// </summary> 
 	[HttpGet]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetOrdersDto))]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetOrdersResponse))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<ActionResult<GetOrdersDto>> GetOrders()
+	public async Task<ActionResult<GetOrdersResponse>> GetOrders()
 	{
 		try
 		{
@@ -49,9 +49,9 @@ public sealed class OrdersController : ShopControllerBase
 	/// Получение заказа по id.
 	/// </summary> 
 	[HttpGet("{id:guid}")]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetOrderDto))]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetOrderResponse))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<ActionResult<GetOrderDto>> GetOrderById([FromRoute] Guid id)
+	public async Task<ActionResult<GetOrderResponse>> GetOrderById([FromRoute] Guid id)
 	{
 		try
 		{
@@ -67,7 +67,30 @@ public sealed class OrdersController : ShopControllerBase
 	}
 
 	/// <summary>
+	/// Получение заказов по id пользователя.
+	/// </summary>  
+	//var url = @$"{HttpConstants.orders}by-user/{Uri.EscapeDataString(userId)}";
+	[HttpGet("by-user/{userId}")]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetOrdersResponse))]
+	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+	public async Task<ActionResult<GetOrdersResponse>> GetOrderByUserId([FromRoute] Guid userId)
+	{
+		try
+		{
+			var orders = await _ordersAPIService.GetOrdersByUserIdAsync(userId);
+
+			return Ok(orders);
+		}
+		catch(Exception exc)
+		{
+			ConsoleLog.WriteError($@"{nameof(OrdersController)}.{nameof(GetOrderByUserId)} failed: {exc}");
+			return StatusCode(StatusCodes.Status500InternalServerError, new ExceptionRepresenter(exc).ToString());
+		}
+	}
+
+	/// <summary>
 	/// Создание заказов.
+	/// TO DO: удалить, ибо излишка, т.к. нет сценариев пока использования этого запроса?
 	/// </summary> 
 	[HttpPost("batch")]
 	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateOrdersResponse))]
@@ -78,9 +101,10 @@ public sealed class OrdersController : ShopControllerBase
 			return BadRequest(ModelState);
 		try
 		{
-			var ordersResponse = await _ordersAPIService.CreateOrdersAsync(parameters);
+			return StatusCode(StatusCodes.Status404NotFound);
+			//var ordersResponse = await _ordersAPIService.CreateOrdersAsync(parameters);
 
-			return Ok(ordersResponse);
+			//return Ok(ordersResponse);
 		}
 		catch(Exception exc)
 		{

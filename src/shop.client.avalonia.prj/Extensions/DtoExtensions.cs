@@ -30,7 +30,7 @@ public static class DtoExtensions
 		return new ProductItemVM(
 			getProductResponse.Id,
 			getProductResponse.Localizations.FirstOrDefault(x => x.LangCode == cultureName)?.DisplayName ?? "-",
-			getProductResponse.CurrentCount,
+			getProductResponse.AvailableCount,
 			getProductResponse.BasePrice,
 			getProductResponse.ResultPrice,
 			getProductResponse.Discount.DiscountValue,

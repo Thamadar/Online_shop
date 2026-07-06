@@ -11,7 +11,7 @@ public record CreateProductsRequest([Required][MinLength(1)] List<CreateProductR
 public record CreateProductRequest(
 	[Required][StringLength(150)] string ProductName,
 	[Required][MinLength(1)] IReadOnlyList<ProductLocalizationRequest> Localizations,
-	[Required] int CurrentCount,
+	[Required] int AvailableCount,
 	[Required] decimal BasePrice,
 	[Required] CreateProductDiscountDto Discount,
 	[Required] int Weight,
@@ -22,7 +22,7 @@ public record CreateProductResponse(
 	int Id,
 	string ProductName,
 	IReadOnlyList<ProductLocalizationResponse> Localizations,
-	int CurrentCount,
+	int AvailableCount,
 	decimal BasePrice,
 	CreateProductDiscountDto Discount,
 	decimal ResultPrice,

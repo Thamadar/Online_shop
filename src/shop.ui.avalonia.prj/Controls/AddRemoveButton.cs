@@ -113,6 +113,8 @@ public class AddRemoveButton : TemplatedControl
 		_сountTextBlock        = InitCountTextBlock(e.NameScope.Find<TextBlock>("PART_CountTextBlock"));
 
 		_areControlsAvailable = true;
+
+		UpdateUI();
 	}
 
 	private void UpdateUI()
@@ -136,7 +138,7 @@ public class AddRemoveButton : TemplatedControl
 		}
 		if(MaxCount == 0)
 		{
-			_isMaxCount = false; 
+			_isMaxCount = true; 
 		}
 		else
 		{

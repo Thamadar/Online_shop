@@ -1,4 +1,5 @@
 ﻿using Shop.Dto.Products;
+using Shop.Server.Data;
 using Shop.Server.Services.API.Interfaces;
 
 namespace Shop.Server.Services.API;
@@ -29,7 +30,7 @@ public interface IProductsAPIService : IAPIService
 	/// Добавление товара.
 	/// </summary> 
 	Task<CreateProductResponse> CreateProductAsync(CreateProductRequest createProductRequest);
-
+	  
 	/// <summary>
 	/// Изменение скидки товара.
 	/// </summary> 

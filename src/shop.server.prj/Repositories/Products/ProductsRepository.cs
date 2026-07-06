@@ -9,12 +9,12 @@ namespace Shop.Server.Repositories;
 public class ProductsRepository : IProductsRepository
 {
 	private readonly IMapper _mapper;
-	private readonly ProductContext _productContext;
+	private readonly ServerContext _serverContext;
 
-	public ProductsRepository(IMapper mapper, ProductContext productContext)
+	public ProductsRepository(IMapper mapper, ServerContext serverContext)
 	{
 		_mapper = mapper;
-		_productContext = productContext;
+		_serverContext = serverContext;
 	}
 
 
@@ -23,7 +23,7 @@ public class ProductsRepository : IProductsRepository
 	{
 		try
 		{
-			var productResponses = await _productContext.Products
+			var productResponses = await _serverContext.Products
 				.AsNoTracking()
 				.Include(p => p.Localizations)
 				.ProjectTo<GetProductResponse>(_mapper.ConfigurationProvider)
@@ -36,18 +36,18 @@ public class ProductsRepository : IProductsRepository
 			throw new InvalidOperationException("Не удалось получить товары", ex);
 		}
 	}
-
+	 
 	/// <inheritdoc/>
 	public async Task<GetProductResponse> GetProductByIdAsync(int productId)
 	{
 		try
 		{
-			var productEntity = await _productContext.Products.FindAsync(productId);
+			var productEntity = await _serverContext.Products.FindAsync(productId);
 
 			if(productEntity == null)
 				throw new Exception();
 
-			await _productContext
+			await _serverContext
 				.Entry(productEntity)
 				.Collection(p => p.Localizations)
 				.LoadAsync();
@@ -67,7 +67,7 @@ public class ProductsRepository : IProductsRepository
 	{
 		try
 		{
-			var productResponse = await _productContext.Products
+			var productResponse = await _serverContext.Products
 				.AsNoTracking()
 				.Where(x => x.ProductName == productName)
 				.Include(p => p.Localizations)
@@ -85,13 +85,13 @@ public class ProductsRepository : IProductsRepository
 	/// <inheritdoc/>
 	public async Task<CreateProductsResponse> CreateProductsAsync(CreateProductsRequest createProductsRequest)
 	{
-		await using var transaction = await _productContext.Database.BeginTransactionAsync();
+		await using var transaction = await _serverContext.Database.BeginTransactionAsync();
 		try
 		{
 			var entities = _mapper.Map<List<ProductEntity>>(createProductsRequest.Products);
 
-			await _productContext.Products.AddRangeAsync(entities);
-			await _productContext.SaveChangesAsync();
+			await _serverContext.Products.AddRangeAsync(entities);
+			await _serverContext.SaveChangesAsync();
 
 			var usersResponse = new CreateProductsResponse(_mapper.Map<List<CreateProductResponse>>(entities));
 			await transaction.CommitAsync();
@@ -109,13 +109,13 @@ public class ProductsRepository : IProductsRepository
 	/// <inheritdoc/>
 	public async Task<CreateProductResponse> CreateProductAsync(CreateProductRequest createProductRequest)
 	{
-		await using var transaction = await _productContext.Database.BeginTransactionAsync();
+		await using var transaction = await _serverContext.Database.BeginTransactionAsync();
 		try
 		{
 			var entity = _mapper.Map<ProductEntity>(createProductRequest);
 
-			await _productContext.Products.AddAsync(entity);
-			await _productContext.SaveChangesAsync();
+			await _serverContext.Products.AddAsync(entity);
+			await _serverContext.SaveChangesAsync();
 
 			var response = _mapper.Map<CreateProductResponse>(entity);
 
@@ -130,18 +130,76 @@ public class ProductsRepository : IProductsRepository
 		}
 	}
 
+	/// <inheritdoc/>
+	public async Task<bool> CheckAvailabilityQuantityAsync(int productId, int quantity)
+	{ 
+		try
+		{
+			var productEntity = await _serverContext.Products.FindAsync(productId);
+
+			if(productEntity == null)
+				throw new Exception();
+
+			return productEntity.AvailableCount >= quantity;
+		}
+		catch(Exception ex)
+		{
+			throw new InvalidOperationException("Не удалось убавить кол-во товаров в ProductEntity", ex);
+		}
+	}
+
+	/// <inheritdoc/>
+	public async Task AddQuantityAsync(int productId, int quantity)
+	{
+		await using var transaction = await _serverContext.Database.BeginTransactionAsync();
+		try
+		{
+			var productEntity = await _serverContext.Products.FindAsync(productId);
+
+			if(productEntity == null || !productEntity.AddAvailableCount(quantity))
+				throw new Exception();
+
+			await _serverContext.SaveChangesAsync();
+			await transaction.CommitAsync(); 
+		}
+		catch(Exception ex)
+		{
+			throw new InvalidOperationException($"Не удалось убавить кол-во товаров в ProductEntity на {quantity}", ex);
+		}
+	}
+
+	/// <inheritdoc/>
+	public async Task RemoveQuantityAsync(int productId, int quantity)
+	{
+		await using var transaction = await _serverContext.Database.BeginTransactionAsync();
+		try
+		{
+			var productEntity = await _serverContext.Products.FindAsync(productId);
+
+			if(productEntity == null || !productEntity.RemoveAvailableCount(quantity))
+				throw new Exception();
+
+			await _serverContext.SaveChangesAsync();
+			await transaction.CommitAsync(); 
+		}
+		catch(Exception ex)
+		{
+			throw new InvalidOperationException($"Не удалось убавить кол-во товаров в ProductEntity на {quantity}", ex);
+		}
+	}
 
 	/// <inheritdoc/>
 	public async Task EditProductDiscountAsync(int productId, decimal discountValue, DiscountUnit discountUnit)
 	{
-		await using var transaction = await _productContext.Database.BeginTransactionAsync();
+		await using var transaction = await _serverContext.Database.BeginTransactionAsync();
 		try
 		{
-			var entity = await _productContext.Products.FindAsync(productId);
+			var entity = await _serverContext.Products.FindAsync(productId);
 			 
 			if(entity != null)
 			{
 				entity.SetDiscount(discountValue, discountUnit);
+				await _serverContext.SaveChangesAsync();
 				await transaction.CommitAsync();
 			}
 			else
@@ -159,14 +217,15 @@ public class ProductsRepository : IProductsRepository
 	/// <inheritdoc/>
 	public async Task ClearProductDiscountAsync(int productId)
 	{
-		await using var transaction = await _productContext.Database.BeginTransactionAsync();
+		await using var transaction = await _serverContext.Database.BeginTransactionAsync();
 		try
 		{
-			var entity = await _productContext.Products.FindAsync(productId);
+			var entity = await _serverContext.Products.FindAsync(productId);
 
 			if(entity != null)
 			{
 				entity.ClearDiscount();
+				await _serverContext.SaveChangesAsync();
 				await transaction.CommitAsync();
 			}
 			else
@@ -184,7 +243,7 @@ public class ProductsRepository : IProductsRepository
 	/// <inheritdoc/>
 	public bool IsAnyNameExist(string name)
 	{
-		return _productContext.Products
+		return _serverContext.Products
 			.AsNoTracking()
 			.Any(x => x.ProductName == name);
 	}
@@ -192,7 +251,7 @@ public class ProductsRepository : IProductsRepository
 	/// <inheritdoc/>
 	public List<string> CheckNamesExist(List<string> names)
 	{
-		var existNames = _productContext.Products
+		var existNames = _serverContext.Products
 			.ToList()
 			.Select(x => x.ProductName);
 

@@ -77,9 +77,7 @@ public class Startup
 
 	private void ConfigureDbContexts(IServiceCollection services)
 	{ 
-		services.AddDbContext<ProductContext>(options => options.UseSqlServer(configRoot.GetConnectionString("DefaultConnection")));
-		services.AddDbContext<OrderContext>(options   => options.UseSqlServer(configRoot.GetConnectionString("DefaultConnection")));
-		services.AddDbContext<UserContext>(options    => options.UseSqlServer(configRoot.GetConnectionString("DefaultConnection")));
+		services.AddDbContext<ServerContext>(options => options.UseSqlServer(configRoot.GetConnectionString("DefaultConnection"))); 
 	}
 
 	private void ConfigureTables(IServiceCollection services)
@@ -89,5 +87,6 @@ public class Startup
 		services.AddSingleton<IServerService, ProductTableInit>();
 		services.AddSingleton<IServerService, OrderTableInit>();
 		services.AddSingleton<IServerService, UserTableInit>();
+		services.AddSingleton<IServerService, OrderProductsTableInit>();
 	}
 }

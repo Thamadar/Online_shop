@@ -29,12 +29,16 @@ public class ProductEntity
 	/// </summary>
 	[Required] 
 	public ICollection<ProductLocalizationEntity> Localizations { get; set; }
-	 
+
 	/// <summary>
-	/// Текущее доступное количество товаров.
+	/// Список заказов, в которых есть данный продукт.
+	/// </summary> 
+	public ICollection<OrderProductEntity> OrderProducts { get; set; }
+
+	/// <summary>
+	/// Текущее доступное количество товаров, располагающихся на условном складе.
 	/// </summary>
-	[Required]
-	public int CurrentCount { get; set; }
+	public int AvailableCount { get; set; }
 
 	/// <summary>
 	/// Базовая стоимость товара в рублях.
@@ -90,6 +94,34 @@ public class ProductEntity
 
 		DiscountValue = discountValue;
 		DiscountUnit  = discountUnit;
+	}
+
+	/// <summary>
+	/// Добавление выбранного кол-во товаров (quantity) в AvailableCount в выбранном ProductEntity.
+	/// </summary>
+	public bool AddAvailableCount(int quantity)
+	{
+		var result = default(bool);
+		if(quantity > 0)
+		{
+			AvailableCount = AvailableCount + quantity;
+			result = true;
+		}
+		return result;
+	}
+
+	/// <summary>
+	/// Удаление выбранного кол-во товаров (quantity) в AvailableCount в выбранном ProductEntity.
+	/// </summary>
+	public bool RemoveAvailableCount(int quantity)
+	{
+		var result = default(bool);
+		if(quantity > 0 && AvailableCount + quantity >= 0)
+		{
+			AvailableCount = AvailableCount - quantity;
+			result = true;
+		}
+		return result;
 	}
 
 	/// <summary>

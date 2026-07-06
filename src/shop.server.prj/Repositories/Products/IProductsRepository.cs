@@ -6,7 +6,7 @@ namespace Shop.Server.Repositories;
 public interface IProductsRepository
 { 
 	/// <summary>
-	/// Получение всех товаров.
+	/// Получение всех товаров, не находящихся в заказе.
 	/// </summary> 
 	Task<GetProductsResponse> GetProductsAsync();
 
@@ -28,7 +28,22 @@ public interface IProductsRepository
 	/// <summary>
 	/// Добавление товара.
 	/// </summary> 
-	Task<CreateProductResponse> CreateProductAsync(CreateProductRequest createProductRequest);
+	Task<CreateProductResponse> CreateProductAsync(CreateProductRequest createProductRequest); 
+
+	/// <summary>
+	/// Проверка наличия заданного кол-во товаров в выбранном ProductEntity.
+	/// </summary> 
+	Task<bool> CheckAvailabilityQuantityAsync(int productId, int quantity);
+
+	/// <summary>
+	/// Добавление выбранного кол-во товаров с AvailableCount в выбранном ProductEntity.
+	/// </summary> 
+	Task AddQuantityAsync(int productId, int quantity);
+
+	/// <summary>
+	/// Удаление выбранного кол-во товаров с AvailableCount в выбранном ProductEntity.
+	/// </summary> 
+	Task RemoveQuantityAsync(int productId, int quantity);
 
 	/// <summary>
 	/// Изменение скидки товара.

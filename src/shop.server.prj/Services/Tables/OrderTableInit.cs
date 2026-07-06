@@ -15,7 +15,6 @@ public class OrderTableInit : BaseTableInit<OrderEntity>
 	protected override string CreateTableQuery => @"CREATE TABLE [dbo].Orders(
 		[Id] UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID() NOT NULL,
 		[UserId] UNIQUEIDENTIFIER NOT NULL,
-		[Products] NVARCHAR(MAX) NOT NULL,
 		[OrderAddress] NVARCHAR(MAX) NOT NULL,
 		[CreatedAt] DATETIME NOT NULL,
 		[CompletedAt] DATETIME,

@@ -8,16 +8,12 @@ namespace Shop.Server.Data;
 /// Объект, инкапсулирующий локализацию для товара (ProductEntity).
 /// </summary> 
 public class ProductLocalizationEntity
-{
-	[Key]
-	[Column(Order = 0)]
+{  
 	public int ProductId { get; set; }
 
 	/// <summary>
 	/// Ключ локализации.
-	/// </summary>
-	[Key]
-	[Column(Order = 1)]
+	/// </summary>  
 	[Required]
 	[MaxLength(10)]
 	public string LangCode { get; set; }  
@@ -25,8 +21,7 @@ public class ProductLocalizationEntity
 	/// <summary>
 	/// Отображение локализации.
 	/// </summary>
-	[Required]
-	[Column(Order = 2)]
+	[Required] 
 	public string DisplayName { get; set; }
 	 
 	[ForeignKey(nameof(ProductId))]
