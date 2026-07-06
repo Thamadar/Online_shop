@@ -183,8 +183,7 @@ public sealed class OrdersController : ShopControllerBase
 	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
 	public async Task<IActionResult> UpdateOrderById(
-		[FromRoute] int id,
-		[FromBody] OrderEntity parameters)
+		[FromRoute] int id)
 	{
 		try
 		{
