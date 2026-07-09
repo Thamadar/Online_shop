@@ -10,17 +10,17 @@ public interface IUsersAPIService : IAPIService
 	/// <summary>
 	/// Получение всех пользователей.
 	/// </summary> 
-	Task<GetUsersDto> GetUsersAsync();
+	Task<GetUsersDto> GetUsersAsync(CancellationToken ct = default);
 
 	/// <summary>
 	/// Получение пользователя по Id.
 	/// </summary> 
-	Task<GetUserDto> GetUserByIdAsync(Guid id);
+	Task<GetUserDto> GetUserByIdAsync(Guid id, CancellationToken ct = default);
 
 	/// <summary>
 	/// Получение пользователя по Login.
 	/// </summary> 
-	Task<GetUserDto> GetUserByLoginAsync(string login);
+	Task<GetUserDto> GetUserByLoginAsync(string login, CancellationToken ct = default);
 
 	/// <summary>
 	/// Создание пользователя.

@@ -8,17 +8,17 @@ public interface IProductsRepository
 	/// <summary>
 	/// Получение всех товаров, не находящихся в заказе.
 	/// </summary> 
-	Task<GetProductsResponse> GetProductsAsync();
+	Task<GetProductsResponse> GetProductsAsync(CancellationToken ct = default);
 
 	/// <summary>
 	/// Получение товара по ID.
 	/// </summary> 
-	Task<GetProductResponse> GetProductByIdAsync(int productId);
+	Task<GetProductResponse> GetProductByIdAsync(int productId, CancellationToken ct = default);
 
 	/// <summary>
 	/// Получение товара по ключу имени (ProductName).
 	/// </summary> 
-	Task<GetProductResponse> GetProductByNameAsync(string productName);
+	Task<GetProductResponse> GetProductByNameAsync(string productName, CancellationToken ct = default);
 
 	/// <summary>
 	/// Добавление товаров.
@@ -33,7 +33,7 @@ public interface IProductsRepository
 	/// <summary>
 	/// Проверка наличия заданного кол-во товаров в выбранном ProductEntity.
 	/// </summary> 
-	Task<bool> CheckAvailabilityQuantityAsync(int productId, int quantity);
+	Task<bool> CheckAvailabilityQuantityAsync(int productId, int quantity, CancellationToken ct = default);
 
 	/// <summary>
 	/// Добавление выбранного кол-во товаров с AvailableCount в выбранном ProductEntity.

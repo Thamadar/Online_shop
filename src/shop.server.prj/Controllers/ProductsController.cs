@@ -29,149 +29,90 @@ public sealed class ProductsController : ShopControllerBase
 	/// Получение всех товаров.
 	/// </summary> 
 	[HttpGet]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetProductsResponse))]
-	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<ActionResult<GetProductsResponse>> GetProducts()
-	{
-		try
-		{
-			var products = await _productsAPIService.GetProductsAsync(); 
-			return Ok(products);
-		}
-		catch(Exception exc)
-		{
-			ConsoleLog.WriteError($@"{nameof(ProductsController)}.{nameof(GetProducts)} failed: {exc}");
-			return StatusCode(StatusCodes.Status500InternalServerError, new ExceptionRepresenter(exc).ToString());
-		}
+	[ResponseCache(Duration = 6000, Location = ResponseCacheLocation.Any)]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetProductsResponse))] 
+	public async Task<ActionResult<GetProductsResponse>> GetProducts(CancellationToken ct)
+	{ 
+		var products = await _productsAPIService.GetProductsAsync(ct); 
+		return Ok(products);
 	}
 
 	/// <summary>
 	/// Получение товара по id.
 	/// </summary> 
 	[HttpGet("{id:int}")]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetProductResponse))]
-	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<ActionResult<GetProductResponse>> GetProductById([FromRoute] int id)
-	{
-		try
-		{
-			var product = await _productsAPIService.GetProductByIdAsync(id); 
-			return Ok(product);
-		}
-		catch(Exception exc)
-		{
-			ConsoleLog.WriteError($@"{nameof(ProductsController)}.{nameof(GetProductById)} failed: {exc}");
-			return StatusCode(StatusCodes.Status500InternalServerError, new ExceptionRepresenter(exc).ToString());
-		}
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetProductResponse))] 
+	public async Task<ActionResult<GetProductResponse>> GetProductById([FromRoute] int id, CancellationToken ct)
+	{ 
+		var product = await _productsAPIService.GetProductByIdAsync(id, ct); 
+		return Ok(product); 
 	}
 
 	/// <summary>
 	/// Получение товара по имени.
 	/// </summary> 
 	[HttpGet("by-name/{name}")]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetProductResponse))]
-	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<ActionResult<GetProductResponse>> GetProductByName([FromRoute] string name)
-	{
-		try
-		{
-			var product = await _productsAPIService.GetProductByNameAsync(name); 
-			return Ok(product);
-		}
-		catch(Exception exc)
-		{
-			ConsoleLog.WriteError($@"{nameof(ProductsController)}.{nameof(GetProductByName)} failed: {exc}");
-			return StatusCode(StatusCodes.Status500InternalServerError, new ExceptionRepresenter(exc).ToString());
-		}
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetProductResponse))] 
+	public async Task<ActionResult<GetProductResponse>> GetProductByName([FromRoute] string name, CancellationToken ct)
+	{ 
+		var product = await _productsAPIService.GetProductByNameAsync(name, ct); 
+		return Ok(product); 
 	}
 
 	/// <summary>
 	/// Добавление товаров.
 	/// </summary> 
 	[HttpPost("batch")]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateProductsResponse))]
-	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateProductsResponse))] 
 	public async Task<ActionResult<CreateProductsResponse>> PostProducts([FromBody] CreateProductsRequest parameters)
 	{
 		if(!ModelState.IsValid)
 			return BadRequest(ModelState);
 
-		try
-		{
-			var products = await _productsAPIService.CreateProductsAsync(parameters);
-			return Ok(products);
-		}
-		catch(Exception exc)
-		{
-			ConsoleLog.WriteError($@"{nameof(ProductsController)}.{nameof(PostProducts)} failed: {exc}");
-			return StatusCode(StatusCodes.Status500InternalServerError, new ExceptionRepresenter(exc).ToString());
-		}
+		var products = await _productsAPIService.CreateProductsAsync(parameters);
+		return Ok(products);
 	}
 
 	/// <summary>
 	/// Добавление товара.
 	/// </summary> 
 	[HttpPost]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateProductResponse))]
-	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateProductResponse))] 
 	public async Task<ActionResult<CreateProductResponse>> PostProduct([FromBody] CreateProductRequest parameters)
 	{
 		if(!ModelState.IsValid)
 			return BadRequest(ModelState);
-
-		try
-		{
-			var product = await _productsAPIService.CreateProductAsync(parameters);
-			return Ok(product);
-		}
-		catch(Exception exc)
-		{
-			ConsoleLog.WriteError($@"{nameof(ProductsController)}.{nameof(PostProduct)} failed: {exc}");
-			return StatusCode(StatusCodes.Status500InternalServerError, new ExceptionRepresenter(exc).ToString());
-		}
+		 
+		var product = await _productsAPIService.CreateProductAsync(parameters);
+		return Ok(product); 
 	}
 	 
 	/// <summary>
 	/// Добавление скидки товару.
 	/// </summary> 
 	[HttpPost("{id:int}/discount")]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))]
-	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<IActionResult> AddOrUpdateDiscount([FromRoute] int id, [FromBody] EditProductDiscountRequest parameters)
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))] 
+	public async Task<IActionResult> AddOrUpdateDiscount(
+		[FromRoute] int id,
+		[FromBody] EditProductDiscountRequest parameters)
 	{
 		if(!ModelState.IsValid)
 			return BadRequest(ModelState);
 
-		try
-		{
-			await _productsAPIService.EditProductDiscountAsync(id, parameters);
-			return Ok();
-		}
-		catch(Exception exc)
-		{
-			ConsoleLog.WriteError($@"{nameof(ProductsController)}.{nameof(PostProduct)} failed: {exc}");
-			return StatusCode(StatusCodes.Status500InternalServerError, new ExceptionRepresenter(exc).ToString());
-		}
+		 
+		await _productsAPIService.EditProductDiscountAsync(id, parameters);
+		return Ok(); 
 	}
 	 
 	/// <summary>
 	/// Обновление товара.
 	/// </summary> 
 	[HttpPut("{id:int}")]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))]
-	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-	public async Task<IActionResult> UpdateProductById(
-		[FromRoute] int id)
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))] 
+	public async Task<IActionResult> UpdateProductById([FromRoute] int id)
 	{
-		try
-		{
-			return StatusCode(StatusCodes.Status404NotFound);
-		}
-		catch(Exception exc)
-		{
-			ConsoleLog.WriteError($@"{nameof(ProductsController)}.{nameof(UpdateProductById)} failed: {exc}");
-			return StatusCode(StatusCodes.Status500InternalServerError, new ExceptionRepresenter(exc).ToString());
-		}
+		//TO DO:
+		return StatusCode(StatusCodes.Status404NotFound); 
 	}
 
 	/// <summary>
@@ -179,19 +120,10 @@ public sealed class ProductsController : ShopControllerBase
 	/// </summary> 
 	[HttpDelete("{id:int}/discount")]
 	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))]
-	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
 	public async Task<IActionResult> ClearProductDiscount([FromRoute] int id)
-	{
-		try
-		{
-			await _productsAPIService.ClearProductDiscountAsync(id);
-			return Ok();
-		}
-		catch(Exception exc)
-		{
-			ConsoleLog.WriteError($@"{nameof(ProductsController)}.{nameof(ClearProductDiscount)} failed: {exc}");
-			return StatusCode(StatusCodes.Status500InternalServerError, new ExceptionRepresenter(exc).ToString());
-		}
+	{ 
+		await _productsAPIService.ClearProductDiscountAsync(id);
+		return Ok(); 
 	}
 
 
@@ -199,18 +131,10 @@ public sealed class ProductsController : ShopControllerBase
 	/// Удаление товара.
 	/// </summary> 
 	[HttpDelete("{id:int}")]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))]
-	[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IActionResult))] 
 	public async Task<IActionResult> DeleteProduct([FromRoute] int id)
 	{
-		try
-		{
-			return StatusCode(StatusCodes.Status404NotFound);
-		}
-		catch(Exception exc)
-		{
-			ConsoleLog.WriteError($@"{nameof(ProductsController)}.{nameof(DeleteProduct)} failed: {exc}");
-			return StatusCode(StatusCodes.Status500InternalServerError, new ExceptionRepresenter(exc).ToString());
-		}
+		//TO DO:
+		return StatusCode(StatusCodes.Status404NotFound); 
 	}
 }

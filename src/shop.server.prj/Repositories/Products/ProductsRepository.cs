@@ -19,7 +19,7 @@ public class ProductsRepository : IProductsRepository
 
 
 	/// <inheritdoc/>
-	public async Task<GetProductsResponse> GetProductsAsync()
+	public async Task<GetProductsResponse> GetProductsAsync(CancellationToken ct = default)
 	{
 		try
 		{
@@ -27,7 +27,7 @@ public class ProductsRepository : IProductsRepository
 				.AsNoTracking()
 				.Include(p => p.Localizations)
 				.ProjectTo<GetProductResponse>(_mapper.ConfigurationProvider)
-				.ToListAsync();
+				.ToListAsync(ct);
 
 			return new GetProductsResponse(productResponses);
 		}
@@ -38,7 +38,7 @@ public class ProductsRepository : IProductsRepository
 	}
 	 
 	/// <inheritdoc/>
-	public async Task<GetProductResponse> GetProductByIdAsync(int productId)
+	public async Task<GetProductResponse> GetProductByIdAsync(int productId, CancellationToken ct = default)
 	{
 		try
 		{
@@ -50,7 +50,7 @@ public class ProductsRepository : IProductsRepository
 			await _serverContext
 				.Entry(productEntity)
 				.Collection(p => p.Localizations)
-				.LoadAsync();
+				.LoadAsync(ct);
 
 			var productResponse = _mapper.Map<GetProductResponse>(productEntity);
 
@@ -63,7 +63,7 @@ public class ProductsRepository : IProductsRepository
 	}
 
 	/// <inheritdoc/> 
-	public async Task<GetProductResponse> GetProductByNameAsync(string productName)
+	public async Task<GetProductResponse> GetProductByNameAsync(string productName, CancellationToken ct = default)
 	{
 		try
 		{
@@ -72,7 +72,7 @@ public class ProductsRepository : IProductsRepository
 				.Where(x => x.ProductName == productName)
 				.Include(p => p.Localizations)
 				.ProjectTo<GetProductResponse>(_mapper.ConfigurationProvider)
-				.FirstAsync();
+				.FirstAsync(ct);
 
 			return productResponse;
 		}
@@ -84,8 +84,7 @@ public class ProductsRepository : IProductsRepository
 
 	/// <inheritdoc/>
 	public async Task<CreateProductsResponse> CreateProductsAsync(CreateProductsRequest createProductsRequest)
-	{
-		await using var transaction = await _serverContext.Database.BeginTransactionAsync();
+	{ 
 		try
 		{
 			var entities = _mapper.Map<List<ProductEntity>>(createProductsRequest.Products);
@@ -93,23 +92,20 @@ public class ProductsRepository : IProductsRepository
 			await _serverContext.Products.AddRangeAsync(entities);
 			await _serverContext.SaveChangesAsync();
 
-			var usersResponse = new CreateProductsResponse(_mapper.Map<List<CreateProductResponse>>(entities));
-			await transaction.CommitAsync();
+			var usersResponse = new CreateProductsResponse(_mapper.Map<List<CreateProductResponse>>(entities)); 
 
 			return usersResponse;
 
 		}
 		catch(Exception ex)
-		{
-			await transaction.RollbackAsync();
+		{ 
 			throw new InvalidOperationException("Не удалось создать и добавить товары в БД", ex);
 		}
 	}
 
 	/// <inheritdoc/>
 	public async Task<CreateProductResponse> CreateProductAsync(CreateProductRequest createProductRequest)
-	{
-		await using var transaction = await _serverContext.Database.BeginTransactionAsync();
+	{ 
 		try
 		{
 			var entity = _mapper.Map<ProductEntity>(createProductRequest);
@@ -117,25 +113,22 @@ public class ProductsRepository : IProductsRepository
 			await _serverContext.Products.AddAsync(entity);
 			await _serverContext.SaveChangesAsync();
 
-			var response = _mapper.Map<CreateProductResponse>(entity);
-
-			await transaction.CommitAsync();
+			var response = _mapper.Map<CreateProductResponse>(entity); 
 
 			return response;
 		}
 		catch(Exception ex)
-		{
-			await transaction.RollbackAsync();
+		{ 
 			throw new InvalidOperationException("Не удалось создать и добавить товар в БД", ex);
 		}
 	}
 
 	/// <inheritdoc/>
-	public async Task<bool> CheckAvailabilityQuantityAsync(int productId, int quantity)
+	public async Task<bool> CheckAvailabilityQuantityAsync(int productId, int quantity, CancellationToken ct = default)
 	{ 
 		try
 		{
-			var productEntity = await _serverContext.Products.FindAsync(productId);
+			var productEntity = await _serverContext.Products.FindAsync(productId, ct);
 
 			if(productEntity == null)
 				throw new Exception();
@@ -150,8 +143,7 @@ public class ProductsRepository : IProductsRepository
 
 	/// <inheritdoc/>
 	public async Task AddQuantityAsync(int productId, int quantity)
-	{
-		await using var transaction = await _serverContext.Database.BeginTransactionAsync();
+	{ 
 		try
 		{
 			var productEntity = await _serverContext.Products.FindAsync(productId);
@@ -159,8 +151,7 @@ public class ProductsRepository : IProductsRepository
 			if(productEntity == null || !productEntity.AddAvailableCount(quantity))
 				throw new Exception();
 
-			await _serverContext.SaveChangesAsync();
-			await transaction.CommitAsync(); 
+			await _serverContext.SaveChangesAsync(); 
 		}
 		catch(Exception ex)
 		{
@@ -170,8 +161,7 @@ public class ProductsRepository : IProductsRepository
 
 	/// <inheritdoc/>
 	public async Task RemoveQuantityAsync(int productId, int quantity)
-	{
-		await using var transaction = await _serverContext.Database.BeginTransactionAsync();
+	{ 
 		try
 		{
 			var productEntity = await _serverContext.Products.FindAsync(productId);
@@ -179,8 +169,7 @@ public class ProductsRepository : IProductsRepository
 			if(productEntity == null || !productEntity.RemoveAvailableCount(quantity))
 				throw new Exception();
 
-			await _serverContext.SaveChangesAsync();
-			await transaction.CommitAsync(); 
+			await _serverContext.SaveChangesAsync(); 
 		}
 		catch(Exception ex)
 		{
@@ -190,8 +179,7 @@ public class ProductsRepository : IProductsRepository
 
 	/// <inheritdoc/>
 	public async Task EditProductDiscountAsync(int productId, decimal discountValue, DiscountUnit discountUnit)
-	{
-		await using var transaction = await _serverContext.Database.BeginTransactionAsync();
+	{ 
 		try
 		{
 			var entity = await _serverContext.Products.FindAsync(productId);
@@ -199,25 +187,22 @@ public class ProductsRepository : IProductsRepository
 			if(entity != null)
 			{
 				entity.SetDiscount(discountValue, discountUnit);
-				await _serverContext.SaveChangesAsync();
-				await transaction.CommitAsync();
+				await _serverContext.SaveChangesAsync(); 
 			}
 			else
 			{
-				throw new InvalidOperationException($"Не найти товар по Id {productId} для изменение его скидки.");
+				throw new Exception();
 			}
 		}
-		catch
+		catch(Exception ex)
 		{
-			await transaction.RollbackAsync();
-			throw;
+			throw new InvalidOperationException($"Не найти товар по Id {productId} для изменение его скидки.", ex);
 		}
 	}
 
 	/// <inheritdoc/>
 	public async Task ClearProductDiscountAsync(int productId)
-	{
-		await using var transaction = await _serverContext.Database.BeginTransactionAsync();
+	{ 
 		try
 		{
 			var entity = await _serverContext.Products.FindAsync(productId);
@@ -225,18 +210,16 @@ public class ProductsRepository : IProductsRepository
 			if(entity != null)
 			{
 				entity.ClearDiscount();
-				await _serverContext.SaveChangesAsync();
-				await transaction.CommitAsync();
+				await _serverContext.SaveChangesAsync(); 
 			}
 			else
 			{
-				throw new InvalidOperationException($"Не найти товар по Id {productId} для удаления его скидки.");
+				throw new Exception();
 			}
 		}
-		catch
+		catch (Exception ex)
 		{
-			await transaction.RollbackAsync();
-			throw;
+			throw new InvalidOperationException($"Не найти товар по Id {productId} для удаления его скидки.", ex);
 		}
 	}
 

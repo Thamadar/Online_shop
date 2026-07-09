@@ -1,62 +1,53 @@
 ﻿
-using AutoMapper;
-using Azure.Core;
-using Microsoft.EntityFrameworkCore.Storage;
-using Shop.Dto.Orders;
-using Shop.Server.Data;
-using Shop.Server.Repositories;
-using System.Transactions;
+using AutoMapper; 
+using Shop.Dto.Orders; 
 
 namespace Shop.Server.Services.API;
 
 public class OrdersAPIService : IOrdersAPIService
 {
-	private readonly IMapper _mapper;
-
-	private readonly IOrdersRepository _ordersRepository;
-	private readonly IProductsRepository _productsRepository;
+	private readonly IMapper _mapper; 
+	private readonly IUnitOfWork _unitOfWork; 
 
 	public OrdersAPIService(
 		IMapper mapper,
-		IOrdersRepository ordersRepository,
-		IProductsRepository productsRepository)
+		IUnitOfWork unitOfWork)
 	{
-		_mapper             = mapper;
-		_ordersRepository   = ordersRepository;
-		_productsRepository = productsRepository;
+		_mapper     = mapper; 
+		_unitOfWork = unitOfWork;
 	}
 
 	/// <inheritdoc/>
-	public async Task<GetOrdersResponse> GetOrdersAsync()
+	public async Task<GetOrdersResponse> GetOrdersAsync(CancellationToken ct = default)
 	{
-		var ordersResponse = await _ordersRepository.GetOrdersAsync();
+		var ordersResponse = await _unitOfWork.Orders.GetOrdersAsync(ct);
 		return ordersResponse;
 	}
 
 
 	/// <inheritdoc/>
-	public async Task<GetOrdersResponse> GetOrdersByUserIdAsync(Guid userId)
+	public async Task<GetOrdersResponse> GetOrdersByUserIdAsync(Guid userId, CancellationToken ct = default)
 	{ 
-		var orderResponse = await _ordersRepository.GetOrdersByUserIdAsync(userId);
+		var orderResponse = await _unitOfWork.Orders.GetOrdersByUserIdAsync(userId, ct);
 		return orderResponse;
 	}
 
 	/// <inheritdoc/>
-	public async Task<GetOrderResponse> GetOrderByIdAsync(Guid orderId)
+	public async Task<GetOrderResponse> GetOrderByIdAsync(Guid orderId, CancellationToken ct = default)
 	{
-		var orderResponse = await _ordersRepository.GetOrderByIdAsync(orderId);
+		var orderResponse = await _unitOfWork.Orders.GetOrderByIdAsync(orderId, ct);
 		return orderResponse;
 	}
 
 	/// <inheritdoc/>
 	public async Task<CreateOrderResponse> CreateOrderAsync(CreateOrderRequest createOrderRequest)
 	{
-		//TO DO: лучше обработать логику ошибок, дабы в случае ошибки, вернулось все в исходное состояние, без потери данных.
+		await using var transaction = await _unitOfWork.BeginTransactionAsync(); 
 		try
 		{
 			foreach(var orderProductRequest in createOrderRequest.OrderProducts)
 			{
-				var isAvailable = await _productsRepository.CheckAvailabilityQuantityAsync(
+				var isAvailable = await _unitOfWork.Products.CheckAvailabilityQuantityAsync(
 					orderProductRequest.ProductId,
 					orderProductRequest.Quantity);
 
@@ -65,18 +56,21 @@ public class OrdersAPIService : IOrdersAPIService
 						$"Товар {orderProductRequest.ProductId} недоступен в количестве {orderProductRequest.Quantity}");
 			} 
 
-			var orderResponse = await _ordersRepository.CreateOrderAsync(createOrderRequest);
+			var orderResponse = await _unitOfWork.Orders.CreateOrderAsync(createOrderRequest);
 			foreach(var orderProductRequest in createOrderRequest.OrderProducts)
 			{
-				await _productsRepository.RemoveQuantityAsync(orderProductRequest.ProductId, orderProductRequest.Quantity);
+				await _unitOfWork.Products.RemoveQuantityAsync(orderProductRequest.ProductId, orderProductRequest.Quantity);
 			}
+
+			await transaction.CommitAsync();
 
 			return orderResponse;
 		}
-		catch
-		{ 
-			throw;
-		}  
+		catch(Exception ex)
+		{
+			await transaction.RollbackAsync();
+			throw new InvalidOperationException("Не создать завершить заказ", ex);
+		}
 	}
 
 	/// <inheritdoc/>
@@ -89,22 +83,44 @@ public class OrdersAPIService : IOrdersAPIService
 	/// <inheritdoc/>
 	public async Task CompletionOrderAsync(Guid orderId)
 	{
-		var orderProductResponses = await _ordersRepository.CompletionOrderAsync(orderId);
+		await using var transaction = await _unitOfWork.BeginTransactionAsync();
+		try
+		{ 
+			var orderProductResponses = await _unitOfWork.Orders.CompletionOrderAsync(orderId);
 
-		foreach(var orderProductResponse in orderProductResponses)
-		{
-			await _productsRepository.RemoveQuantityAsync(orderProductResponse.ProductId, orderProductResponse.Quantity);
+			foreach(var orderProductResponse in orderProductResponses)
+			{
+				await _unitOfWork.Products.RemoveQuantityAsync(orderProductResponse.ProductId, orderProductResponse.Quantity);
+			}
+
+			await transaction.CommitAsync();
+		}
+		catch(Exception ex)
+		{ 
+			await transaction.RollbackAsync();
+			throw new InvalidOperationException("Не удалось завершить заказ", ex);
 		}
 	}
 
 	/// <inheritdoc/>
 	public async Task CancellationOrderAsync(Guid orderId)
 	{
-		var orderProductResponses = await _ordersRepository.CancellationOrderAsync(orderId);
-
-		foreach(var orderProductResponse in orderProductResponses)
+		await using var transaction = await _unitOfWork.BeginTransactionAsync();
+		try
 		{
-			await _productsRepository.RemoveQuantityAsync(orderProductResponse.ProductId, orderProductResponse.Quantity);
+			var orderProductResponses = await _unitOfWork.Orders.CancellationOrderAsync(orderId);
+
+			foreach(var orderProductResponse in orderProductResponses)
+			{
+				await _unitOfWork.Products.RemoveQuantityAsync(orderProductResponse.ProductId, orderProductResponse.Quantity);
+			}
+
+			await transaction.CommitAsync();
+		}
+		catch(Exception ex)
+		{
+			await transaction.RollbackAsync();
+			throw new InvalidOperationException("Не отменить завершить заказ", ex);
 		}
 	}
 

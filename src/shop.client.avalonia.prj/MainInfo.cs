@@ -1,8 +1,7 @@
 ﻿using Autofac;
 using Shop.Client.Avalonia.Configurations;
 using Shop.Client.Avalonia.Services;
-using System.Diagnostics;
-using System.Net.Http;
+using System.Diagnostics; 
 
 namespace Shop.Client.Avalonia;
 public class MainInfo
@@ -17,9 +16,13 @@ public class MainInfo
 
 	public MainInfo()
 	{
-		HttpClient = new HttpClient();
-
 		var connectionConfiguration = ConnectionConfiguration.Defaults; //TO DO: Сериализация из конфига
+
+		HttpClient = new HttpClient(new SocketsHttpHandler
+		{
+			// защита от устаревшего DNS.
+			PooledConnectionLifetime = TimeSpan.FromMinutes(connectionConfiguration.PooledConnectionLifeTimeMinutes)
+		});
 
 		HttpClient.BaseAddress = new Uri(connectionConfiguration.BaseAddress);
 		HttpClient.Timeout     = TimeSpan.FromMilliseconds(connectionConfiguration.TimeOutInMilliseconds); 

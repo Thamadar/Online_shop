@@ -8,16 +8,16 @@ public interface IUsersRepository
 	/// <summary>
 	/// Получение всех пользователей.
 	/// </summary> 
-	Task<GetUsersDto> GetUsersAsync();  
+	Task<GetUsersDto> GetUsersAsync(CancellationToken ct = default);  
 	/// <summary>
 	/// Получение пользователя по id.
 	/// </summary> 
-	Task<GetUserDto> GetUserByIdAsync(Guid id);
+	Task<GetUserDto> GetUserByIdAsync(Guid id, CancellationToken ct = default);
 
 	/// <summary>
 	/// КОСТЫЛЬ, ИБО НЕТ аутентификации (AuthController). - необходимо.
 	/// </summary> 
-	Task<GetUserDto> GetUserByLoginAsync(string login);
+	Task<GetUserDto> GetUserByLoginAsync(string login, CancellationToken ct = default);
 
 	/// <summary>
 	/// Добавление пользователя.

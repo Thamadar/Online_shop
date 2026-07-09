@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 using Shop.Server.Data;
 using Shop.Server.Mappers;
 using Shop.Server.Repositories;
 using Shop.Server.Services;
 using Shop.Server.Services.API;
 using Shop.Server.Services.Tables;
+using Shop.Utilities;
 
 namespace Shop.Server;
 
@@ -40,7 +42,7 @@ public class Startup
 	}
 
 	public void Configure(WebApplication app, IWebHostEnvironment env)
-	{
+	{ 
 		if(app.Environment.IsDevelopment())
 		{
 			app.UseSwagger();
@@ -49,7 +51,28 @@ public class Startup
 
 		app.UseAuthorization();
 
-		app.MapControllers(); 
+		app.MapControllers();
+
+		app.UseExceptionHandler(exceptionHandlerApp =>
+		{
+			exceptionHandlerApp.Run(async context =>
+			{
+				var exceptionHandlerFeature = context.Features.Get<IExceptionHandlerFeature>();
+				var exc = exceptionHandlerFeature?.Error;
+
+				if(exc != null)
+				{ 
+					var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+					logger.LogError(exc, "Unhandled exception");
+
+					context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+					context.Response.ContentType = "application/json";
+
+					var body = new ExceptionRepresenter(exc).ToString();
+					await context.Response.WriteAsync(body);
+				}
+			});
+		});
 
 		app.Run();
 	}
@@ -70,6 +93,8 @@ public class Startup
 
 	private void ConfigureRepositories(IServiceCollection services)
 	{
+		services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 		services.AddScoped<IProductsRepository, ProductsRepository>();
 		services.AddScoped<IOrdersRepository,  OrdersRepository>();
 		services.AddScoped<IUsersRepository,   UsersRepository>(); 

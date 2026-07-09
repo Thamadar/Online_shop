@@ -8,17 +8,17 @@ public interface IOrdersRepository
 	/// <summary>
 	/// Получение всех заказов.
 	/// </summary> 
-	Task<GetOrdersResponse> GetOrdersAsync();
+	Task<GetOrdersResponse> GetOrdersAsync(CancellationToken ct = default);
 
 	/// <summary>
 	/// Получение всех заказов пользователя по его userId.
 	/// </summary> 
-	Task<GetOrdersResponse> GetOrdersByUserIdAsync(Guid userId);
+	Task<GetOrdersResponse> GetOrdersByUserIdAsync(Guid userId, CancellationToken ct = default);
 
 	/// <summary>
 	/// Получение заказа по ID заказа.
 	/// </summary> 
-	Task<GetOrderResponse> GetOrderByIdAsync(Guid orderId);
+	Task<GetOrderResponse> GetOrderByIdAsync(Guid orderId, CancellationToken ct = default);
 
 	/// <summary>
 	/// Создание заказа.
@@ -34,7 +34,7 @@ public interface IOrdersRepository
 	/// Редактирование заказа.
 	/// </summary>
 	/// TO DO
-	//Task<EditOrderResponse> EditOrderAsync(EditOrderRequest editOrderRequest);
+	//Task<EditOrderResponse> EditOrderAsync(EditOrderRequest editOrderRequest, CancellationToken ct = default);
 
 	/// <summary>
 	/// Успешное завершение заказа.

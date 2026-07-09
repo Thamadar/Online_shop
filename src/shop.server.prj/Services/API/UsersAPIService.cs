@@ -1,63 +1,87 @@
 ﻿using AutoMapper; 
 using Shop.Dto;
-using Shop.Dto.Users; 
-using Shop.Server.Repositories;
+using Shop.Dto.Users;  
 
 namespace Shop.Server.Services.API;
 
 public class UsersAPIService : IUsersAPIService
 {
-	private readonly IUsersRepository _usersRepository;
 	private readonly IMapper _mapper;
+	private readonly IUnitOfWork _unitOfWork;
 
-	public UsersAPIService(IMapper mapper, IUsersRepository repository) 
+	public UsersAPIService(IMapper mapper, IUnitOfWork unitOfWork) 
 	{
 		_mapper = mapper;
-		_usersRepository = repository;
+		_unitOfWork = unitOfWork;
 	}
 
 	/// <inheritdoc/>
-	public async Task<GetUsersDto> GetUsersAsync()
+	public async Task<GetUsersDto> GetUsersAsync(CancellationToken ct = default)
 	{
-		var usersResponse = await _usersRepository.GetUsersAsync();
+		var usersResponse = await _unitOfWork.Users.GetUsersAsync(ct);
 		return usersResponse;
 	}
 
 	/// <inheritdoc/>
-	public async Task<GetUserDto> GetUserByIdAsync(Guid id)
+	public async Task<GetUserDto> GetUserByIdAsync(Guid id, CancellationToken ct = default)
 	{
-		var userResponse = await _usersRepository.GetUserByIdAsync(id);
+		var userResponse = await _unitOfWork.Users.GetUserByIdAsync(id, ct);
 		return userResponse;
 	}
 
 	/// <inheritdoc/>
-	public async Task<GetUserDto> GetUserByLoginAsync(string login)
+	public async Task<GetUserDto> GetUserByLoginAsync(string login, CancellationToken ct = default)
 	{
-		var userResponse = await _usersRepository.GetUserByLoginAsync(login);
+		var userResponse = await _unitOfWork.Users.GetUserByLoginAsync(login, ct);
 		return userResponse;
 	}
 
 	/// <inheritdoc/>
 	public async Task<CreateUserResponse> CreateUserAsync(CreateUserRequest request)
 	{
-		if(_usersRepository.IsAnyLoginExist(request.Login))
-			throw new ArgumentException("Пользователь с таким логином уже существует. ");
-		 
-		var resultResponse = await _usersRepository.CreateUserAsync(request);
-		return resultResponse;
+		await using var transaction = await _unitOfWork.BeginTransactionAsync();
+		try
+		{ 
+			if(_unitOfWork.Users.IsAnyLoginExist(request.Login))
+				throw new ArgumentException("Пользователь с таким логином уже существует. ");
+
+			var resultResponse = await _unitOfWork.Users.CreateUserAsync(request);
+
+			await transaction.CommitAsync();
+
+			return resultResponse;
+		}
+		catch(Exception ex)
+		{
+			await transaction.RollbackAsync();
+			throw new InvalidOperationException("Не удалось создать пользователя", ex);
+		} 
 
 	}
 	/// <inheritdoc/>
 	public async Task<CreateUsersResponse> CreateUsersAsync(CreateUsersRequest createUsersRequest)
-	{ 
+	{
 
-		var logins = createUsersRequest.Users.Select(u => u.Login).ToList();
-		var loginsExist = _usersRepository.CheckLoginsExist(logins); 
-		if(loginsExist.Count > 0)
-			throw new ArgumentException($"Пользователи с таким логином уже существуют: {loginsExist}");
-		 
-		var resultResponse = await _usersRepository.CreateUsersBatchAsync(createUsersRequest);
-		return resultResponse;
+		await using var transaction = await _unitOfWork.BeginTransactionAsync();
+		try
+		{
+
+			var logins = createUsersRequest.Users.Select(u => u.Login).ToList();
+			var loginsExist = _unitOfWork.Users.CheckLoginsExist(logins);
+			if(loginsExist.Count > 0)
+				throw new ArgumentException($"Пользователи с таким логином уже существуют: {loginsExist}");
+
+			var resultResponse = await _unitOfWork.Users.CreateUsersBatchAsync(createUsersRequest); 
+
+			await transaction.CommitAsync();
+
+			return resultResponse;
+		}
+		catch(Exception ex)
+		{
+			await transaction.RollbackAsync();
+			throw new InvalidOperationException("Не удалось создать пользователей", ex);
+		} 
 	}
 
 	/// <inheritdoc/>

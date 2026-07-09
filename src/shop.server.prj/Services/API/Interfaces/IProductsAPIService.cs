@@ -9,17 +9,17 @@ public interface IProductsAPIService : IAPIService
 	/// <summary>
 	/// Получение всех товаров.
 	/// </summary> 
-	Task<GetProductsResponse> GetProductsAsync();
+	Task<GetProductsResponse> GetProductsAsync(CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// Получение товара по ID.
 	/// </summary> 
-	Task<GetProductResponse> GetProductByIdAsync(int id);
+	Task<GetProductResponse> GetProductByIdAsync(int id, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// Получение товара по ключу имени (ProductName).
 	/// </summary> 
-	Task<GetProductResponse> GetProductByNameAsync(string productName);
+	Task<GetProductResponse> GetProductByNameAsync(string productName, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// Добавление товаров.

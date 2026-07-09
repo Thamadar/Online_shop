@@ -18,14 +18,14 @@ public class UsersRepository : IUsersRepository
 	}
 	 
 	/// <inheritdoc/>
-	public async Task<GetUsersDto> GetUsersAsync()
+	public async Task<GetUsersDto> GetUsersAsync(CancellationToken ct = default)
 	{
 		try
 		{
 			var userDtoList = await _serverContext.Users
 				.AsNoTracking()
 				.ProjectTo<GetUserDto>(_mapper.ConfigurationProvider)
-				.ToListAsync();
+				.ToListAsync(ct);
 
 			return new GetUsersDto(
 				Users: userDtoList,
@@ -38,11 +38,11 @@ public class UsersRepository : IUsersRepository
 	}
 
 	/// <inheritdoc/>
-	public async Task<GetUserDto> GetUserByIdAsync(Guid id)
+	public async Task<GetUserDto> GetUserByIdAsync(Guid id, CancellationToken ct = default)
 	{
 		try
 		{
-			var userEntity = await _serverContext.Users.FindAsync(id);
+			var userEntity = await _serverContext.Users.FindAsync(id, ct);
 
 			return _mapper.Map<GetUserDto>(userEntity);  
 		}
@@ -53,7 +53,7 @@ public class UsersRepository : IUsersRepository
 	}
 
 	/// <inheritdoc/>
-	public async Task<GetUserDto> GetUserByLoginAsync(string login)
+	public async Task<GetUserDto> GetUserByLoginAsync(string login, CancellationToken ct = default)
 	{
 		try
 		{
@@ -61,7 +61,7 @@ public class UsersRepository : IUsersRepository
 				.AsNoTracking()
 				.Where(x => x.Login == login)
 				.ProjectTo<GetUserDto>(_mapper.ConfigurationProvider)
-				.FirstAsync();
+				.FirstAsync(ct);
 
 			return user;
 		}
@@ -74,7 +74,6 @@ public class UsersRepository : IUsersRepository
 	/// <inheritdoc/>
 	public async Task<CreateUserResponse> CreateUserAsync(CreateUserRequest request)
 	{
-		await using var transaction = await _serverContext.Database.BeginTransactionAsync();
 		try
 		{
 			var entity = _mapper.Map<UserEntity>(request);
@@ -82,14 +81,11 @@ public class UsersRepository : IUsersRepository
 			await _serverContext.SaveChangesAsync(); 
 
 			var userResponse = _mapper.Map<CreateUserResponse>(entity);  
-			await transaction.CommitAsync();
 
 			return userResponse;
 		}
 		catch(Exception ex)
 		{
-			await transaction.RollbackAsync();
-
 			throw new InvalidOperationException("Не удалось создать и добавить пользователя в БД", ex);
 		}  
 	}
@@ -97,7 +93,6 @@ public class UsersRepository : IUsersRepository
 	/// <inheritdoc/>
 	public async Task<CreateUsersResponse> CreateUsersBatchAsync(CreateUsersRequest requestBatch)
 	{   
-		await using var transaction = await _serverContext.Database.BeginTransactionAsync();
 		try
 		{
 			var entities = _mapper.Map<List<UserEntity>>(requestBatch.Users); 
@@ -106,15 +101,12 @@ public class UsersRepository : IUsersRepository
 			await _serverContext.SaveChangesAsync();   
 
 			var usersResponse = new CreateUsersResponse(_mapper.Map<List<CreateUserResponse>>(entities));
-			await transaction.CommitAsync();
 
 			return usersResponse;
 
 		}  
 		catch(Exception ex)
 		{
-			await transaction.RollbackAsync();
-
 			throw new InvalidOperationException("Не удалось создать и добавить пользователей в БД", ex);
 		}
 	}
