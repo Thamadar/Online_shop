@@ -1,32 +1,39 @@
-На данный момент решение является полностью рабочим - сервер, клиенты: WPF и Avalonia. <br>
-Есть возможность открывать страницу товаров, делать заказы, тем самым делая записи в БД <br> 
-----------------
+На данный момент решение является полностью рабочим - сервер, клиенты: WPF и Avalonia. Версии синхронизированы. <br>
+Есть возможность открывать страницу товаров, делать заказы, тем самым делая записи в БД. Есть бизнес-логика. Со временем расширяется. В самом низу - план задач на разработку. <br> 
 
-Дизайн и цвета - пока в разработке и не являются окончательным решением. <br>
 
 ----------------
-Клиент: <br>
+ 
+**Стек:** <br>
+Avalonia, WPF, ReactiveUI, MVVM, .net7.0, net7.0-windows, ASP.NET, SQL Server (MySQL), EntityFrameworkCore, Behaviors.interactivity, Autofac, Microsoft.Extensions.DependencyInjection, AutoMapper, Swagger, REST API, DDD, CRUD, Fluent API, UnitOfWork, GoF. <br>
+
+---------------- 
+ 
+**Дизайн и цвета** - пока в разработке и не являются окончательным решением. <br>
+
+----------------
+**Клиент и таблицы с результатами:** <br>
 ![](https://github.com/Thamadar/Online_shop/blob/main/preview_client.gif) <br>
 
 ----------------
  
-Swagger: <br>
+**Swagger:** <br>
 ![](https://github.com/Thamadar/Online_shop/blob/main/preview_swagger.gif) <br> 
  
 ----------------
 
 Для запуска необходимо иметь: <br>
--.NET 7.0. <br>
--SQL Server (Желательно Express версия. Также база и таблицы сами инициализируются при запуске shop.server). <br> 
-<br>
+- .NET 7.0. <br>
+- SQL Server (Желательно Express версия. Также база и таблицы сами инициализируются при запуске shop.server). <br>
+  
+----------------
+ 
 Инструкция по запуску: <br>
--Настройте при необходимости параметры сервера и подключения к серверу в shop.server/Properties/launchSerttings.json и в shop.server/appsettings.json  <br>
--Настройте при необходимости параметры подключения к серверу в shop.сlient.ВыбранныйВамиКлиент/Configurations/ConnectionConfiguration в параметре Defaults (изначально адрес стоит "http://localhost:5100")  <br>
--Запустите shop.server. <br>
-**Запуск server'а: <br>
-dotnet run --project "ваш путь\src\shop.server.prj\shop.server.csproj" --launch-profile "http" <br>**
--Запустите shop.client.ВыбранныйВамиКлиент. (WPF/Avalonia) <br>
-<br>  
+- Настройте при необходимости параметры сервера и подключения к серверу в shop.server/Properties/launchSerttings.json и в shop.server/appsettings.json  <br>
+- Настройте при необходимости параметры подключения к серверу в shop.сlient.ВыбранныйВамиКлиент/Configurations/ConnectionConfiguration в параметре Defaults (изначально адрес стоит "http://localhost:5100")  <br>
+- Запустите shop.server. <br>
+-- Запуск server'а: **dotnet run --project "ваш путь\src\shop.server.prj\shop.server.csproj" --launch-profile "http"** <br>
+- Запустите shop.client.ВыбранныйВамиКлиент. (WPF/Avalonia) <br> 
 
 ----------------
 
