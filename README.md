@@ -12,7 +12,7 @@ Avalonia, WPF, ReactiveUI, MVVM, .net7.0, net7.0-windows, ASP.NET, SQL Server (M
 
 ----------------
 **Клиент и таблицы с результатами:** <br>
-![](https://github.com/Thamadar/Online_shop/blob/main/preview_client.gif ) <br>
+![](https://github.com/Thamadar/Online_shop/blob/main/preview_client2.0.gif ) <br>
 
 ----------------
  
