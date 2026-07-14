@@ -1,4 +1,4 @@
-<Styles
+﻿<Styles
   xmlns="https://github.com/avaloniaui"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
@@ -13,9 +13,9 @@
 
     <!-- Button -->
     <Style Selector="Button, RepeatButton, ToggleButton">
-        <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
+        <Setter Property="Foreground" Value="{StaticResource WhiteMain}" />
         <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
-        <Setter Property="FontSize" Value="{StaticResource FontSize}" />
+        <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Padding" Value="8,6,8,6" />
         <Setter Property="BorderThickness" Value="1" />
@@ -37,7 +37,7 @@
         <Setter Property="MinWidth" Value="45" />
         <Setter Property="MinHeight" Value="44" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CornerRadius" Value="16" />
+        <Setter Property="CornerRadius" Value="{StaticResource ButtonCornerRadius}" />
     </Style>
 
     <!-- Default -->
@@ -46,36 +46,36 @@
         <Style Selector="^">
             <!-- background & text -->
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="#575557" />
-                <Setter Property="BorderBrush" Value="#FFF" />
-                <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
+                <Setter Property="Background" Value="{StaticResource Gray700}" />
+                <Setter Property="BorderBrush" Value="{StaticResource WhiteMain}" />
+                <Setter Property="Foreground" Value="{StaticResource WhiteMain}" />
             </Style>
         </Style>
         <!-- pointerover -->
         <Style Selector="^:pointerover">
             <!-- background & text -->
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="#505050" />
-                <Setter Property="BorderBrush" Value="#FFF" />
-                <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
+                <Setter Property="Background" Value="{StaticResource Gray650}" />
+                <Setter Property="BorderBrush" Value="{StaticResource WhiteMain}" />
+                <Setter Property="Foreground" Value="{StaticResource WhiteMain}" />
             </Style>
         </Style>
         <!-- pressed -->
         <Style Selector="^:pressed">
             <!-- background & text -->
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="#2d2d2d" />
-                <Setter Property="BorderBrush" Value="#FFF" />
-                <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
+                <Setter Property="Background" Value="{StaticResource Gray750}" />
+                <Setter Property="BorderBrush" Value="{StaticResource WhiteMain}" />
+                <Setter Property="Foreground" Value="{StaticResource WhiteMain}" />
             </Style>
         </Style>
         <!-- disabled, checked disabled -->
         <Style Selector="^:disabled, ^:checked:disabled">
             <!-- background & text -->
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="#575757" />
-                <Setter Property="BorderBrush" Value="#FFF" />
-                <Setter Property="Foreground" Value="#b3b3b3" />
+                <Setter Property="Background" Value="{StaticResource Gray200}" />
+                <Setter Property="BorderBrush" Value="{StaticResource Gray100}" />
+                <Setter Property="Foreground" Value="{StaticResource Gray100}" />
             </Style>
         </Style>
     </Style>

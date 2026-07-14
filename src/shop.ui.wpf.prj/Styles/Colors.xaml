@@ -3,30 +3,132 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- Colors -->
-    <Color x:Key="DarkSmoothColor">#1e1e1e</Color>
-    <Color x:Key="FullWhiteColor">#ffffff</Color>
-    <Color x:Key="FullBlackColor">#000000</Color>
-    <Color x:Key="SmokeGrayColor">#9e9b98</Color>
-    <Color x:Key="GrayDarkColor">#575557</Color>
+
+    <Color x:Key="WhiteMainColor">#e0deda</Color>
+    <Color x:Key="BlackMainColor">#000000</Color>
+
+    <!-- Gray colors -->
+    <Color x:Key="Gray100Color">#dad9d5</Color>
+    <Color x:Key="Gray150Color">#cccbc7</Color>
+    <Color x:Key="Gray200Color">#bebdb9</Color>
+    <Color x:Key="Gray250Color">#b0afab</Color>
+    <Color x:Key="Gray300Color">#a2a19e</Color>
+    <Color x:Key="Gray350Color">#959491</Color>
+    <Color x:Key="Gray400Color">#888784</Color>
+    <Color x:Key="Gray450Color">#7c7b78</Color>
+    <Color x:Key="Gray500Color">#706f6c</Color>
+    <Color x:Key="Gray550Color">#646360</Color>
+    <Color x:Key="Gray600Color">#585855</Color>
+    <Color x:Key="Gray650Color">#4d4c4a</Color>
+    <Color x:Key="Gray700Color">#43423f</Color>
+    <Color x:Key="Gray750Color">#2e2e2b</Color>
+    <Color x:Key="Gray800Color">#252522</Color>
+    <Color x:Key="Gray850Color">#1d1c1a</Color>
+    <Color x:Key="Gray900Color">#11100a</Color>
+
+    <Color x:Key="RedGrayColor">#e1b8b2</Color>
+    <Color x:Key="Red300Color">#cb5c4d</Color>
+    <Color x:Key="Red450Color">#bd4e42</Color>
+    <Color x:Key="Red500Color">#ae4137</Color>
+    <Color x:Key="Red550Color">#9d312b</Color>
+    <Color x:Key="Red600Color">#8f2122</Color>
+    <Color x:Key="Red650Color">#820818</Color>
+    <Color x:Key="Red700Color">#74000c</Color>
 
     <Color x:Key="PriceWithSaleColor">#fa6a3c</Color>
 
     <!-- Brushes -->
     <SolidColorBrush
-        x:Key="DarkSmooth"
-        Color="{StaticResource DarkSmoothColor}" />
+        x:Key="WhiteMain"
+        Color="{StaticResource WhiteMainColor}" />
     <SolidColorBrush
-        x:Key="FullWhite"
-        Color="{StaticResource FullWhiteColor}" />
+        x:Key="BlackMain"
+        Color="{StaticResource BlackMainColor}" />
+
+    <!-- Gray brushes -->
     <SolidColorBrush
-        x:Key="FullBlack"
-        Color="{StaticResource FullBlackColor}" />
+        x:Key="Gray100"
+        Color="{StaticResource Gray100Color}" />
     <SolidColorBrush
-        x:Key="SmokeGray"
-        Color="{StaticResource SmokeGrayColor}" />
+        x:Key="Gray150"
+        Color="{StaticResource Gray150Color}" />
     <SolidColorBrush
-        x:Key="GrayDark"
-        Color="{StaticResource GrayDarkColor}" />
+        x:Key="Gray200"
+        Color="{StaticResource Gray200Color}" />
+    <SolidColorBrush
+        x:Key="Gray250"
+        Color="{StaticResource Gray250Color}" />
+    <SolidColorBrush
+        x:Key="Gray300"
+        Color="{StaticResource Gray300Color}" />
+    <SolidColorBrush
+        x:Key="Gray350"
+        Color="{StaticResource Gray350Color}" />
+    <SolidColorBrush
+        x:Key="Gray400"
+        Color="{StaticResource Gray400Color}" />
+    <SolidColorBrush
+        x:Key="Gray450"
+        Color="{StaticResource Gray450Color}" />
+    <SolidColorBrush
+        x:Key="Gray500"
+        Color="{StaticResource Gray500Color}" />
+    <SolidColorBrush
+        x:Key="Gray550"
+        Color="{StaticResource Gray550Color}" />
+    <SolidColorBrush
+        x:Key="Gray600"
+        Color="{StaticResource Gray600Color}" />
+    <SolidColorBrush
+        x:Key="Gray650"
+        Color="{StaticResource Gray650Color}" />
+    <SolidColorBrush
+        x:Key="Gray700"
+        Color="{StaticResource Gray700Color}" />
+    <SolidColorBrush
+        x:Key="Gray750"
+        Color="{StaticResource Gray750Color}" />
+    <SolidColorBrush
+        x:Key="Gray800"
+        Color="{StaticResource Gray800Color}" />
+    <SolidColorBrush
+        x:Key="Gray850"
+        Color="{StaticResource Gray850Color}" />
+    <SolidColorBrush
+        x:Key="Gray900"
+        Color="{StaticResource Gray900Color}" />
+
+    <SolidColorBrush
+        x:Key="RedGray"
+        Color="{StaticResource RedGrayColor}" />
+    <SolidColorBrush
+        x:Key="Red300"
+        Color="{StaticResource Red300Color}" />
+    <SolidColorBrush
+        x:Key="Red350"
+        Color="{StaticResource Red350Color}" />
+    <SolidColorBrush
+        x:Key="Red400"
+        Color="{StaticResource Red400Color}" />
+    <SolidColorBrush
+        x:Key="Red450"
+        Color="{StaticResource Red450Color}" />
+    <SolidColorBrush
+        x:Key="Red500"
+        Color="{StaticResource Red500Color}" />
+    <SolidColorBrush
+        x:Key="Red550"
+        Color="{StaticResource Red550Color}" />
+    <SolidColorBrush
+        x:Key="Red600"
+        Color="{StaticResource Red600Color}" />
+    <SolidColorBrush
+        x:Key="Red650"
+        Color="{StaticResource Red650Color}" />
+    <SolidColorBrush
+        x:Key="Red700"
+        Color="{StaticResource Red700Color}" />
+
     <SolidColorBrush
         x:Key="PriceWithSale"
         Color="{StaticResource PriceWithSaleColor}" />

@@ -4,12 +4,11 @@
     xmlns:controls="clr-namespace:Shop.UI.WPF.Controls" xmlns:converters="clr-namespace:Shop.UI.WPF.Converters">
 
     <Style TargetType="{x:Type controls:ButtonIcon}">
-
-        <Setter Property="Background" Value="#535152" />
-        <Setter Property="BorderBrush" Value="#FFF" />
+        <Setter Property="Background" Value="{StaticResource Gray700}" />
+        <Setter Property="BorderBrush" Value="{StaticResource WhiteMain}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="FontWeight" Value="SemiBold" />
-        <Setter Property="Foreground" Value="#FFF" />
+        <Setter Property="Foreground" Value="{StaticResource WhiteMain}" />
         <Setter Property="MinHeight" Value="44" />
         <Setter Property="MinWidth" Value="45" />
         <Setter Property="Padding" Value="10,1,10,0" />
@@ -58,15 +57,15 @@
 
                         <!-- Triggers default -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="PART_MainBorder" Property="Background" Value="#505050" />
+                            <Setter TargetName="PART_MainBorder" Property="Background" Value="{DynamicResource Gray650}" />
                             <Setter Property="Cursor" Value="Hand" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_MainBorder" Property="Background" Value="#2d2d2d" />
+                            <Setter TargetName="PART_MainBorder" Property="Background" Value="{DynamicResource Gray750}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="PART_MainBorder" Property="Background" Value="#575757" />
-                            <Setter Property="Foreground" Value="#b3b3b3" />
+                            <Setter TargetName="PART_MainBorder" Property="Background" Value="{DynamicResource Gray200}" />
+                            <Setter Property="Foreground" Value="{DynamicResource Gray100}" />
                         </Trigger>
 
                         <!-- Triggers IsRed -->
@@ -75,7 +74,8 @@
                                 <Condition Property="IsRed" Value="True" />
                                 <Condition Property="IsSelected" Value="False" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_MainBorder" Property="Background" Value="#922424" />
+                            <Setter TargetName="PART_MainBorder" Property="Background" Value="{StaticResource Red600}" />
+                            <Setter TargetName="PART_MainBorder" Property="BorderBrush" Value="{DynamicResource WhiteMain}" />
                         </MultiTrigger>
 
                         <!-- MultiTrigger IsRed для IsMouseOver -->
@@ -85,7 +85,7 @@
                                 <Condition Property="IsMouseOver" Value="True" />
                                 <Condition Property="IsSelected" Value="False" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_MainBorder" Property="Background" Value="#ad1f1f" />
+                            <Setter TargetName="PART_MainBorder" Property="Background" Value="{StaticResource Red550}" />
                             <Setter Property="Cursor" Value="Hand" />
                         </MultiTrigger>
 
@@ -96,7 +96,7 @@
                                 <Condition Property="IsPressed" Value="True" />
                                 <Condition Property="IsSelected" Value="False" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_MainBorder" Property="Background" Value="#812222" />
+                            <Setter TargetName="PART_MainBorder" Property="Background" Value="{StaticResource Red650}" />
                         </MultiTrigger>
 
                         <!-- MultiTrigger IsRed для IsEnabled -->
@@ -106,45 +106,8 @@
                                 <Condition Property="IsEnabled" Value="False" />
                                 <Condition Property="IsSelected" Value="False" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_MainBorder" Property="Background" Value="#787878" />
-                            <Setter Property="Foreground" Value="#b3b3b3" />
-                        </MultiTrigger>
-
-
-                        <!-- Triggers IsSelected -->
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="PART_MainBorder" Property="Background" Value="#ececec" />
-                            <Setter TargetName="PART_MainBorder" Property="BorderBrush" Value="#000" />
-                            <Setter Property="Foreground" Value="#000" />
-                        </Trigger>
-
-                        <!-- MultiTrigger IsSelected для IsMouseOver -->
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="True" />
-                                <Condition Property="IsMouseOver" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_MainBorder" Property="Background" Value="#fff" />
-                            <Setter Property="Cursor" Value="Hand" />
-                        </MultiTrigger>
-
-                        <!-- MultiTrigger IsSelected для IsPressed -->
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="True" />
-                                <Condition Property="IsPressed" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_MainBorder" Property="Background" Value="#d8d8d8" />
-                        </MultiTrigger>
-
-                        <!-- MultiTrigger IsSelected для IsEnabled -->
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="True" />
-                                <Condition Property="IsEnabled" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_MainBorder" Property="Background" Value="#787878" />
-                            <Setter Property="Foreground" Value="#b3b3b3" />
+                            <Setter TargetName="PART_MainBorder" Property="Background" Value="{StaticResource RedGray}" />
+                            <Setter Property="Foreground" Value="{DynamicResource Gray100}" />
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -184,15 +147,15 @@
 
                         <!-- Triggers default -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="PART_MainBorder" Property="Background" Value="#505050" />
+                            <Setter TargetName="PART_MainBorder" Property="Background" Value="{DynamicResource Gray650}" />
                             <Setter Property="Cursor" Value="Hand" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_MainBorder" Property="Background" Value="#2d2d2d" />
+                            <Setter TargetName="PART_MainBorder" Property="Background" Value="{DynamicResource Gray750}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="PART_MainBorder" Property="Background" Value="#575757" />
-                            <Setter Property="Foreground" Value="#b3b3b3" />
+                            <Setter TargetName="PART_MainBorder" Property="Background" Value="{DynamicResource Gray200}" />
+                            <Setter Property="Foreground" Value="{DynamicResource Gray100}" />
                         </Trigger>
 
                         <!-- Triggers IsRed -->
@@ -201,7 +164,8 @@
                                 <Condition Property="IsRed" Value="True" />
                                 <Condition Property="IsSelected" Value="False" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_MainBorder" Property="Background" Value="#922424" />
+                            <Setter TargetName="PART_MainBorder" Property="Background" Value="{StaticResource Red600}" />
+                            <Setter TargetName="PART_MainBorder" Property="BorderBrush" Value="{DynamicResource WhiteMain}" />
                         </MultiTrigger>
 
                         <!-- MultiTrigger IsRed для IsMouseOver -->
@@ -211,7 +175,7 @@
                                 <Condition Property="IsMouseOver" Value="True" />
                                 <Condition Property="IsSelected" Value="False" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_MainBorder" Property="Background" Value="#ad1f1f" />
+                            <Setter TargetName="PART_MainBorder" Property="Background" Value="{StaticResource Red550}" />
                             <Setter Property="Cursor" Value="Hand" />
                         </MultiTrigger>
 
@@ -222,7 +186,7 @@
                                 <Condition Property="IsPressed" Value="True" />
                                 <Condition Property="IsSelected" Value="False" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_MainBorder" Property="Background" Value="#812222" />
+                            <Setter TargetName="PART_MainBorder" Property="Background" Value="{StaticResource Red650}" />
                         </MultiTrigger>
 
                         <!-- MultiTrigger IsRed для IsEnabled -->
@@ -232,45 +196,8 @@
                                 <Condition Property="IsEnabled" Value="False" />
                                 <Condition Property="IsSelected" Value="False" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_MainBorder" Property="Background" Value="#787878" />
-                            <Setter Property="Foreground" Value="#b3b3b3" />
-                        </MultiTrigger>
-
-
-                        <!-- Triggers IsSelected -->
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="PART_MainBorder" Property="Background" Value="#ececec" />
-                            <Setter TargetName="PART_MainBorder" Property="BorderBrush" Value="#000" />
-                            <Setter Property="Foreground" Value="#000" />
-                        </Trigger>
-
-                        <!-- MultiTrigger IsSelected для IsMouseOver -->
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="True" />
-                                <Condition Property="IsMouseOver" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_MainBorder" Property="Background" Value="#fff" />
-                            <Setter Property="Cursor" Value="Hand" />
-                        </MultiTrigger>
-
-                        <!-- MultiTrigger IsSelected для IsPressed -->
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="True" />
-                                <Condition Property="IsPressed" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_MainBorder" Property="Background" Value="#d8d8d8" />
-                        </MultiTrigger>
-
-                        <!-- MultiTrigger IsSelected для IsEnabled -->
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="True" />
-                                <Condition Property="IsEnabled" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_MainBorder" Property="Background" Value="#787878" />
-                            <Setter Property="Foreground" Value="#b3b3b3" />
+                            <Setter TargetName="PART_MainBorder" Property="Background" Value="{StaticResource RedGray}" />
+                            <Setter Property="Foreground" Value="{DynamicResource Gray100}" />
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -1,4 +1,4 @@
-<Styles
+﻿<Styles
   xmlns="https://github.com/avaloniaui"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
@@ -9,18 +9,18 @@
     </Design.PreviewWith>
 
     <Style Selector="Border.container">
-        <Setter Property="CornerRadius" Value="16" />
+        <Setter Property="CornerRadius" Value="{StaticResource ButtonCornerRadius}" />
         <Setter Property="Margin" Value="8" />
-        <Setter Property="Background" Value="#6d6a6a" />
+        <Setter Property="Background" Value="{StaticResource Gray750}" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="BorderBrush" Value="#858385" />
+        <Setter Property="BorderBrush" Value="{StaticResource Gray750}" />
     </Style>
 
     <Style Selector="Border.container-product">
-        <Setter Property="CornerRadius" Value="16" />
+        <Setter Property="CornerRadius" Value="{StaticResource ButtonCornerRadius}" />
         <Setter Property="Margin" Value="8" />
-        <Setter Property="Background" Value="#ccc9c9" />
+        <Setter Property="Background" Value="{StaticResource Gray700}" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="BorderBrush" Value="#ffffff" />
+        <Setter Property="BorderBrush" Value="{StaticResource Gray700}" />
     </Style>
 </Styles>

@@ -15,12 +15,18 @@
         <Grid
           Margin="0,16,0,0"
           RowDefinitions="auto,auto">
+
+            <Border
+            Grid.Row="0"
+            Background="White"
+            Width="190" Height="147"  />
             <Image
               Grid.Row="0"
               Width="190" Height="147"
               HorizontalAlignment="Center"
               Source="{Binding Image}"
               Stretch="Fill" />
+
 
             <Grid
               Grid.Row="1"
@@ -31,7 +37,6 @@
                   VerticalAlignment="Bottom"
                   ColumnDefinitions="auto,*">
                     <TextBlock
-                      Classes.dark="true"
                       Classes.price-with-sale="{Binding DiscountValue, Converter={x:Static ObjectConverters.IsNotNull}}"
                       Classes.price-without-sale="{Binding DiscountValue, Converter={x:Static ObjectConverters.IsNull}}"
                       Grid.Column="0">
@@ -54,7 +59,7 @@
                     </TextBlock>
                 </Grid>
                 <TextBlock
-                  Classes="default" Classes.dark="true"
+                  Classes="product-name"
                   Grid.Row="1"
                   Height="43"
                   Margin="0,-2,0,0"

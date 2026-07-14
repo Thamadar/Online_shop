@@ -1,21 +1,41 @@
-<Styles
+﻿<Styles
   xmlns="https://github.com/avaloniaui"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
-        <Border
-          Height="50"
+        <Border 
           Padding="0"
-          Background="Orchid">
+          Background="{StaticResource Gray750}">
+          <StackPanel>
+              
             <TextBlock
               Classes="header"
-              Text="5555555555555555555" />
+              Text="header" />
+            <TextBlock
+              Classes="default"
+              Text="default" />
+            <TextBlock
+              Classes="default dark"
+              Text="default dark" />
+            <TextBlock
+              Classes="price-without-sale"
+              Text="price-without-sale" />
+            <TextBlock
+              Classes="price-with-sale"
+              Text="price-with-sale" />
+            <TextBlock
+              Classes="product-name"
+              Text="product-name" />
+            <TextBlock
+              Classes="sale"
+              Text="sale" /> 
+          </StackPanel> 
         </Border>
     </Design.PreviewWith>
 
     <Style Selector="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="FontSize" Value="{DynamicResource FontSize}" />
+        <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}" />
         <Setter Property="Padding" Value="4,7,4,4" />
     </Style>
 
@@ -23,29 +43,40 @@
         <Setter Property="FontWeight" Value="Regular" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="FontSize" Value="{DynamicResource LargeFontSize}" />
-        <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
+        <Setter Property="FontSize" Value="{StaticResource BigHeaderTitleFontSize}" />
+        <Setter Property="Foreground" Value="{StaticResource WhiteMain}" />
     </Style>
 
     <Style Selector="TextBlock.default">
         <Setter Property="FontWeight" Value="Regular" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
+        <Setter Property="Foreground" Value="{StaticResource WhiteMain}" />
         <Style Selector="^.dark">
-            <Setter Property="Foreground" Value="{DynamicResource GrayDark}" />
-        </Style>
+            <Setter Property="Foreground" Value="{StaticResource Gray300}" />
+        </Style> 
+    </Style>
+    
+    <Style Selector="TextBlock.product-name">
+        <Setter Property="FontWeight" Value="Regular" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="FontSize" Value="{StaticResource BigHeaderTitleFontSize}" />
+        <Setter Property="Foreground" Value="{StaticResource WhiteMain}" /> 
+        <Style Selector="^.small">
+            <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
+        </Style> 
     </Style>
 
     <Style Selector="TextBlock.price-without-sale">
         <Setter Property="VerticalAlignment" Value="Bottom" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="FontSize" Value="{DynamicResource MediumFontSize}" />
-        <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
+        <Setter Property="FontSize" Value="{StaticResource PriceFontSize}" />
+        <Setter Property="Foreground" Value="{StaticResource WhiteMain}" />
 
         <Style Selector="^.dark">
-            <Setter Property="Foreground" Value="{DynamicResource GrayDark}" />
+            <Setter Property="Foreground" Value="{StaticResource Gray300}" />
         </Style>
     </Style>
 
@@ -53,15 +84,15 @@
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="VerticalAlignment" Value="Bottom" />
         <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="FontSize" Value="{DynamicResource MediumFontSize}" />
-        <Setter Property="Foreground" Value="{DynamicResource PriceWithSale}" />
+        <Setter Property="FontSize" Value="{StaticResource PriceFontSize}" />
+        <Setter Property="Foreground" Value="{StaticResource PriceWithSale}" />
     </Style>
 
-    <Style Selector="TextBlock.sale">
+    <Style Selector="TextBlock.sale"> 
         <Setter Property="FontWeight" Value="Regular" />
         <Setter Property="VerticalAlignment" Value="Bottom" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="TextDecorations" Value="Strikethrough" />
-        <Setter Property="Foreground" Value="{DynamicResource GrayDark}" />
+        <Setter Property="Foreground" Value="{StaticResource Gray300}" />
     </Style>
 </Styles>

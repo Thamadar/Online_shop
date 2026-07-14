@@ -4,10 +4,10 @@
 
     <Style TargetType="{x:Type Button}">
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
-        <Setter Property="FontSize" Value="{StaticResource FontSize}" />
+        <Setter Property="FontFamily" Value="{DynamicResource DefaultFont}" />
+        <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}" />
         <Setter Property="FontWeight" Value="SemiBold" />
-        <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
+        <Setter Property="Foreground" Value="{DynamicResource WhiteMain}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="8,6,8,6" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -20,8 +20,9 @@
     </Style>
 
     <Style x:Key="button-default" BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource GrayDark}" />
-        <Setter Property="BorderBrush" Value="#FFF" />
+        <Setter Property="Background" Value="{DynamicResource Gray700}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BlackMain}" />
+        <Setter Property="Foreground" Value="{DynamicResource WhiteMain}" />
         <Setter Property="MinHeight" Value="44" />
         <Setter Property="MinWidth" Value="45" />
         <Setter Property="Template">
@@ -42,14 +43,19 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#505050" />
+                <Setter Property="Background" Value="{DynamicResource Gray650}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource Gray650}" />
+                <Setter Property="Foreground" Value="{DynamicResource WhiteMain}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="#2d2d2d" />
+                <Setter Property="Background" Value="{DynamicResource Gray750}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource Gray750}" />
+                <Setter Property="Foreground" Value="{DynamicResource WhiteMain}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Background" Value="#575757" />
-                <Setter Property="Foreground" Value="#b3b3b3" />
+                <Setter Property="Background" Value="{DynamicResource Gray200}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource Gray100}" />
+                <Setter Property="Foreground" Value="{DynamicResource Gray100}" />
             </Trigger>
         </Style.Triggers>
     </Style>

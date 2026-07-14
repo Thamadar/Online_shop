@@ -1,4 +1,4 @@
-<Styles xmlns="https://github.com/avaloniaui"
+﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <Design.PreviewWith>
     <Border Padding="20">
@@ -9,7 +9,7 @@
     <!-- TextBox style, template -->
     <Style Selector="TextBox">
         <Setter Property="Height"                   Value="27"/>
-        <Setter Property="FontSize"                 Value="{DynamicResource FontSizeNormal}"/>
+        <Setter Property="FontSize"                 Value="{StaticResource DefaultFontSize}"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Padding"                  Value="4,6,4,5"/>
         <Setter Property="MaxLines"                 Value="1" />
@@ -99,61 +99,53 @@
         <!-- default -->
         <Style Selector="^">
             <!-- border & background -->
-            <Setter Property="Background"  Value="{DynamicResource GrayMainColor}"/>
-            <Setter Property="BorderBrush" Value="{DynamicResource Main}"/>
+            <Setter Property="Background"  Value="{StaticResource Gray750}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Gray750}"/>
             <!-- foreground -->
-            <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
+            <Setter Property="Foreground" Value="{StaticResource WhiteMain}" />
 
             <!-- border & background -->
             <Style Selector="^ /template/ Border#PART_BorderElement">
-                <Setter Property="Background"  Value="{DynamicResource Main}"/>
-                <Setter Property="BorderBrush" Value="{DynamicResource Main}"/>
+                <Setter Property="Background"  Value="{StaticResource Gray750}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource Gray750}"/>
             </Style>
 
             <!-- watermark -->
             <Style Selector="^ /template/ TextBlock#PART_Watermark,
                    ^ /template/ TextBlock#PART_FloatingWatermark">
-                <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
+                <Setter Property="Foreground" Value="{StaticResource WhiteMain}" />
                 <Setter Property="Padding"    Value="3,3,3,3"/>
-                <Setter Property="FontSize"   Value="{DynamicResource FontSizeSmall}"/>
+                <Setter Property="FontSize"   Value="{StaticResource SmallFontSize}"/>
                 <Setter Property="Opacity"    Value="1.0" />
             </Style>
 
             <!-- selected text & caret -->
             <Style Selector="^ /template/ TextPresenter#PART_TextPresenter">
-                <Setter Property="SelectionBrush"           Value="{DynamicResource Smoke}" />
-                <Setter Property="SelectionForegroundBrush" Value="{DynamicResource FullWhite}" />
-                <Setter Property="CaretBrush"               Value="{DynamicResource Smoke}" />
+                <Setter Property="SelectionBrush"           Value="{StaticResource Gray250}" />
+                <Setter Property="SelectionForegroundBrush" Value="{StaticResource Gray350}" />
+                <Setter Property="CaretBrush"               Value="{StaticResource Gray250}" />
             </Style>
         </Style>
 
         <!-- pointerover -->
         <Style Selector="^:pointerover">
             <!-- foreground -->
-            <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
+            <Setter Property="Foreground" Value="{StaticResource WhiteMain}" />
             <!-- border & background -->
             <Style Selector="^ /template/ Border#PART_BorderElement">
-                <Setter Property="Background"  Value="{DynamicResource SmokeMainColor}"/>
-                <Setter Property="BorderBrush" Value="{DynamicResource SmokeMainColor}"/>
-            </Style>
-            <!-- border -->
-            <Style Selector="^ /template/ Border#PART_BorderElement">
-                <Setter Property="BorderBrush" Value="{DynamicResource Metal}"/>
-            </Style>
+                <Setter Property="Background"  Value="{StaticResource Gray700}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource Gray700}"/>
+            </Style> 
         </Style>
 
         <!-- focus -->
         <Style Selector="^:focus">
             <!-- foreground -->
-            <Setter Property="Foreground" Value="{DynamicResource FullWhite}" />
+            <Setter Property="Foreground" Value="{StaticResource WhiteMain}" />
             <Style Selector="^ /template/ Border#PART_BorderElement">
-                <Setter Property="Background"  Value="{DynamicResource SmokeMainColor}"/>
-                <Setter Property="BorderBrush" Value="{DynamicResource SmokeMainColor}"/>
-            </Style>
-            <!-- border -->
-            <Style Selector="^ /template/ Border#PART_BorderElement">
-                <Setter Property="BorderBrush" Value="{DynamicResource Metal}"/>
-            </Style>
+                <Setter Property="Background"  Value="{StaticResource Gray750}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource Gray750}"/>
+            </Style> 
         </Style>  
     </Style>
 </Styles>

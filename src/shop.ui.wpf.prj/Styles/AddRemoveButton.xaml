@@ -11,7 +11,7 @@
         x:Key="IsNullOrEmptyObjectToVisibilityConverter" />
 
     <Style TargetType="controls:AddRemoveButton">
-        <Setter Property="Background" Value="{DynamicResource GrayDark}" />
+        <Setter Property="Background" Value="{DynamicResource Gray700}" />
         <Setter Property="BorderBrush" Value="#FFF" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontWeight" Value="SemiBold" />
@@ -28,7 +28,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="16">
+                        CornerRadius="{DynamicResource ButtonCornerRadius}">
                         <Grid>
                             <Grid
                                 Visibility="{TemplateBinding Count,

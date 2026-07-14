@@ -28,16 +28,16 @@ public static class DtoExtensions
 		var cultureName = _currentCulture.Name;
 
 		return new ProductItemVM(
-			getProductResponse.Id,
-			getProductResponse.Localizations.FirstOrDefault(x => x.LangCode == cultureName)?.DisplayName ?? "-",
-			getProductResponse.CurrentCount,
-			getProductResponse.BasePrice,
-			getProductResponse.ResultPrice,
-			getProductResponse.Discount.DiscountValue,
-			getProductResponse.Discount.DiscountUnit, 
-			getProductResponse.Weight,
-			getProductResponse.Image, 
-			addCommand:    ReactiveCommand.CreateFromTask(addCommand),
-			removeCommand: ReactiveCommand.CreateFromTask(removeCommand));
+		getProductResponse.Id,
+		getProductResponse.Localizations.FirstOrDefault(x => x.LangCode == cultureName)?.DisplayName ?? "-",
+		getProductResponse.AvailableCount,
+		getProductResponse.BasePrice,
+		getProductResponse.ResultPrice,
+		getProductResponse.Discount.DiscountValue,
+		getProductResponse.Discount.DiscountUnit,
+		getProductResponse.Weight,
+		getProductResponse.Image,
+		addCommand: ReactiveCommand.CreateFromTask(addCommand),
+		removeCommand: ReactiveCommand.CreateFromTask(removeCommand));
 	}
 }

@@ -42,4 +42,11 @@
       <DependentUpon>MainWindowView.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Views\Categories\" />
+    <Folder Include="Views\Orders\" />
+    <Folder Include="Views\Profile\" />
+  </ItemGroup>
 </Project>

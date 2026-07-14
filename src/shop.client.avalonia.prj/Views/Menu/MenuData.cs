@@ -50,7 +50,6 @@ public class MenuData : ViewModelBase
 		MenuItems.Add(new MenuItem(_mainInfo, typeof(HomeViewModel),    "MenuButtonHome",    async _ => await OpenPage<HomeViewModel>(
 			_mainInfo.GetItem<IProductsService>(), 
 			_mainInfo.GetItem<UsersHttpClient>()))); 
-		MenuItems.Add(new MenuItem(_mainInfo, typeof(ProfileViewModel), "MenuButtonProfile", async _ => await OpenPage<ProfileViewModel>())); 
 	} 
 
 	private async Task OpenPage<T>(params object[] parameters)

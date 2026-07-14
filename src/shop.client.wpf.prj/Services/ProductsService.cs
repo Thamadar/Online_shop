@@ -236,19 +236,19 @@ public class ProductsService : IProductsService
 	{
 		var result = default(bool);
 		var userEntity = await _usersHttpClient.GetUserByLogin("admin");
-		var products = _productsInBasket.Items.GetProductsFromString();
+		var orderProducts = _productsInBasket.Items.GetOrderProducts();
+		//var products = _productsInBasket.Items.GetProductsFromString();
 
-		if(userEntity != null && products.Length > 0)
+		if(userEntity != null && orderProducts.Count > 0)
 		{
-			var orderRequest = new CreateOrderRequest(userEntity.Id, products, userEntity.Address);
+			var orderRequest = new CreateOrderRequest(userEntity.Id, orderProducts, userEntity.Address);
 			var orderResponse = await _ordersHttpClient.CreateOrder(orderRequest);
 			if(orderResponse != null)
 			{
-				RemoveAllProductsFromBasket();
+				await UpdateProductsItemsAsync();
 				result = true;
 			}
 		}
-
 		return result;
 	}
 

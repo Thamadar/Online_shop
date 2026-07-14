@@ -1,4 +1,4 @@
-<Styles
+﻿<Styles
   xmlns="https://github.com/avaloniaui"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:c="using:Shop.UI.Avalonia.Controls">
@@ -11,9 +11,9 @@
 
     <Style Selector="ToggleButton.menu">
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Foreground" Value="#FFF" />
-        <Setter Property="BorderBrush" Value="#FFF" />
-        <Setter Property="CornerRadius" Value="16" />
+        <Setter Property="Foreground" Value="{StaticResource WhiteMain}" />
+        <Setter Property="BorderBrush" Value="{StaticResource WhiteMain}" />
+        <Setter Property="CornerRadius" Value="{StaticResource ButtonCornerRadius}" />
         <Setter Property="Width" Value="44" />
         <Setter Property="Height" Value="44" />
         <Setter Property="FontWeight" Value="SemiBold" />

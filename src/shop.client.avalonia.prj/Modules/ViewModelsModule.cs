@@ -31,16 +31,6 @@ public class ViewModelsModule : Autofac.Module
 			.AsSelf()
 			.SingleInstance(); 
 
-		builder
-			.RegisterType<ProfileView>()
-			.AsSelf()
-			.SingleInstance();
-
-		builder
-			.RegisterType<ProfileViewModel>()
-			.AsSelf()
-			.SingleInstance();
-
 		#endregion
 
 	}

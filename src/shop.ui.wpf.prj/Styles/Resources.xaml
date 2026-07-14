@@ -2,10 +2,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
     <FontFamily x:Key="DefaultFont">Segoe UI</FontFamily>
 
     <sys:Double
-        x:Key="FontSize">
+        x:Key="DefaultFontSize">
         12
     </sys:Double>
     <sys:Double
@@ -17,12 +18,21 @@
         14
     </sys:Double>
     <sys:Double
-        x:Key="LargeFontSize">
+        x:Key="BigHeaderTitleFontSize">
         16
+    </sys:Double>
+    <sys:Double
+        x:Key="PriceFontSize">
+        18
+    </sys:Double>
+    <sys:Double
+        x:Key="LargeHeaderTitleFontSize">
+        24
     </sys:Double>
 
     <CornerRadius
         x:Key="ButtonCornerRadius">
         16
     </CornerRadius>
+
 </ResourceDictionary>

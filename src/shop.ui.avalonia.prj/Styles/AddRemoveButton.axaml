@@ -1,4 +1,4 @@
-<Styles
+﻿<Styles
   xmlns="https://github.com/avaloniaui"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:c="using:Shop.UI.Avalonia.Controls" xmlns:converters="using:Shop.UI.Avalonia.Converters">
@@ -31,10 +31,10 @@
 
     <Style Selector="c|AddRemoveButton">
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Foreground" Value="#FFF" />
-        <Setter Property="CornerRadius" Value="16" />
-        <Setter Property="BorderBrush" Value="#FFF" />
-        <Setter Property="Background" Value="{DynamicResource GrayDark}" />
+        <Setter Property="Foreground" Value="{StaticResource WhiteMain}" />
+        <Setter Property="CornerRadius" Value="{StaticResource ButtonCornerRadius}" />
+        <Setter Property="BorderBrush" Value="{StaticResource WhiteMain}" />
+        <Setter Property="Background" Value="{StaticResource Gray700}" />
         <Setter Property="MinWidth" Value="45" />
         <Setter Property="MinHeight" Value="44" />
         <Setter Property="Padding" Value="0" />
@@ -80,7 +80,7 @@
                               Classes="default"
                               Grid.Column="1"
                               Margin="4,-2,4,0"
-                              FontSize="{DynamicResource MediumFontSize}" />
+                              FontSize="{StaticResource MediumFontSize}" />
                             <c:ButtonIcon
                               x:Name="PART_ShortAddButtonIcon"
                               Classes="short-wild"

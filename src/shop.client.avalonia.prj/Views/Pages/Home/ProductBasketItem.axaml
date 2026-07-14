@@ -21,6 +21,11 @@
         <Grid
           Margin="10,0"
           ColumnDefinitions="auto,*,auto">
+            <Border
+            Grid.Column="0"
+            Background="White"
+            Width="70" />
+
             <Image
               Grid.Column="0"
               Width="70"
@@ -33,7 +38,7 @@
               Margin="10,0"
               RowDefinitions="auto,auto">
                 <TextBlock
-                  Classes="default" Classes.dark="true"
+                  Classes="product-name small"
                   Grid.Row="0"
                   Height="44"
                   Margin="0,5,0,0"
@@ -47,7 +52,6 @@
                   VerticalAlignment="Bottom"
                   ColumnDefinitions="auto,*">
                     <TextBlock
-                      Classes.dark="true"
                       Classes.price-with-sale="{Binding DiscountValue, Converter={x:Static ObjectConverters.IsNotNull}}"
                       Classes.price-without-sale="{Binding DiscountValue, Converter={x:Static ObjectConverters.IsNull}}"
                       Grid.Column="0">
