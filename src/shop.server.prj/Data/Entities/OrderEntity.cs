@@ -14,19 +14,19 @@ public class OrderEntity
 	/// </summary>
 	[Key]
 	[NotNull]
-	public Guid Id { get; set; }
+	public Guid Id { get; private set; }
 
 	/// <summary>
 	/// Идентификатор пользователя.
 	/// </summary>
 	[NotNull]
-	public Guid UserId { get; set; }
+	public Guid UserId { get; private set; }
 
 	/// <summary>
 	/// Список продуктов в заказе.
 	/// </summary>
 	[Required]
-	public ICollection<OrderProductEntity> OrderProducts { get; set; }
+	public ICollection<OrderProductEntity> OrderProducts { get; private set; }
 
 	/// <summary>
 	/// Адрес заказа.
@@ -38,7 +38,7 @@ public class OrderEntity
 	/// Дата создания.
 	/// </summary>
 	[NotNull]
-	public DateTime CreatedAt { get; set; }
+	public DateTime CreatedAt { get; private set; }
 
 	/// <summary>
 	/// Дата завершения заказа: успешное завершение или отмена.

@@ -24,6 +24,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shop.dto", "shop.dto.prj\sh
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit-tests", "unit-tests", "{F35D3A7D-090F-4B91-82D4-79D6C97799F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shop.server.test", "shop.server.test.prj\shop.server.test.csproj", "{E7866DAF-5D0E-797C-25F0-65B611E7B8D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,12 +62,17 @@ Global
 		{B697172A-441A-195A-107B-B6E6A611981C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B697172A-441A-195A-107B-B6E6A611981C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B697172A-441A-195A-107B-B6E6A611981C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7866DAF-5D0E-797C-25F0-65B611E7B8D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7866DAF-5D0E-797C-25F0-65B611E7B8D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7866DAF-5D0E-797C-25F0-65B611E7B8D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7866DAF-5D0E-797C-25F0-65B611E7B8D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B697172A-441A-195A-107B-B6E6A611981C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{E7866DAF-5D0E-797C-25F0-65B611E7B8D2} = {F35D3A7D-090F-4B91-82D4-79D6C97799F2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E521D017-97E5-44CA-9417-1F5523B39344}

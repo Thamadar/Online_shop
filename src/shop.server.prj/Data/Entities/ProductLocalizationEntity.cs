@@ -9,14 +9,14 @@ namespace Shop.Server.Data;
 /// </summary> 
 public class ProductLocalizationEntity
 {  
-	public int ProductId { get; set; }
+	public int ProductId { get; private set; }
 
 	/// <summary>
 	/// Ключ локализации.
 	/// </summary>  
 	[Required]
 	[MaxLength(10)]
-	public string LangCode { get; set; }  
+	public string LangCode { get; init; }  
 
 	/// <summary>
 	/// Отображение локализации.
@@ -26,5 +26,5 @@ public class ProductLocalizationEntity
 	 
 	[ForeignKey(nameof(ProductId))]
 	[JsonIgnore]
-	public ProductEntity Product { get; set; }
+	public ProductEntity Product { get; private set; }
 }

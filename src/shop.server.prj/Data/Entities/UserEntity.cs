@@ -11,7 +11,7 @@ public class UserEntity
 	/// Идентификатор пользователя.
 	/// </summary>
 	[Key]
-	public Guid Id { get; set; }
+	public Guid Id { get; private set; }
 
 	/// <summary>
 	/// Логин пользователя.
@@ -36,5 +36,5 @@ public class UserEntity
 	/// <summary>
 	/// Дата обновления.
 	/// </summary>
-	public DateTime UpdatedAt { get; set; }
+	public DateTime UpdatedAt { get; set; } 
 }

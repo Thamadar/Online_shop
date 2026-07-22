@@ -15,7 +15,7 @@ public class ProductEntity
 	/// Идентификатор товара.
 	/// </summary>
 	[Key]
-	public int Id { get; set; }
+	public int Id { get; private set; }
 	 
 	/// <summary>
 	/// Ключ для локализации наименования продукта.
@@ -33,7 +33,7 @@ public class ProductEntity
 	/// <summary>
 	/// Список заказов, в которых есть данный продукт.
 	/// </summary> 
-	public ICollection<OrderProductEntity> OrderProducts { get; set; }
+	public ICollection<OrderProductEntity> OrderProducts { get; private set; }
 
 	/// <summary>
 	/// Текущее доступное количество товаров, располагающихся на условном складе.
@@ -82,15 +82,40 @@ public class ProductEntity
 	/// Установить скидку товара.
 	/// </summary> 
 	public void SetDiscount(decimal discountValue, DiscountUnit discountUnit)
-	{ 
-		if(discountUnit == DiscountUnit.Percent)
+	{
+		switch(discountUnit)
 		{
-			discountValue = Math.Clamp(discountValue, 0m, 100m);
-		}
-		else if(discountUnit == DiscountUnit.FixedAmount)
-		{
-			discountValue = Math.Clamp(DiscountValue, 0m, BasePrice);  
-		}
+			case DiscountUnit.Percent:
+				{
+					if(discountValue > 100)
+					{
+						throw new InvalidOperationException($"Процент скидки не может составлять больше 100. Значение: {discountValue}");
+					}
+					if(discountValue <= 0)
+					{
+						throw new InvalidOperationException($"Процент скидки не может быть меньше или равен 0. Значение: {discountValue}");
+					}
+					discountValue = Math.Clamp(discountValue, 0m, 100m);
+
+					break;
+				};
+			case DiscountUnit.FixedAmount:
+				{
+					if(DiscountValue > BasePrice)
+					{
+						throw new InvalidOperationException($"Сумма скидки не может составлять больше цены товара. Значение: {discountValue}");
+					}
+					if(DiscountValue <= 0)
+					{
+						throw new InvalidOperationException($"Сумма скидки не может быть меньше или равна 0. Значение: {discountValue}");
+					}
+
+					discountValue = Math.Clamp(DiscountValue, 0m, BasePrice);
+					break;
+				};
+			default:
+				throw new InvalidOperationException($"Неизвестный при обработке тип скидки. Тип {discountUnit}"); 
+		} 
 
 		DiscountValue = discountValue;
 		DiscountUnit  = discountUnit;

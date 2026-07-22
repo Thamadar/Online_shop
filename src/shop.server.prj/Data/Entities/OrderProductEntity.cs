@@ -6,18 +6,18 @@ namespace Shop.Server.Data;
 
 public class OrderProductEntity
 {   
-	public Guid OrderId { get; set; }
+	public Guid OrderId { get; private set; }
 	  
-	public int ProductId { get; set; }
+	public int ProductId { get; private set; }
 
 	[Required] 
 	public int Quantity { get; set; } = 1;
 	 
 	[ForeignKey(nameof(OrderId))]
 	[JsonIgnore]
-	public OrderEntity OrderEntity { get; set; }
+	public OrderEntity OrderEntity { get; private set; }
 
 	[ForeignKey(nameof(ProductId))]
 	[JsonIgnore]
-	public ProductEntity ProductEntity { get; set; }
+	public ProductEntity ProductEntity { get; private set; }
 }
