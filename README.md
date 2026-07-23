@@ -6,7 +6,7 @@
 ----------------
  
 **Стек:** <br>
-Avalonia, WPF, ReactiveUI, MVVM, Docker, .net7.0, net7.0-windows, ASP.NET, SQL Server (MySQL), EntityFrameworkCore, Behaviors.interactivity, Autofac, Microsoft.Extensions.DependencyInjection, AutoMapper, Swagger, REST API, DDD, CRUD, Fluent API, UnitOfWork, GoF. <br>
+Avalonia, WPF, ReactiveUI, MVVM, xUnit, Docker, .net7.0, net7.0-windows, ASP.NET, SQL Server (MySQL), EntityFrameworkCore, Behaviors.interactivity, Autofac, Microsoft.Extensions.DependencyInjection, AutoMapper, Swagger, REST API, DDD, CRUD, Fluent API, UnitOfWork, GoF. <br>
 
 ---------------- 
  
