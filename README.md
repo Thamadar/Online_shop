@@ -6,7 +6,7 @@
 ----------------
  
 **Стек:** <br>
-Avalonia, WPF, ReactiveUI, MVVM, .net7.0, net7.0-windows, ASP.NET, SQL Server (MySQL), EntityFrameworkCore, Behaviors.interactivity, Autofac, Microsoft.Extensions.DependencyInjection, AutoMapper, Swagger, REST API, DDD, CRUD, Fluent API, UnitOfWork, GoF. <br>
+Avalonia, WPF, ReactiveUI, MVVM, Docker, .net7.0, net7.0-windows, ASP.NET, SQL Server (MySQL), EntityFrameworkCore, Behaviors.interactivity, Autofac, Microsoft.Extensions.DependencyInjection, AutoMapper, Swagger, REST API, DDD, CRUD, Fluent API, UnitOfWork, GoF. <br>
 
 ---------------- 
  
@@ -25,7 +25,7 @@ Avalonia, WPF, ReactiveUI, MVVM, .net7.0, net7.0-windows, ASP.NET, SQL Server (M
 
 Для запуска необходимо иметь: <br>
 - .NET 7.0. <br>
-- SQL Server (Желательно Express версия. Также база и таблицы сами инициализируются при запуске shop.server). <br>
+- SQL Server (если запускаете сервер через Docker, то не нужно). <br>
   
 ----------------
  
