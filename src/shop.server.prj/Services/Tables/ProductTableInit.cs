@@ -113,7 +113,7 @@ public class ProductTableInit : BaseTableInit<ProductEntity>
 		//TO DO: add builder.
 		return new List<ProductEntity>()
 		{
-			new ProductEntity() { ProductName = "TomatoesCommon", BasePrice = 150, Weight = 250, AvailableCount = 3, Image = File.ReadAllBytes(@"Assets\Images\tomatoes-common-product.png"),
+			new ProductEntity() { ProductName = "TomatoesCommon", BasePrice = 150, Weight = 250, AvailableCount = 3, Image = File.ReadAllBytes(Path.Combine("Assets", "Images", "tomatoes-common-product.png")),
 				Localizations = new List<ProductLocalizationEntity>
 				{
 					new ProductLocalizationEntity
@@ -127,7 +127,7 @@ public class ProductTableInit : BaseTableInit<ProductEntity>
 						DisplayName = "Томаты обычные"
 					}
 				}},
-			new ProductEntity() { ProductName = "BananasCommon", BasePrice = 70, Weight = 500, AvailableCount = 5, Image = File.ReadAllBytes(@"Assets\Images\banana-product.png"),
+			new ProductEntity() { ProductName = "BananasCommon", BasePrice = 70, Weight = 500, AvailableCount = 5, Image = File.ReadAllBytes(Path.Combine("Assets", "Images", "banana-product.png")),
 				Localizations = new List<ProductLocalizationEntity>
 				{
 					new ProductLocalizationEntity
@@ -141,7 +141,7 @@ public class ProductTableInit : BaseTableInit<ProductEntity>
 						DisplayName = "Бананы обычные"
 					}
 				} },
-			new ProductEntity() { ProductName = "ApplesGreen", BasePrice = 60, Weight = 400, AvailableCount = 7, Image = File.ReadAllBytes(@"Assets\Images\apples-green-product.png"),
+			new ProductEntity() { ProductName = "ApplesGreen", BasePrice = 60, Weight = 400, AvailableCount = 7, Image = File.ReadAllBytes(Path.Combine("Assets", "Images", "apples-green-product.png")),
 				Localizations = new List<ProductLocalizationEntity>
 				{
 					new ProductLocalizationEntity
@@ -155,7 +155,7 @@ public class ProductTableInit : BaseTableInit<ProductEntity>
 						DisplayName = "Яблоки зеленые"
 					}
 				} },
-			new ProductEntity() { ProductName = "MushroomChampignons", BasePrice = 90, Weight = 500, AvailableCount = 3, Image = File.ReadAllBytes(@"Assets\Images\mushroom-champignons-product.png"),
+			new ProductEntity() { ProductName = "MushroomChampignons", BasePrice = 90, Weight = 500, AvailableCount = 3, Image = File.ReadAllBytes(Path.Combine("Assets", "Images", "mushroom-champignons-product.png")),
 				Localizations = new List<ProductLocalizationEntity>
 				{
 					new ProductLocalizationEntity
@@ -169,7 +169,7 @@ public class ProductTableInit : BaseTableInit<ProductEntity>
 						DisplayName = "Шампиньоны"
 					}
 				} },
-			new ProductEntity() { ProductName = "CucumbersSmoothMediumFruited", BasePrice = 150,  Weight = 300, AvailableCount = 8, Image = File.ReadAllBytes(@"Assets\Images\cucumbers-smooth-medium-fruited-product.png"),
+			new ProductEntity() { ProductName = "CucumbersSmoothMediumFruited", BasePrice = 150,  Weight = 300, AvailableCount = 8, Image = File.ReadAllBytes(Path.Combine("Assets", "Images", "cucumbers-smooth-medium-fruited-product.png")),
 				Localizations = new List<ProductLocalizationEntity>
 				{
 					new ProductLocalizationEntity
@@ -183,7 +183,7 @@ public class ProductTableInit : BaseTableInit<ProductEntity>
 						DisplayName = "Огурцы гладкие среднеплодные"
 					}
 				} },
-			new ProductEntity() { ProductName = "BlackBreadDarizkiy", BasePrice = 30, Weight = 350, AvailableCount = 15, Image = File.ReadAllBytes(@"Assets\Images\black-bread-darizkiy-product.png"),
+			new ProductEntity() { ProductName = "BlackBreadDarizkiy", BasePrice = 30, Weight = 350, AvailableCount = 15, Image = File.ReadAllBytes(Path.Combine("Assets", "Images", "black-bread-darizkiy-product.png")),
 				Localizations = new List<ProductLocalizationEntity>
 				{
 					new ProductLocalizationEntity
@@ -197,7 +197,7 @@ public class ProductTableInit : BaseTableInit<ProductEntity>
 						DisplayName = "Черный хлеб Дарницкий"
 					}
 				} },
-			new ProductEntity() { ProductName = "GrapeGreen",  BasePrice = 95, Weight = 500, AvailableCount = 6, Image = File.ReadAllBytes(@"Assets\Images\grape-green-product.png"),
+			new ProductEntity() { ProductName = "GrapeGreen",  BasePrice = 95, Weight = 500, AvailableCount = 6, Image = File.ReadAllBytes(Path.Combine("Assets", "Images", "grape-green-product.png")),
 				Localizations = new List<ProductLocalizationEntity>
 				{
 					new ProductLocalizationEntity

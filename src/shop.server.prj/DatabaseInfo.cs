@@ -11,6 +11,9 @@ public class DatabaseInfo : IDatabaseInfo
 	public DatabaseInfo(IConfiguration configRoot)
 	{
 		ServerConnectionString = configRoot.GetConnectionString("ServerConnection");
-		ConnectionString       = configRoot.GetConnectionString("DefaultConnection");
+		ConnectionString       = configRoot.GetConnectionString("DatabaseConnection");
+
+		ConsoleLog.Write($"Конфиг подключения к серверу БД: {ServerConnectionString}");
+		ConsoleLog.Write($"Конфиг подключения к БД: {ConnectionString}");
 	} 
 }

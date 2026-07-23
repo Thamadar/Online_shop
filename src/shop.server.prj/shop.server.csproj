@@ -17,12 +17,16 @@
      
   </ItemGroup>
  
-  <ItemGroup>
+  <ItemGroup> 
+    <Content Include="Assets\**\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    
     <None Remove=".gitignore" />
-  </ItemGroup>
- 
+  </ItemGroup> 
+  
   <ItemGroup>
     <ProjectReference Include="..\shop.dto.prj\shop.dto.csproj" />
     <ProjectReference Include="..\Utilities\shop.utilities.csproj" />
-  </ItemGroup> 
+  </ItemGroup>  
 </Project>

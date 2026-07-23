@@ -11,7 +11,7 @@ namespace Shop.Client.WPF.Configuration;
 public class ConnectionConfiguration
 {
 
-	public static ConnectionConfiguration Defaults { get; } = new("http://localhost:5100", 15, 5000);
+	public static ConnectionConfiguration Defaults { get; } = new("http://localhost:8080", 15, 5000);
 
 	private string _baseAddress = string.Empty;
 

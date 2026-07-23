@@ -16,7 +16,9 @@ public interface IUnitOfWork : IDisposable
 	/// <summary>
 	/// Репозиторий заказов.
 	/// </summary>
-	IOrdersRepository Orders { get; } 
+	IOrdersRepository Orders { get; }
+	 
+	IExecutionStrategy CreateExecutionStrategy();
 
 	/// <summary>
 	/// Начать транзакцию.

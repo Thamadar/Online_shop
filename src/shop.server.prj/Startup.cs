@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Shop.Server.Data;
 using Shop.Server.Mappers;
 using Shop.Server.Repositories;
@@ -101,8 +102,14 @@ public class Startup
 	}
 
 	private void ConfigureDbContexts(IServiceCollection services)
-	{ 
-		services.AddDbContext<ServerContext>(options => options.UseSqlServer(configRoot.GetConnectionString("DefaultConnection"))); 
+	{
+		services.AddDbContext<ServerContext>(options =>
+			options.UseSqlServer(
+				configRoot.GetConnectionString("DatabaseConnection"),
+					sqlOptions =>
+					{ 
+						sqlOptions.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+					}));
 	}
 
 	private void ConfigureTables(IServiceCollection services)

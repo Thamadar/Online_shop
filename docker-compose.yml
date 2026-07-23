@@ -1,0 +1,36 @@
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2025-latest 
+    container_name: sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "VeryStrongOnlineShopPassword@!_P"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -C -S 127.0.0.1 -U sa -P 'VeryStrongOnlineShopPassword@!_P' -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: server
+    restart: unless-stopped
+    depends_on: 
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ConnectionStrings__ServerConnection: "Server=db;User Id=sa;Password=VeryStrongOnlineShopPassword@!_P;Encrypt=False;"
+      ConnectionStrings__DatabaseConnection: "Server=db;Database=OnlineShop;User Id=sa;Password=VeryStrongOnlineShopPassword@!_P;Encrypt=False;"
+
+volumes:
+  sql_data:
